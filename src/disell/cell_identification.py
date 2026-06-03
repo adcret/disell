@@ -15,7 +15,7 @@ import numpy as np
 import multiprocessing
 from skimage.morphology import ball, disk, binary_erosion, binary_dilation, skeletonize
 from skimage.measure import label, regionprops
-from cell_statistics import cell_stats_orientation_based
+from .cell_statistics import cell_stats_orientation_based
 
 from . import _flood_fill as flood_fill
 

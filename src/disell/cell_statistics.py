@@ -1,7 +1,7 @@
 import numpy as np
 from skimage.measure import regionprops
 from skimage.segmentation import find_boundaries
-from properties import find_connected_cells_numba, batch_erode_labels, batch_dilate_labels
+from .properties import find_connected_cells_numba, batch_erode_labels, batch_dilate_labels
 from scipy import ndimage
 from scipy.optimize import curve_fit
 

@@ -26,7 +26,7 @@ py::dict flood_fill_collect_seeds(
     int min_grain_size
 );
 
-PYBIND11_MODULE(flood_fill, m) {
+PYBIND11_MODULE(_flood_fill, m) {
     m.def("flood_fill_random_seeds_3d",
         &flood_fill_random_seeds_3d,
         py::arg("property_map"),
