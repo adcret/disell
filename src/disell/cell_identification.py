@@ -31,6 +31,9 @@ def flood_fill_dfxm_two_stage(
     recycle_small_grains=False,
     stagnation_tolerance=200
 ):
+    # TODO: undefined local_threshold variable (should use local_misorientation_threshold);
+    # TODO: missing footprint_tolerance in flood_fill_random_seeds_3d call;
+    # TODO: ascending sort with a descending comment (np.argsort is ascending).
     """
     Two-stage deterministic flood-fill segmentation for DFXM data.
 
@@ -212,6 +215,7 @@ def flood_fill_dfxm(
     property_map,
     footprint = None, 
     local_threshold = None, 
+    global_threshold=None,
     footprint_tolerance = 0.9,
     mask=None,
     max_iterations=250,
@@ -258,6 +262,13 @@ def flood_fill_dfxm(
 
     local_threshold : float
         Local misorientation threshold controlling region growth.
+
+    global_threshold : float or None, default=None
+        Maximum allowed RMS per-channel distance from the seed feature
+        (same units as ``local_threshold``). When the property-map channels
+        are orientation components, this caps intra-region angular spread
+        relative to the seed voxel captured at the start of each region grow.
+        ``None`` (or any value ``<= 0``) disables the check.
 
     footprint_tolerance : float, default=0.9
         Tolerance when evaluating neighborhood similarity.
@@ -350,10 +361,12 @@ def flood_fill_dfxm(
     # -------------------------------------------------------------
     # Call the C++ function
     # -------------------------------------------------------------
+    g_thr = -1.0 if global_threshold is None else float(global_threshold)
     result = flood_fill.flood_fill_random_seeds_3d(
         property_map_3d,
         footprint_3d,
         float(local_threshold),
+        g_thr,
         float(footprint_tolerance),
         mask_3d,
         int(max_iterations),

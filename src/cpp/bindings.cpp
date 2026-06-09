@@ -7,6 +7,7 @@ py::dict flood_fill_random_seeds_3d(
     py::array_t<float, py::array::c_style | py::array::forcecast> property_map,   // (Z,Y,X,C)
     py::array_t<bool,  py::array::c_style | py::array::forcecast> footprint,      // (FZ,FY,FX)
     float local_threshold,
+    float global_threshold,
     float footprint_tolerance,
     py::object mask_obj,
     int max_iterations,
@@ -20,6 +21,7 @@ py::dict flood_fill_collect_seeds(
     py::array_t<float, py::array::c_style | py::array::forcecast> property_map,   // (Z,Y,X,C)
     py::array_t<bool,  py::array::c_style | py::array::forcecast> footprint,      // (FZ,FY,FX)
     float local_threshold,
+    float global_threshold,
     float footprint_tolerance,
     py::object mask_obj,
     int max_iterations,
@@ -32,6 +34,7 @@ PYBIND11_MODULE(_flood_fill, m) {
         py::arg("property_map"),
         py::arg("footprint"),
         py::arg("local_threshold"),
+        py::arg("global_threshold") = -1.0f,
         py::arg("footprint_tolerance"),
         py::arg("mask"),
         py::arg("max_iterations"),
@@ -40,5 +43,14 @@ PYBIND11_MODULE(_flood_fill, m) {
         py::arg("stagnation_tolerance"),
         py::arg("seed_points") = py::none()
     );
-    m.def("flood_fill_collect_seeds", &flood_fill_collect_seeds, "3D flood fill with returned seeds and sizes");
+    m.def("flood_fill_collect_seeds", &flood_fill_collect_seeds,
+        py::arg("property_map"),
+        py::arg("footprint"),
+        py::arg("local_threshold"),
+        py::arg("global_threshold") = -1.0f,
+        py::arg("footprint_tolerance"),
+        py::arg("mask"),
+        py::arg("max_iterations"),
+        py::arg("min_grain_size")
+    );
 }

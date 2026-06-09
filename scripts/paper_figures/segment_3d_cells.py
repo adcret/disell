@@ -320,6 +320,7 @@ def run_multiseed_flood_fill(
         field_padded,
         footprint.astype(bool),
         float(args.local_threshold),
+        -1.0,
         float(args.footprint_tolerance),
         mask_for_cpp,
         int(args.max_seed_attempts),

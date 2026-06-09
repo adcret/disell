@@ -33,9 +33,11 @@ void flood_fill_single_region_binary_3d(
     const std::vector<Offset3D>& offsets,
     int si, int sj, int sk,
     float thr_sq_C,
+    float global_threshold,
     float footprint_tolerance,
     std::vector<size_t>& region_indices
 ) {
+    // global_threshold <= 0 disables the seed-anchored spread cap.
 
     // bounds
     if (si < 0 || sj < 0 || sk < 0 ||
@@ -50,6 +52,9 @@ void flood_fill_single_region_binary_3d(
         return;
     }
 
+    const float* seed_feat = prop + seed_idx * C;
+    const bool global_enabled = global_threshold > 0.0f;
+    const float g_thr_sq_C = global_threshold * global_threshold * float(C);
 
     const size_t Nvox = (size_t)Z * Y * X;
     std::vector<uint8_t> visited(Nvox, 0);
@@ -100,6 +105,15 @@ void flood_fill_single_region_binary_3d(
             }
 
             bool pass = dist2 < thr_sq_C;
+            if (pass && global_enabled) {
+                float ds2 = 0.0f;
+                #pragma omp simd reduction(+:ds2)
+                for (int c = 0; c < C; ++c) {
+                    float ds = neigh[c] - seed_feat[c];
+                    ds2 += ds*ds;
+                }
+                pass = ds2 < g_thr_sq_C;
+            }
             count_pass += pass;
             if (pass) candidates.push_back(nidx);
         }
@@ -127,6 +141,7 @@ py::dict flood_fill_random_seeds_3d(
     py::array_t<float, py::array::c_style | py::array::forcecast> property_map,   // (Z,Y,X,C)
     py::array_t<bool,  py::array::c_style | py::array::forcecast> footprint,      // (FZ,FY,FX)
     float local_threshold,
+    float global_threshold,
     float footprint_tolerance,
     py::object mask_obj,
     int max_iterations,
@@ -135,6 +150,7 @@ py::dict flood_fill_random_seeds_3d(
     int stagnation_tolerance,
     py::object seed_points_obj = py::none()
 ) {
+    // global_threshold <= 0 disables the seed-anchored spread cap.
     // ---- property_map checks ----
     auto pbuf = property_map.request();
     if (pbuf.ndim != 4)
@@ -302,6 +318,7 @@ py::dict flood_fill_random_seeds_3d(
             offsets,
             z, y, x,
             thr_sq_C,
+            global_threshold,
             footprint_tolerance,
             region_indices
         );
@@ -398,11 +415,13 @@ py::dict flood_fill_collect_seeds(
     py::array_t<float, py::array::c_style | py::array::forcecast> property_map,   // (Z,Y,X,C)
     py::array_t<bool,  py::array::c_style | py::array::forcecast> footprint,      // (FZ,FY,FX)
     float local_threshold,
+    float global_threshold,
     float footprint_tolerance,
     py::object mask_obj,
     int max_iterations,
     int min_grain_size
 ) {
+    // global_threshold <= 0 disables the seed-anchored spread cap.
     // ---- property_map checks ----
     auto pbuf = property_map.request();
     if (pbuf.ndim != 4)
@@ -497,6 +516,7 @@ py::dict flood_fill_collect_seeds(
             offsets,
             z, y, x,
             thr_sq_C,
+            global_threshold,
             footprint_tolerance,
             region_indices
         );
