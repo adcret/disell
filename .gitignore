@@ -209,3 +209,5 @@ __marimo__/
 # Ignore markdown notes/reports
 *.md
 !README.md
+old_stuff/
+*.npy
