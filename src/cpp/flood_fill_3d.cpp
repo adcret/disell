@@ -37,7 +37,10 @@ void flood_fill_single_region_binary_3d(
     float footprint_tolerance,
     std::vector<size_t>& region_indices
 ) {
-    // global_threshold <= 0 disables the seed-anchored spread cap.
+    // global_threshold <= 0 disables the global spread cap. When enabled, each
+    // candidate neighbour is compared against the running mean of the current
+    // region (the mean feature vector of voxels actually accepted so far), not
+    // the seed voxel.
 
     // bounds
     if (si < 0 || sj < 0 || sk < 0 ||
@@ -55,6 +58,15 @@ void flood_fill_single_region_binary_3d(
     const float* seed_feat = prop + seed_idx * C;
     const bool global_enabled = global_threshold > 0.0f;
     const float g_thr_sq_C = global_threshold * global_threshold * float(C);
+
+    // Running mean of the accepted region, used for the global spread cap.
+    // Only allocated/initialised when the global check is enabled.
+    std::vector<float> region_mean;
+    if (global_enabled) {
+        region_mean.assign(C, 0.0f);
+        for (int c = 0; c < C; ++c)
+            region_mean[c] = seed_feat[c];
+    }
 
     const size_t Nvox = (size_t)Z * Y * X;
     std::vector<uint8_t> visited(Nvox, 0);
@@ -109,7 +121,7 @@ void flood_fill_single_region_binary_3d(
                 float ds2 = 0.0f;
                 #pragma omp simd reduction(+:ds2)
                 for (int c = 0; c < C; ++c) {
-                    float ds = neigh[c] - seed_feat[c];
+                    float ds = neigh[c] - region_mean[c];
                     ds2 += ds*ds;
                 }
                 pass = ds2 < g_thr_sq_C;
@@ -122,6 +134,14 @@ void flood_fill_single_region_binary_3d(
         int min_pass = (int)std::ceil(footprint_tolerance * valid_neighbors);
         if (count_pass >= min_pass) {
             region_indices.push_back(idx);
+
+            // Update the running region mean with the accepted voxel.
+            if (global_enabled) {
+                const size_t n = region_indices.size();
+                const float* accepted = prop + idx*C;
+                for (int c = 0; c < C; ++c)
+                    region_mean[c] = (region_mean[c] * float(n - 1) + accepted[c]) / float(n);
+            }
 
             for (size_t nidx : candidates) {
                 if (!visited[nidx]) {
@@ -148,9 +168,11 @@ py::dict flood_fill_random_seeds_3d(
     int min_grain_size,
     bool recycle_small_grains,
     int stagnation_tolerance,
-    py::object seed_points_obj = py::none()
+    py::object seed_points_obj = py::none(),
+    int random_seed = -1
 ) {
-    // global_threshold <= 0 disables the seed-anchored spread cap.
+    // global_threshold <= 0 disables the global spread cap. When enabled, the
+    // cap is relative to the running mean of the current region.
     // ---- property_map checks ----
     auto pbuf = property_map.request();
     if (pbuf.ndim != 4)
@@ -212,8 +234,12 @@ py::dict flood_fill_random_seeds_3d(
 
     const float thr_sq_C = local_threshold * local_threshold * float(C);
 
-    // rng
-    std::mt19937 rng(std::random_device{}());
+    // rng: random_seed < 0 preserves the previous non-deterministic behaviour.
+    std::mt19937 rng(
+        random_seed >= 0
+            ? static_cast<unsigned>(random_seed)
+            : std::random_device{}()
+    );
 
     int label = 1;
     int iteration = 0;
@@ -419,9 +445,11 @@ py::dict flood_fill_collect_seeds(
     float footprint_tolerance,
     py::object mask_obj,
     int max_iterations,
-    int min_grain_size
+    int min_grain_size,
+    int random_seed = -1
 ) {
-    // global_threshold <= 0 disables the seed-anchored spread cap.
+    // global_threshold <= 0 disables the global spread cap. When enabled, the
+    // cap is relative to the running mean of the current region.
     // ---- property_map checks ----
     auto pbuf = property_map.request();
     if (pbuf.ndim != 4)
@@ -487,8 +515,12 @@ py::dict flood_fill_collect_seeds(
 
     const float thr_sq_C = local_threshold * local_threshold * (float)C;
 
-    // RNG
-    std::mt19937 rng(std::random_device{}());
+    // RNG: random_seed < 0 preserves the previous non-deterministic behaviour.
+    std::mt19937 rng(
+        random_seed >= 0
+            ? static_cast<unsigned>(random_seed)
+            : std::random_device{}()
+    );
 
     std::vector<size_t> region_indices;
     region_indices.reserve(8192);

@@ -30,7 +30,8 @@ def flood_fill_dfxm_two_stage(
     max_iterations=250,
     min_grain_size=50,
     recycle_small_grains=False,
-    stagnation_tolerance=200
+    stagnation_tolerance=200,
+    random_seed=None
 ):
     """
     Two-stage size-prioritized flood-fill segmentation for DFXM data.
@@ -98,10 +99,11 @@ def flood_fill_dfxm_two_stage(
         Maximum allowed local misorientation used when expanding a region.
  
     global_threshold : float or None, default=None
-        Maximum allowed RMS per-channel distance from the seed feature
-        (same units as ``local_misorientation_threshold``). Caps intra-region
-        spread relative to the seed voxel captured at the start of each
-        region grow. ``None`` (or any value ``<= 0``) disables the check.
+        Maximum allowed RMS per-channel distance from the running mean of the
+        current region (same units as ``local_misorientation_threshold``). Caps
+        intra-region spread relative to the running mean of voxels already
+        accepted into the region. ``None`` (or any value ``<= 0``) disables the
+        check.
  
     footprint_tolerance : float, default=1
         Tolerance applied when comparing values within the footprint.
@@ -127,12 +129,17 @@ def flood_fill_dfxm_two_stage(
     stagnation_tolerance : int, default=200
         Maximum number of iterations without region growth before the
         algorithm terminates.
- 
+
+    random_seed : int or None, default=None
+        Seed for the internal random number generator. When None, the RNG is seeded from
+        std::random_device and results are non-reproducible. Set to any non-negative integer
+        for reproducible results.
+
     Returns
     -------
     dict
         Dictionary containing:
- 
+
         segmentation : ndarray
             Label image of segmeted dislocation cell.
  
@@ -183,6 +190,7 @@ def flood_fill_dfxm_two_stage(
  
     # Step (1): collect seeds + sizes
     g_thr = -1.0 if global_threshold is None else float(global_threshold)
+    rs = -1 if random_seed is None else int(random_seed)
     seed_info = flood_fill.flood_fill_collect_seeds(
         property_map_3d,
         footprint_3d,
@@ -192,6 +200,7 @@ def flood_fill_dfxm_two_stage(
         mask_3d,
         int(max_iterations),
         int(min_grain_size),
+        rs,
     )
  
     sizes_initial = seed_info["sizes"]
@@ -225,8 +234,9 @@ def flood_fill_dfxm_two_stage(
         bool(recycle_small_grains),
         int(stagnation_tolerance),
         seeds_sorted,
+        rs,
     )
- 
+
     seg  = result["segmentation"]
     means = result["means"]
     sizes = result["sizes"]
@@ -248,6 +258,7 @@ def flood_fill_dfxm(
     min_grain_size=50,
     recycle_small_grains=False,
     stagnation_tolerance=200,
+    random_seed=None,
 ):
     """
     
@@ -290,11 +301,11 @@ def flood_fill_dfxm(
         Local misorientation threshold controlling region growth.
 
     global_threshold : float or None, default=None
-        Maximum allowed RMS per-channel distance from the seed feature
-        (same units as ``local_threshold``). When the property-map channels
-        are orientation components, this caps intra-region angular spread
-        relative to the seed voxel captured at the start of each region grow.
-        ``None`` (or any value ``<= 0``) disables the check.
+        Maximum allowed RMS per-channel distance from the running mean of the
+        current region (same units as ``local_threshold``). When the
+        property-map channels are orientation components, this caps intra-region
+        angular spread relative to the running mean of voxels already accepted
+        into the region. ``None`` (or any value ``<= 0``) disables the check.
 
     footprint_tolerance : float, default=0.9
         Tolerance when evaluating neighborhood similarity.
@@ -319,6 +330,11 @@ def flood_fill_dfxm(
     stagnation_tolerance : int, default=200
         Maximum number of iterations without region growth before
         termination.
+
+    random_seed : int or None, default=None
+        Seed for the internal random number generator. When None, the RNG is seeded from
+        std::random_device and results are non-reproducible. Set to any non-negative integer
+        for reproducible results.
 
     Returns
     -------
@@ -388,6 +404,7 @@ def flood_fill_dfxm(
     # Call the C++ function
     # -------------------------------------------------------------
     g_thr = -1.0 if global_threshold is None else float(global_threshold)
+    rs = -1 if random_seed is None else int(random_seed)
     result = flood_fill.flood_fill_random_seeds_3d(
         property_map_3d,
         footprint_3d,
@@ -399,6 +416,8 @@ def flood_fill_dfxm(
         int(min_grain_size),
         bool(recycle_small_grains),
         int(stagnation_tolerance),
+        None,
+        rs,
     )
 
     # -------------------------------------------------------------

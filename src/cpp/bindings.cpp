@@ -14,7 +14,8 @@ py::dict flood_fill_random_seeds_3d(
     int min_grain_size,
     bool recycle_small_grains,
     int stagnation_tolerance,
-    py::object seed_points_obj
+    py::object seed_points_obj,
+    int random_seed
 );
 
 py::dict flood_fill_collect_seeds(
@@ -25,7 +26,8 @@ py::dict flood_fill_collect_seeds(
     float footprint_tolerance,
     py::object mask_obj,
     int max_iterations,
-    int min_grain_size
+    int min_grain_size,
+    int random_seed
 );
 
 PYBIND11_MODULE(_flood_fill, m) {
@@ -41,7 +43,8 @@ PYBIND11_MODULE(_flood_fill, m) {
         py::arg("min_grain_size"),
         py::arg("recycle_small_grains"),
         py::arg("stagnation_tolerance"),
-        py::arg("seed_points") = py::none()
+        py::arg("seed_points") = py::none(),
+        py::arg("random_seed") = -1
     );
     m.def("flood_fill_collect_seeds", &flood_fill_collect_seeds,
         py::arg("property_map"),
@@ -51,6 +54,7 @@ PYBIND11_MODULE(_flood_fill, m) {
         py::arg("footprint_tolerance"),
         py::arg("mask"),
         py::arg("max_iterations"),
-        py::arg("min_grain_size")
+        py::arg("min_grain_size"),
+        py::arg("random_seed") = -1
     );
 }
