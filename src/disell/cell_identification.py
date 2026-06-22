@@ -15,7 +15,7 @@ import numpy as np
 import multiprocessing
 from skimage.morphology import ball, disk, binary_erosion, binary_dilation, skeletonize
 from skimage.measure import label, regionprops
-from cell_statistics import cell_stats_orientation_based
+from .cell_statistics import cell_stats_orientation_based
 
 from . import _flood_fill as flood_fill
 
@@ -24,96 +24,116 @@ def flood_fill_dfxm_two_stage(
     property_map,
     footprint=None,
     local_misorientation_threshold=None,
+    global_threshold=None,
     footprint_tolerance=1,
     mask=None,
     max_iterations=250,
     min_grain_size=50,
     recycle_small_grains=False,
-    stagnation_tolerance=200
+    stagnation_tolerance=200,
+    random_seed=None
 ):
     """
-    Two-stage deterministic flood-fill segmentation for DFXM data.
-
+    Two-stage size-prioritized flood-fill segmentation for DFXM data.
+ 
     When cell boundaries are weak or noisy, random seeding can lead to
     non-unique segmentations. This function stabilizes the segmentation
     by first detecting candidate seed regions and then performing flood fill on the the seeds ordered by cell size.
-
+ 
     Algorithm
     ---------
     The segmentation proceeds in two stages:
-
+ 
     1. **Seed collection**
     `flood_fill_collect_seeds` is executed to detect potential seed
     regions that satisfy the local misorientation and footprint criteria.
     Each candidate seed is associated with an initial region size.
-
+ 
     2. **Seed sorting**
-    Seeds are sorted by their detected region size (descending).
-
-    3. **Deterministic flood fill**
-    `flood_fill_random_seeds_3d` is called with the sorted seed list,
-    producing a stable segmentation.
-
-    This method tends to converge to an asymptotically stable segmentation
-    for a given parameter set.
-
+    Seeds are sorted by their detected region size so that the largest
+    cells are seeded first by the C++ region-grow loop. (The Python
+    array is sorted ascending because the C++ loop consumes user seeds
+    LIFO via ``back()`` / ``pop_back()``.)
+ 
+    3. **Seeded flood fill**
+    `flood_fill_random_seeds_3d` is called with the sorted seed list.
+    Once the seed list is exhausted the loop stops, so only voxels
+    reachable from a provided seed are labeled.
+ 
+    Note: stage 1 uses an internal RNG seeded from ``std::random_device``,
+    so the seed set itself varies across runs. This function stabilizes
+    the segmentation (large cells set the partition first) but does not
+    produce bit-exact reproducibility.
+ 
     The wrapper supports both **2D and 3D datasets**:
-
+ 
     - 2D input: `(H, W, C)`
     - 3D input: `(Z, H, W, C)`
-
+ 
     Internally, 2D data is lifted to `(1, H, W, C)` so the same C++ routine
     can be used.
-
+ 
     Parameters
     ----------
     property_map : ndarray
         DFXM property map to segment.
-
+ 
         Shape:
         - `(H, W, C)` for 2D data
         - `(Z, H, W, C)` for 3D data
-
+ 
         `C` typically contains fitted orientation parameters such as
         `(chi, phi)`.
-
+ 
     footprint : ndarray
         Neighborhood footprint used during flood filling.
-
+ 
         Shape:
         - `(h, w)` for 2D
         - `(f, h, w)` for 3D
-
+ 
         The footprint should be chosen considering the physical voxel
         spacing of the dataset.
-
+ 
     local_misorientation_threshold : float
         Maximum allowed local misorientation used when expanding a region.
-
+ 
+    global_threshold : float or None, default=None
+        Maximum allowed RMS per-channel distance from the running mean of the
+        current region (same units as ``local_misorientation_threshold``). Caps
+        intra-region spread relative to the running mean of voxels already
+        accepted into the region. ``None`` (or any value ``<= 0``) disables the
+        check.
+ 
     footprint_tolerance : float, default=1
         Tolerance applied when comparing values within the footprint.
-
+ 
     mask : ndarray, optional
         Binary mask restricting the segmentation region.
-
+ 
         Shape:
         - `(H, W)` for 2D
         - `(Z, H, W)` for 3D
-
+ 
     max_iterations : int, default=250
         Maximum number of flood-fill iterations.
-
+ 
     min_grain_size : int, default=50
         Minimum region size. Regions smaller than this threshold may be
         discarded or recycled depending on `recycle_small_grains`.
-
+ 
     recycle_small_grains : bool, default=False
         If True, pixels from small regions are returned to the pool and
         may be reassigned to neighboring grains.
-
+ 
     stagnation_tolerance : int, default=200
         Maximum number of iterations without region growth before the
         algorithm terminates.
+
+    random_seed : int or None, default=None
+        Seed for the internal random number generator. When None, the RNG is seeded from
+        std::random_device and results are non-reproducible. Set to any non-negative integer
+        for reproducible results.
 
     Returns
     -------
@@ -122,102 +142,123 @@ def flood_fill_dfxm_two_stage(
 
         segmentation : ndarray
             Label image of segmeted dislocation cell.
-
+ 
             Shape:
             - `(H, W)` for 2D
             - `(Z, H, W)` for 3D
-
+ 
         means : ndarray
             Mean property values per grain/mean orientation values of cells
-
+ 
         sizes : ndarray
             Final region sizes.
-
+ 
     sizes_initial : ndarray
         Region sizes obtained during the seed collection stage.
-
+ 
     """
-
+ 
     # As the c++ code is only for 3d this raises 2d into a 3d array in trough python 
     if property_map.ndim == 3:
         H, W, C = property_map.shape
         property_map_3d = property_map[None, ...]
-
+ 
         if footprint.ndim == 2:
             footprint_3d = footprint[None, ...]
         else:
             footprint_3d = footprint
-
+ 
         mask_3d = None if mask is None else mask[None, ...].astype(np.uint8)
-
+ 
         is_2d = True
-
+ 
     elif property_map.ndim == 4:
         property_map_3d = property_map
         footprint_3d = footprint
         mask_3d = mask.astype(np.uint8)
         is_2d = False
-
+ 
     else:
         raise ValueError("property_map must be 3D (H,W,C) or 4D (Z,H,W,C)")
-
+ 
+    # The C++ stage 2 (flood_fill_random_seeds_3d) mutates the mask in place,
+    # zeroing voxels as they are claimed. Defensive copy so:
+    #   (a) the caller's input mask is preserved;
+    #   (b) the function can be called repeatedly to test stability.
+    if mask_3d is not None:
+        mask_3d = np.ascontiguousarray(mask_3d.copy())
+ 
     # Step (1): collect seeds + sizes
+    g_thr = -1.0 if global_threshold is None else float(global_threshold)
+    rs = -1 if random_seed is None else int(random_seed)
     seed_info = flood_fill.flood_fill_collect_seeds(
         property_map_3d,
         footprint_3d,
-        float(local_threshold),
+        float(local_misorientation_threshold),
+        g_thr,
         float(footprint_tolerance),
         mask_3d,
         int(max_iterations),
         int(min_grain_size),
+        rs,
     )
-
-    sizes_initial = seed_info["sizes"]       
-    seeds_initial = seed_info["seeds"]       
-
+ 
+    sizes_initial = seed_info["sizes"]
+    seeds_initial = seed_info["seeds"]
+ 
     if len(sizes_initial) == 0:
         print("No valid seeds found — return empty segmentation")
         seg = np.zeros(property_map_3d.shape[:3], dtype=np.int32)
         if is_2d:
             seg = seg[0]
-        return dict(segmentation=seg, means=None, sizes=None)
-
-    # Step (2): sort seeds by size (DESCENDING)
+        return dict(segmentation=seg, means=None, sizes=None), sizes_initial
+ 
+    # Step (2): sort seeds by size ASCENDING in Python.
+    # The C++ user-seed loop consumes via back()/pop_back() (LIFO), so the
+    # last element of seeds_sorted is processed first. Ascending order in
+    # Python therefore means *largest cells are seeded first*, which is the
+    # intended priority for stable segmentation.
     order = np.argsort(sizes_initial).astype(np.int64)
     seeds_sorted = seeds_initial[order]
-    
+ 
     # Step (3): full segmentation with deterministic seeds
     result = flood_fill.flood_fill_random_seeds_3d(
         property_map_3d,
         footprint_3d,
-        float(local_threshold),
+        float(local_misorientation_threshold),
+        g_thr,
+        float(footprint_tolerance),
         mask_3d,
         int(max_iterations),
         int(min_grain_size),
         bool(recycle_small_grains),
         int(stagnation_tolerance),
-        seeds_sorted,             
+        seeds_sorted,
+        rs,
     )
 
     seg  = result["segmentation"]
     means = result["means"]
     sizes = result["sizes"]
-
+ 
     if is_2d:
         seg = seg[0]
-
+ 
     return dict(segmentation=seg, means=means, sizes=sizes), sizes_initial
+
 
 def flood_fill_dfxm(
     property_map,
     footprint = None, 
     local_threshold = None, 
+    global_threshold=None,
     footprint_tolerance = 0.9,
     mask=None,
     max_iterations=250,
     min_grain_size=50,
     recycle_small_grains=False,
     stagnation_tolerance=200,
+    random_seed=None,
 ):
     """
     
@@ -259,6 +300,13 @@ def flood_fill_dfxm(
     local_threshold : float
         Local misorientation threshold controlling region growth.
 
+    global_threshold : float or None, default=None
+        Maximum allowed RMS per-channel distance from the running mean of the
+        current region (same units as ``local_threshold``). When the
+        property-map channels are orientation components, this caps intra-region
+        angular spread relative to the running mean of voxels already accepted
+        into the region. ``None`` (or any value ``<= 0``) disables the check.
+
     footprint_tolerance : float, default=0.9
         Tolerance when evaluating neighborhood similarity.
 
@@ -282,6 +330,11 @@ def flood_fill_dfxm(
     stagnation_tolerance : int, default=200
         Maximum number of iterations without region growth before
         termination.
+
+    random_seed : int or None, default=None
+        Seed for the internal random number generator. When None, the RNG is seeded from
+        std::random_device and results are non-reproducible. Set to any non-negative integer
+        for reproducible results.
 
     Returns
     -------
@@ -350,16 +403,21 @@ def flood_fill_dfxm(
     # -------------------------------------------------------------
     # Call the C++ function
     # -------------------------------------------------------------
+    g_thr = -1.0 if global_threshold is None else float(global_threshold)
+    rs = -1 if random_seed is None else int(random_seed)
     result = flood_fill.flood_fill_random_seeds_3d(
         property_map_3d,
         footprint_3d,
         float(local_threshold),
+        g_thr,
         float(footprint_tolerance),
         mask_3d,
         int(max_iterations),
         int(min_grain_size),
         bool(recycle_small_grains),
         int(stagnation_tolerance),
+        None,
+        rs,
     )
 
     # -------------------------------------------------------------

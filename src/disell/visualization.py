@@ -1,9 +1,12 @@
 import numpy as np
 import pyvista as pv
 from skimage.measure import marching_cubes
-import open3d as o3d
 import vtk
 import vtk.util.numpy_support as ns
+
+# ``open3d`` is an optional, heavy visualization dependency that does not ship
+# wheels for every supported Python version. Import it lazily so that simply
+# importing ``disell`` (and the C++ flood-fill extension) does not require it.
 
 
 
@@ -61,6 +64,8 @@ def o3d_to_vtk(o3d_mesh, rgb_color, grain_id):
 
 def export_grain_meshes(seg_filled, rgb_vol, output_path="grains_surface.vtp", voxel_size = (1,1,1), selected_grains = None,
                         min_voxels=50, type="volume", smoothing="none", smoothing_iterations=30):
+    import open3d as o3d
+
     unique_ids = np.unique(seg_filled)
     unique_ids = unique_ids[unique_ids != 0]
 

@@ -1,546 +1,508 @@
-// flood_fill_batch_3d.cpp
+// flood_fill_3d.cpp
+//
+// 3D (and 2D-lifted) region-growing segmentation for DFXM orientation fields.
+//
+//
+// Conventions:
+//   property_map : (Z, Y, X, C) float32, channel-last.
+//   footprint    : (FZ, FY, FX) bool.
+//   mask         : (Z, Y, X) uint8/bool. REQUIRED. Marks the valid domain.
+//                  The caller MUST exclude NaN voxels from the mask; this code
+//                  does not test for NaN.
+//   thresholds   : same physical unit as the property field. The criterion is
+//                  sum-of-squares: dist^2 < threshold^2 * C  (per-channel).
+
 #include <pybind11/pybind11.h>
 #include <pybind11/numpy.h>
 #include <pybind11/stl.h>
 
-#include <vector>
-#include <unordered_set>
-#include <random>
+#include <algorithm>
 #include <cmath>
 #include <cstddef>
+#include <cstring>
+#include <random>
 #include <stdexcept>
+#include <vector>
 
 namespace py = pybind11;
 
-// ------------------- offset struct -------------------
+// ------------------------------------------------------------------ helpers
+
 struct Offset3D {
     int dz, dy, dx;
-    ptrdiff_t dlin;   // precomputed linear offset
-
-    Offset3D(int dz_, int dy_, int dx_, int Y, int X)
-        : dz(dz_), dy(dy_), dx(dx_) 
-    {
-        dlin = (ptrdiff_t)dz * (Y * X) + (ptrdiff_t)dy * X + dx;
-    }
+    Offset3D(int dz_, int dy_, int dx_) : dz(dz_), dy(dy_), dx(dx_) {}
 };
 
+static inline size_t linear_index(int z, int y, int x, int Y, int X) {
+    return (size_t)z * (size_t)Y * (size_t)X + (size_t)y * (size_t)X + (size_t)x;
+}
 
+static inline bool in_bounds(int z, int y, int x, int Z, int Y, int X) {
+    return (z >= 0 && z < Z && y >= 0 && y < Y && x >= 0 && x < X);
+}
 
+static std::vector<Offset3D> build_offsets(const bool* fdata,
+                                           int FZ, int FY, int FX) {
+    const int mZ = FZ / 2, mY = FY / 2, mX = FX / 2;
+    std::vector<Offset3D> offsets;
+    offsets.reserve((size_t)FZ * FY * FX);
+    for (int dz = 0; dz < FZ; ++dz)
+        for (int dy = 0; dy < FY; ++dy)
+            for (int dx = 0; dx < FX; ++dx)
+                if (fdata[((size_t)dz * FY + dy) * FX + dx])
+                    offsets.emplace_back(dz - mZ, dy - mY, dx - mX);
+    if (offsets.empty())
+        throw std::runtime_error("footprint contains no active voxels");
+    return offsets;
+}
+
+// ------------------------------------------------------- single region grow
+//
+// Grows one connected region from one seed using a DFS over the footprint
+// neighbourhood. A voxel is accepted into the region if it is the seed, OR if
+// at least ceil(footprint_tolerance * valid_neighbours) of its in-mask
+// neighbours pass the local (and, if enabled, global running-mean) test.
+//
+// `visited` is supplied by the caller and is assumed to be all-zero on entry;
+// it is left all-zero on return (every set entry is reset before returning),
+// so the caller can reuse one buffer across many seeds without reallocating
+// Nvox bytes each time.
 void flood_fill_single_region_binary_3d(
     const float* __restrict prop,
-    const uint8_t*  __restrict mask,
+    const uint8_t* __restrict mask,
     int Z, int Y, int X, int C,
     const std::vector<Offset3D>& offsets,
     int si, int sj, int sk,
     float thr_sq_C,
+    float global_threshold,
     float footprint_tolerance,
-    std::vector<size_t>& region_indices
+    std::vector<uint8_t>& visited,        // scratch, size Nvox, all-zero in/out
+    std::vector<size_t>& region_indices   // output
 ) {
+    region_indices.clear();
 
-    // bounds
-    if (si < 0 || sj < 0 || sk < 0 ||
-        si >= Z || sj >= Y || sk >= X) {
-        region_indices.clear();
-        return;
+    if (!in_bounds(si, sj, sk, Z, Y, X)) return;
+
+    const size_t seed_idx = linear_index(si, sj, sk, Y, X);
+    if (!mask[seed_idx]) return;
+
+    const float* seed_feat = prop + seed_idx * (size_t)C;
+    const bool global_enabled = global_threshold > 0.0f;
+    const float g_thr_sq_C = global_threshold * global_threshold * float(C);
+
+    std::vector<float> region_mean;
+    if (global_enabled) {
+        region_mean.assign(C, 0.0f);
+        for (int c = 0; c < C; ++c) region_mean[c] = seed_feat[c];
     }
 
-    const size_t seed_idx = (size_t)si * (Y * X) + (size_t)sj * X + sk;
-    if (!mask[seed_idx]) {
-        region_indices.clear();
-        return;
-    }
+    const size_t stride_yx = (size_t)Y * X;
 
-
-    const size_t Nvox = (size_t)Z * Y * X;
-    std::vector<uint8_t> visited(Nvox, 0);
-
-    // local stack (DFS)
     std::vector<size_t> stack;
     stack.reserve(8192);
     stack.push_back(seed_idx);
-
-    // mark seed visited
     visited[seed_idx] = 1;
 
-    region_indices.clear();
-
-    const size_t stride_yx = (size_t)Y * X;
+    // Track everything we marked visited so we can zero it again at the end.
+    std::vector<size_t> touched;
+    touched.reserve(8192);
+    touched.push_back(seed_idx);
 
     std::vector<size_t> candidates;
     candidates.reserve(offsets.size());
 
     while (!stack.empty()) {
-
-        size_t idx = stack.back();
+        const size_t idx = stack.back();
         stack.pop_back();
 
-        int z = idx / stride_yx;
-        int y = (idx % stride_yx) / X;
-        int x = idx % X;
+        const int z = (int)(idx / stride_yx);
+        const int y = (int)((idx % stride_yx) / (size_t)X);
+        const int x = (int)(idx % (size_t)X);
 
-        const float* center = prop + idx*C;
+        const float* center = prop + idx * (size_t)C;
 
         candidates.clear();
         int valid_neighbors = 0;
         int count_pass = 0;
 
         for (const auto& off : offsets) {
-            size_t nidx = idx + off.dlin;
+            const int nz = z + off.dz, ny = y + off.dy, nx = x + off.dx;
+            if (!in_bounds(nz, ny, nx, Z, Y, X)) continue;     // safety guard
 
+            const size_t nidx = linear_index(nz, ny, nx, Y, X);
             if (!mask[nidx]) continue;
             valid_neighbors++;
 
-            const float* neigh = prop + nidx*C;
-
+            const float* neigh = prop + nidx * (size_t)C;
             float dist2 = 0.0f;
             #pragma omp simd reduction(+:dist2)
             for (int c = 0; c < C; ++c) {
-                float d = neigh[c] - center[c];
-                dist2 += d*d;
+                const float d = neigh[c] - center[c];
+                dist2 += d * d;
             }
-
             bool pass = dist2 < thr_sq_C;
-            count_pass += pass;
-            if (pass) candidates.push_back(nidx);
+
+            if (pass && global_enabled) {
+                float ds2 = 0.0f;
+                #pragma omp simd reduction(+:ds2)
+                for (int c = 0; c < C; ++c) {
+                    const float ds = neigh[c] - region_mean[c];
+                    ds2 += ds * ds;
+                }
+                pass = ds2 < g_thr_sq_C;
+            }
+            if (pass) { count_pass++; candidates.push_back(nidx); }
         }
 
-        // int-based threshold
-        int min_pass = (int)std::ceil(footprint_tolerance * valid_neighbors);
-        if (count_pass >= min_pass) {
+        const int min_pass =
+            (int)std::ceil(footprint_tolerance * (float)valid_neighbors);
+        const bool is_seed = (idx == seed_idx);
+
+        if (is_seed || count_pass >= min_pass) {
             region_indices.push_back(idx);
 
+            if (global_enabled) {
+                const size_t n = region_indices.size();
+                for (int c = 0; c < C; ++c)
+                    region_mean[c] =
+                        (region_mean[c] * float(n - 1) + center[c]) / float(n);
+            }
             for (size_t nidx : candidates) {
                 if (!visited[nidx]) {
                     visited[nidx] = 1;
+                    touched.push_back(nidx);
                     stack.push_back(nidx);
                 }
             }
         }
     }
+
+    // Reset the scratch buffer to all-zero for the next seed.
+    for (size_t t : touched) visited[t] = 0;
 }
 
-
-
-// ------------------- main batch function (3D random seeds) -------------------
+// ---------------------------------------------------------- main driver
 
 py::dict flood_fill_random_seeds_3d(
-    py::array_t<float, py::array::c_style | py::array::forcecast> property_map,   // (Z,Y,X,C)
-    py::array_t<bool,  py::array::c_style | py::array::forcecast> footprint,      // (FZ,FY,FX)
+    py::array_t<float, py::array::c_style | py::array::forcecast> property_map,
+    py::array_t<bool,  py::array::c_style | py::array::forcecast> footprint,
     float local_threshold,
+    float global_threshold,
     float footprint_tolerance,
     py::object mask_obj,
     int max_iterations,
     int min_grain_size,
-    bool recycle_small_grains,
+    bool fill_remaining,            // was `recycle_small_grains` (dead); now meaningful
     int stagnation_tolerance,
-    py::object seed_points_obj = py::none()
+    py::object seed_points_obj = py::none(),
+    int random_seed = -1
 ) {
-    // ---- property_map checks ----
     auto pbuf = property_map.request();
     if (pbuf.ndim != 4)
         throw std::runtime_error("property_map must be 4D (Z,Y,X,C)");
-
-    const int Z = pbuf.shape[0];
-    const int Y = pbuf.shape[1];
-    const int X = pbuf.shape[2];
-    const int C = pbuf.shape[3];
+    const int Z = (int)pbuf.shape[0], Y = (int)pbuf.shape[1];
+    const int X = (int)pbuf.shape[2], C = (int)pbuf.shape[3];
     const size_t Nvox = (size_t)Z * Y * X;
-
     const float* prop = static_cast<const float*>(pbuf.ptr);
 
-    // ---- footprint ----
     auto fbuf = footprint.request();
     if (fbuf.ndim != 3)
         throw std::runtime_error("footprint must be 3D (FZ,FY,FX)");
-    const int FZ = fbuf.shape[0];
-    const int FY = fbuf.shape[1];
-    const int FX = fbuf.shape[2];
     const bool* fdata = static_cast<const bool*>(fbuf.ptr);
+    const std::vector<Offset3D> offsets =
+        build_offsets(fdata, (int)fbuf.shape[0], (int)fbuf.shape[1], (int)fbuf.shape[2]);
 
-    const int mZ = FZ / 2;
-    const int mY = FY / 2;
-    const int mX = FX / 2;
-
-    // ---- mask (now REQUIRED) ----
     if (mask_obj.is_none())
         throw std::runtime_error("mask must be provided (Python must compute it)");
-
-    py::array_t<uint8_t> mask_arr = mask_obj.cast<py::array_t<uint8_t>>();
+    auto mask_arr =
+        mask_obj.cast<py::array_t<uint8_t, py::array::c_style | py::array::forcecast>>();
     auto mbuf = mask_arr.request();
-
-    if (mbuf.ndim != 3 ||
-        mbuf.shape[0] != Z ||
-        mbuf.shape[1] != Y ||
-        mbuf.shape[2] != X)
-        throw std::runtime_error("mask must be shape (Z,Y,X) uint8");
-
+    if (mbuf.ndim != 3 || mbuf.shape[0] != Z || mbuf.shape[1] != Y || mbuf.shape[2] != X)
+        throw std::runtime_error("mask must be shape (Z,Y,X) uint8/bool");
     uint8_t* mask = static_cast<uint8_t*>(mbuf.ptr);
 
-    // ---- precompute footprint offsets ----
-    std::vector<Offset3D> offsets;
-    offsets.reserve(FZ * FY * FX);
-    for (int dz = 0; dz < FZ; ++dz)
-        for (int dy = 0; dy < FY; ++dy)
-            for (int dx = 0; dx < FX; ++dx)
-                if (fdata[(dz*FY + dy)*FX + dx])
-                    offsets.emplace_back(dz - mZ, dy - mY, dx - mX,Y,X);
-
-    // ---- segmentation output ----
     py::array_t<int> seg_arr({Z, Y, X});
     int* segmentation = seg_arr.mutable_data();
     std::fill_n(segmentation, Nvox, 0);
 
-    // ---- region stats ----
-    std::vector<size_t>    label_sizes;
+    std::vector<size_t> label_sizes;
     std::vector<std::vector<double>> label_means;
 
     const float thr_sq_C = local_threshold * local_threshold * float(C);
 
-    // rng
-    std::mt19937 rng(std::random_device{}());
+    std::mt19937 rng(random_seed >= 0 ? (unsigned)random_seed
+                                       : std::random_device{}());
+
+    // Remaining-pool with O(1) removal.
+    std::vector<size_t> remaining;
+    remaining.reserve(Nvox);
+    std::vector<size_t> position_in_remaining(Nvox, (size_t)-1);
+    for (size_t idx = 0; idx < Nvox; ++idx)
+        if (mask[idx]) {
+            position_in_remaining[idx] = remaining.size();
+            remaining.push_back(idx);
+        }
+
+    auto remove_voxel = [&](size_t idx) {
+        size_t pos = position_in_remaining[idx];
+        if (pos == (size_t)-1) return;
+        size_t last = remaining.back();
+        remaining[pos] = last;
+        position_in_remaining[last] = pos;
+        remaining.pop_back();
+        position_in_remaining[idx] = (size_t)-1;
+    };
+
+    // Parse user seeds (consumed LIFO so a size-ascending Python sort means
+    // largest-first processing).
+    std::vector<size_t> user_seeds;
+    if (!seed_points_obj.is_none()) {
+        auto seeds_arr =
+            seed_points_obj.cast<py::array_t<long long, py::array::c_style | py::array::forcecast>>();
+        auto sbuf = seeds_arr.request();
+        if (sbuf.ndim != 2 || sbuf.shape[1] != 3)
+            throw std::runtime_error("seed_points must be array of shape (N, 3)");
+        const long long* sptr = static_cast<const long long*>(sbuf.ptr);
+        const size_t Nseeds = (size_t)sbuf.shape[0];
+        user_seeds.reserve(Nseeds);
+        for (size_t i = 0; i < Nseeds; ++i) {
+            const long long z = sptr[i*3+0], y = sptr[i*3+1], x = sptr[i*3+2];
+            if (z < 0 || y < 0 || x < 0 || z >= Z || y >= Y || x >= X) {
+                py::print("user seed out of bounds:", z, y, x);
+                continue;
+            }
+            const size_t idx = linear_index((int)z, (int)y, (int)x, Y, X);
+            if (mask[idx]) user_seeds.push_back(idx);
+        }
+    }
+    const bool had_user_seeds = !user_seeds.empty();
+
+    std::vector<uint8_t> visited(Nvox, 0);     // reusable scratch
+    std::vector<size_t> region_indices;
+    region_indices.reserve(8192);
 
     int label = 1;
     int iteration = 0;
     int last_success = -1;
 
-    std::vector<size_t> region_indices;
-    region_indices.reserve(8192);
-
-    std::vector<size_t> remaining;
-    remaining.reserve(Nvox);
-    std::vector<size_t> position_in_remaining(Nvox, (size_t)-1);
-
-    for (size_t idx = 0; idx < Nvox; ++idx) {
-        if (mask[idx]) {
-            position_in_remaining[idx] = remaining.size();
-            remaining.push_back(idx);
-        }
-    }
-
-    // ---- user-provided seeds (optional) ----
-    std::vector<size_t> user_seeds;
-
-    if (!seed_points_obj.is_none()) {
-        py::array_t<long long> seeds_arr = seed_points_obj.cast<py::array_t<long long>>();
-        auto sbuf = seeds_arr.request();
-
-        if (sbuf.ndim != 2 || sbuf.shape[1] != 3)
-            throw std::runtime_error("seed_points must be array of shape (N, 3)");
-
-        long long* sptr = static_cast<long long*>(sbuf.ptr);
-        size_t Nseeds = sbuf.shape[0];
-
-        user_seeds.reserve(Nseeds);
-
-        for (size_t i = 0; i < Nseeds; ++i) {
-            long long z = sptr[i*3 + 0];
-            long long y = sptr[i*3 + 1];
-            long long x = sptr[i*3 + 2];
-
-            size_t idx = (size_t)z * (Y * X) + (size_t)y * X + (size_t)x;
-
-            // Only accept seeds that are inside the mask
-            if (mask[idx]){
-                user_seeds.push_back(idx);
-            }
-            else{
-                py::print("user seed:", z, y, x, "is not in mask");
-            }
-        }
-    }
-
-
-    auto remove_voxel = [&](size_t idx_to_remove) {
-        size_t pos = position_in_remaining[idx_to_remove];
-        if (pos == (size_t)-1) return;  // already removed
-
-        size_t last_idx = remaining.back();
-
-        remaining[pos] = last_idx;
-        position_in_remaining[last_idx] = pos;
-
-        remaining.pop_back();
-        position_in_remaining[idx_to_remove] = (size_t)-1;
-    };
-
-    // ================================================================
-    //               MAIN LOOP (unchanged except mask logic)
-    // ================================================================
     while (iteration < max_iterations) {
-        if (remaining.empty())
-            break;
+        if (remaining.empty()) break;
 
-        size_t seed_idx;
-
-        // ---- deterministic mode: only use user seeds, stop when empty ----
-        if (!user_seeds.empty()) {
-            seed_idx = user_seeds.back();
+        // --- pick a seed -------------------------------------------------
+        size_t seed_idx = (size_t)-1;
+        while (!user_seeds.empty()) {
+            const size_t cand = user_seeds.back();
             user_seeds.pop_back();
-
-            // If user seeds become empty → stop immediately
-            if (user_seeds.empty())
-                max_iterations = iteration + 1;  // ensure loop exits after this iteration
-        }
-        // ---- random mode (no user seeds provided) ----
-        else if (seed_points_obj.is_none()) {
-            if (remaining.empty())
+            if (cand < Nvox && mask[cand] &&
+                position_in_remaining[cand] != (size_t)-1) {
+                seed_idx = cand;
                 break;
-
+            }
+        }
+        if (seed_idx == (size_t)-1) {
+            // No (more) usable user seeds. Only continue with random seeds if
+            // either we were in pure-random mode (no user seeds were ever
+            // given) OR the caller explicitly asked to fill the rest.
+            if (had_user_seeds && !fill_remaining) break;
             std::uniform_int_distribution<size_t> dist(0, remaining.size() - 1);
-            size_t pool_pos = dist(rng);
-            seed_idx = remaining[pool_pos];
+            seed_idx = remaining[dist(rng)];
         }
 
-        int z = seed_idx / (Y * X);
-        int y = (seed_idx / X) % Y;
-        int x = seed_idx % X;
-        // run region grow
+        const int z = (int)(seed_idx / ((size_t)Y * X));
+        const int y = (int)((seed_idx / (size_t)X) % (size_t)Y);
+        const int x = (int)(seed_idx % (size_t)X);
+
         flood_fill_single_region_binary_3d(
-            prop,
-            mask,
-            Z, Y, X, C,
-            offsets,
-            z, y, x,
-            thr_sq_C,
-            footprint_tolerance,
-            region_indices
-        );
+            prop, mask, Z, Y, X, C, offsets, z, y, x,
+            thr_sq_C, global_threshold, footprint_tolerance,
+            visited, region_indices);
 
-        size_t grain_size = region_indices.size();
-        if (grain_size == 0) { iteration++; continue; }
+        const size_t grain_size = region_indices.size();
 
-        // mean feature
+        // Seed is always accepted, so grain_size >= 1 for an in-mask seed.
+        // grain_size == 0 only if the seed was already claimed/removed.
+        if (grain_size == 0) {
+            remove_voxel(seed_idx);     // never resample a dead seed
+            iteration++;
+            continue;
+        }
+
+        // --- small region: PARK it (do not delete, do not relabel) -------
+        // Setting min_grain_size <= 0 disables this entirely (max coverage).
+        if (min_grain_size > 0 && grain_size < (size_t)min_grain_size) {
+            // Remove from the random pool so we don't resample the same tiny
+            // region forever, but DO NOT clear the mask: leave these voxels
+            // unlabelled (0) so a downstream watershed can still claim them.
+            for (size_t idx : region_indices) remove_voxel(idx);
+            iteration++;
+            continue;
+        }
+
+        // --- accept as a new label ---------------------------------------
         std::vector<double> mean_feat(C, 0.0);
         for (size_t idx : region_indices) {
-            const float* f = &prop[idx * C];
+            const float* f = prop + idx * (size_t)C;
             for (int c = 0; c < C; ++c) mean_feat[c] += f[c];
         }
-        for (int c = 0; c < C; ++c)
-            mean_feat[c] /= double(grain_size);
+        for (int c = 0; c < C; ++c) mean_feat[c] /= double(grain_size);
 
-        // ===============================================================
-        //                   MERGING LOGIC (unchanged)
-        // ===============================================================
-        // ---- MERGING / NEW-LABEL LOGIC ----
-        if (grain_size <= (size_t)min_grain_size) {
-            iteration++;
+        const int new_label = label++;
+        for (size_t idx : region_indices) {
+            segmentation[idx] = new_label;
+            mask[idx] = 0;            // claimed: remove from valid domain
+            remove_voxel(idx);
         }
-        // Case 2: LARGE region → assign a new label
-        else {
-
-            int new_label = label++;
-
-            for (size_t idx : region_indices) {
-                segmentation[idx] = new_label;
-                mask[idx] = false;        // always remove from mask
-                remove_voxel(idx);
-            }
-
-            // store statistics
-            label_sizes.push_back(grain_size);
-            label_means.push_back(mean_feat);
-
-            last_success = iteration;
-        }
+        label_sizes.push_back(grain_size);
+        label_means.push_back(mean_feat);
+        last_success = iteration;
         iteration++;
 
         if (stagnation_tolerance > 0 &&
             (iteration - last_success) > stagnation_tolerance)
             break;
-
     }
 
-    // ===============================================================
-    //        RELABEL + BUILD OUTPUT (unchanged)
-    // ===============================================================
-    int num_labels_raw = label - 1;
-    std::vector<int> new_map(num_labels_raw, 0);
+    // --- relabel to a contiguous 1..K (all stored labels already pass) ---
+    const int num_labels_raw = label - 1;
+    std::vector<int> new_map((size_t)std::max(num_labels_raw, 0), 0);
     int new_id = 1;
-
     for (int lbl = 1; lbl <= num_labels_raw; ++lbl)
-        if ((int)label_sizes[lbl-1] >= min_grain_size)
-            new_map[lbl-1] = new_id++;
+        new_map[lbl - 1] = new_id++;
+    const int num_final = new_id - 1;
 
-    int num_final = new_id - 1;
-
-    // relabel
     for (size_t idx = 0; idx < Nvox; ++idx) {
-        int old = segmentation[idx];
-        if (old > 0)
-            segmentation[idx] = new_map[old-1];
+        const int old = segmentation[idx];
+        if (old > 0) segmentation[idx] = new_map[old - 1];
     }
 
-    // outputs
     py::array_t<double> means_arr({num_final, C});
     py::array_t<long long> sizes_arr({num_final});
-
-    auto mp = static_cast<double*>(means_arr.mutable_data());
-    auto sp = static_cast<long long*>(sizes_arr.mutable_data());
-
+    double* mp = static_cast<double*>(means_arr.mutable_data());
+    long long* sp = static_cast<long long*>(sizes_arr.mutable_data());
     for (int lbl = 1; lbl <= num_labels_raw; ++lbl) {
-        int new_lbl = new_map[lbl-1];
-        if (new_lbl == 0) continue;
-        int out = new_lbl - 1;
-        sp[out] = label_sizes[lbl-1];
+        const int out = new_map[lbl - 1] - 1;
+        if (out < 0) continue;
+        sp[out] = (long long)label_sizes[lbl - 1];
         for (int c = 0; c < C; ++c)
-            mp[out*C + c] = label_means[lbl-1][c];
+            mp[(size_t)out * C + c] = label_means[lbl - 1][c];
     }
 
     py::dict out;
     out["segmentation"] = seg_arr;
-    out["means"]        = means_arr;
-    out["sizes"]        = sizes_arr;
+    out["means"] = means_arr;
+    out["sizes"] = sizes_arr;
     return out;
 }
 
+// ---------------------------------------------------- seed collection (stage 1)
 
 py::dict flood_fill_collect_seeds(
-    py::array_t<float, py::array::c_style | py::array::forcecast> property_map,   // (Z,Y,X,C)
-    py::array_t<bool,  py::array::c_style | py::array::forcecast> footprint,      // (FZ,FY,FX)
+    py::array_t<float, py::array::c_style | py::array::forcecast> property_map,
+    py::array_t<bool,  py::array::c_style | py::array::forcecast> footprint,
     float local_threshold,
+    float global_threshold,
     float footprint_tolerance,
     py::object mask_obj,
     int max_iterations,
-    int min_grain_size
+    int min_grain_size,
+    int random_seed = -1
 ) {
-    // ---- property_map checks ----
     auto pbuf = property_map.request();
     if (pbuf.ndim != 4)
         throw std::runtime_error("property_map must be 4D (Z,Y,X,C)");
-
-    const int Z = pbuf.shape[0];
-    const int Y = pbuf.shape[1];
-    const int X = pbuf.shape[2];
-    const int C = pbuf.shape[3];
+    const int Z = (int)pbuf.shape[0], Y = (int)pbuf.shape[1];
+    const int X = (int)pbuf.shape[2], C = (int)pbuf.shape[3];
     const size_t Nvox = (size_t)Z * Y * X;
     const float* prop = static_cast<const float*>(pbuf.ptr);
 
-    std::vector<uint8_t> visited(Nvox, 0);
-
-    // ---- footprint ----
     auto fbuf = footprint.request();
     if (fbuf.ndim != 3)
         throw std::runtime_error("footprint must be 3D (FZ,FY,FX)");
-    const int FZ = fbuf.shape[0];
-    const int FY = fbuf.shape[1];
-    const int FX = fbuf.shape[2];
     const bool* fdata = static_cast<const bool*>(fbuf.ptr);
+    const std::vector<Offset3D> offsets =
+        build_offsets(fdata, (int)fbuf.shape[0], (int)fbuf.shape[1], (int)fbuf.shape[2]);
 
-    const int mZ = FZ / 2;
-    const int mY = FY / 2;
-    const int mX = FX / 2;
-
-    // ---- mask ----
     if (mask_obj.is_none())
         throw std::runtime_error("mask must be provided");
-
-    py::array_t<uint8_t> mask_arr = mask_obj.cast<py::array_t<uint8_t>>();
+    auto mask_arr =
+        mask_obj.cast<py::array_t<uint8_t, py::array::c_style | py::array::forcecast>>();
     auto mbuf = mask_arr.request();
-
-    if (mbuf.ndim != 3 ||
-        mbuf.shape[0] != Z || mbuf.shape[1] != Y || mbuf.shape[2] != X)
+    if (mbuf.ndim != 3 || mbuf.shape[0] != Z || mbuf.shape[1] != Y || mbuf.shape[2] != X)
         throw std::runtime_error("mask must be shape (Z,Y,X)");
+    const uint8_t* mask_in = static_cast<const uint8_t*>(mbuf.ptr);
 
-    uint8_t* mask = static_cast<uint8_t*>(mbuf.ptr);
+    // Work on a private availability copy so the caller's mask is untouched
+    // (the Python two-stage wrapper reuses it for the final fill).
+    std::vector<uint8_t> available(mask_in, mask_in + Nvox);
 
-    // ---- precompute offsets ----
-    std::vector<Offset3D> offsets;
-    offsets.reserve(FZ * FY * FX);
-    for (int dz = 0; dz < FZ; ++dz)
-        for (int dy = 0; dy < FY; ++dy)
-            for (int dx = 0; dx < FX; ++dx)
-                if (fdata[(dz*FY + dy)*FX + dx])
-                    offsets.emplace_back(dz - mZ, dy - mY, dx - mX, Y, X);
-
-    // ---- seed candidates ----
     std::vector<size_t> remaining;
     remaining.reserve(Nvox);
+    std::vector<size_t> position_in_remaining(Nvox, (size_t)-1);
     for (size_t idx = 0; idx < Nvox; ++idx)
-        if (mask[idx])
+        if (available[idx]) {
+            position_in_remaining[idx] = remaining.size();
             remaining.push_back(idx);
+        }
 
-    // ---- output storage ----
-    std::vector<long long> region_sizes;
-    std::vector<long long> seed_points;
-    seed_points.reserve(max_iterations * 3);
-    region_sizes.reserve(max_iterations);
+    auto remove_voxel = [&](size_t idx) {
+        size_t pos = position_in_remaining[idx];
+        if (pos == (size_t)-1) return;
+        size_t last = remaining.back();
+        remaining[pos] = last;
+        position_in_remaining[last] = pos;
+        remaining.pop_back();
+        position_in_remaining[idx] = (size_t)-1;
+        available[idx] = 0;
+    };
 
+    std::vector<long long> region_sizes, seed_points;
+    region_sizes.reserve((size_t)std::max(max_iterations, 0));
+    seed_points.reserve((size_t)std::max(max_iterations, 0) * 3);
 
-    const float thr_sq_C = local_threshold * local_threshold * (float)C;
+    const float thr_sq_C = local_threshold * local_threshold * float(C);
+    std::mt19937 rng(random_seed >= 0 ? (unsigned)random_seed
+                                       : std::random_device{}());
 
-    // RNG
-    std::mt19937 rng(std::random_device{}());
-
+    std::vector<uint8_t> visited(Nvox, 0);
     std::vector<size_t> region_indices;
     region_indices.reserve(8192);
 
     int iteration = 0;
-    int last_success = -1;
-
-    // ---- main loop ----
     while (iteration < max_iterations) {
-
-        if (remaining.empty())
-            break;
+        if (remaining.empty()) break;
 
         std::uniform_int_distribution<size_t> dist(0, remaining.size() - 1);
-        size_t pool_pos = dist(rng);
-        size_t seed_idx = remaining[pool_pos];
+        const size_t seed_idx = remaining[dist(rng)];
+        const int z = (int)(seed_idx / ((size_t)Y * X));
+        const int y = (int)((seed_idx / (size_t)X) % (size_t)Y);
+        const int x = (int)(seed_idx % (size_t)X);
 
-        int z = seed_idx / (Y * X);
-        int y = (seed_idx / X) % Y;
-        int x = seed_idx % X;
-
-        // flood fill
         flood_fill_single_region_binary_3d(
-            prop, mask, Z, Y, X, C,
-            offsets,
-            z, y, x,
-            thr_sq_C,
-            footprint_tolerance,
-            region_indices
-        );
+            prop, available.data(), Z, Y, X, C, offsets, z, y, x,
+            thr_sq_C, global_threshold, footprint_tolerance,
+            visited, region_indices);
 
-        size_t grain_size = region_indices.size();
-        if (grain_size == 0) {
-            iteration++;
-            continue;
-        }
+        const size_t grain_size = region_indices.size();
+        if (grain_size == 0) { remove_voxel(seed_idx); iteration++; continue; }
 
-        // ---- store only size + seed ----
-        if ((int)grain_size >= min_grain_size) {
+        if (min_grain_size <= 0 || grain_size >= (size_t)min_grain_size) {
             region_sizes.push_back((long long)grain_size);
             seed_points.push_back((long long)z);
             seed_points.push_back((long long)y);
             seed_points.push_back((long long)x);
         }
-
+        // Consume the whole region so we don't resample it (or its members).
+        for (size_t idx : region_indices) remove_voxel(idx);
         iteration++;
-
     }
 
-    size_t num_regions = region_sizes.size();
-    
-    py::array_t<long long> sizes_arr((py::ssize_t)num_regions);
-
-    py::array_t<long long> seeds_arr(py::array::ShapeContainer{
-        (py::ssize_t)num_regions,
-        (py::ssize_t)3
-    });
-
-
-    std::memcpy(
-        sizes_arr.mutable_data(),
-        region_sizes.data(),
-        num_regions * sizeof(long long)
-    );
-
-    std::memcpy(
-        seeds_arr.mutable_data(),
-        seed_points.data(),
-        num_regions * 3 * sizeof(long long)
-    );
-
+    const size_t num = region_sizes.size();
+    py::array_t<long long> sizes_arr((py::ssize_t)num);
+    py::array_t<long long> seeds_arr(py::array::ShapeContainer{(py::ssize_t)num, (py::ssize_t)3});
+    if (num > 0) {
+        std::memcpy(sizes_arr.mutable_data(), region_sizes.data(), num * sizeof(long long));
+        std::memcpy(seeds_arr.mutable_data(), seed_points.data(), num * 3 * sizeof(long long));
+    }
     py::dict out;
     out["sizes"] = sizes_arr;
     out["seeds"] = seeds_arr;
