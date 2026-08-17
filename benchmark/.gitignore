@@ -27,6 +27,12 @@ analysis/synthetic_method_comparison_v1/*
 !analysis/synthetic_method_comparison_v1/comparison.json
 !analysis/synthetic_method_comparison_v1/representative_metrics.csv
 
+!analysis/paired_ordering_v1/
+analysis/paired_ordering_v1/*
+!analysis/paired_ordering_v1/REPORT.md
+!analysis/paired_ordering_v1/paired_ordering_summary.json
+!analysis/paired_ordering_v1/paired_configuration_effects.csv
+
 !analysis/paper_minimal_v1/
 analysis/paper_minimal_v1/*
 !analysis/paper_minimal_v1/*.pdf

@@ -27,6 +27,7 @@ from matplotlib.ticker import FixedFormatter, FixedLocator, NullFormatter
 HERE = Path(__file__).resolve().parent
 COUNT = HERE / "analysis" / "count_first_v1"
 COMPARISON = HERE / "analysis" / "synthetic_method_comparison_v1"
+ORDERING = HERE / "analysis" / "paired_ordering_v1"
 OUT = HERE / "analysis" / "paper_minimal_v1"
 PARAMETERS = (
     "local_threshold_deg",
@@ -110,50 +111,47 @@ def local_count_sensitivity() -> None:
     save(fig, "local_count_sensitivity")
 
 
-def method_count_robustness() -> None:
-    screen = json.loads((COUNT / "five_seed_screen.json").read_text())
-    comparison = json.loads((COMPARISON / "comparison.json").read_text())
-    size = screen["winner"]["metrics"]["n_cells_pred"]["values"]
-
-    selected = json.loads(
-        (
-            HERE
-            / "continuation_results"
-            / "flood_fill_random_order"
-            / "selected_solutions.json"
-        ).read_text()
-    )["identity_optimal"]["config_key"]
-    unordered = []
-    with (
-        HERE
-        / "continuation_results"
-        / "flood_fill_random_order"
-        / "expanded_sensitivity_trials.jsonl"
-    ).open() as stream:
-        for line in stream:
-            row = json.loads(line)
-            if row.get("config_key") == selected:
-                unordered.append(float(row["n_cells_pred"]))
-    kam = [float(comparison["representative_seed0"]["KAM"]["n_cells_pred"])]
-    groups = [size, unordered, kam]
-    labels = ["size ordered", "not ordered", "KAM"]
-    records = [
-        {"method": label, "recovered_cells": value}
-        for label, values in zip(labels, groups)
-        for value in values
+def paired_ordering_effect() -> None:
+    summary = json.loads((ORDERING / "paired_ordering_summary.json").read_text())
+    measures = [
+        ("count error", "absolute_cell_count_error"),
+        ("correct-cell F1", "identity_f1"),
     ]
-    pd.DataFrame(records).to_csv(OUT / "method_count_robustness_source.csv", index=False)
+    records = []
+    for label, key in measures:
+        result = summary["configuration_medians"][key]
+        records.append({
+            "measure": label,
+            "ordered_better": result["ordered_better"],
+            "equal": result["equal"],
+            "ordered_worse": result["ordered_worse"],
+        })
+    source = pd.DataFrame(records)
+    source.to_csv(OUT / "method_count_robustness_source.csv", index=False)
 
-    fig, axis = plt.subplots(figsize=(8.8 / 2.54, 6.2 / 2.54))
-    rng = np.random.default_rng(20260817)
-    for index, values in enumerate(groups):
-        jitter = rng.uniform(-0.10, 0.10, len(values))
-        axis.plot(index + jitter, values, "o", color="k", ms=3, alpha=0.75)
-    axis.axhline(360, color="0.55", ls="--", lw=0.8)
-    axis.set_xticks(range(3), labels)
-    axis.set_ylabel("recovered cells")
-    axis.set_ylim(354.5, 364.5)
-    fig.subplots_adjust(left=0.18, right=0.97, top=0.96, bottom=0.22)
+    fig, axis = plt.subplots(figsize=(8.8 / 2.54, 5.8 / 2.54))
+    y = np.arange(len(source))
+    left = np.zeros(len(source))
+    for column, label, color in (
+        ("ordered_better", "better", "0.15"),
+        ("equal", "same", "0.60"),
+        ("ordered_worse", "worse", "0.90"),
+    ):
+        values = source[column].to_numpy()
+        axis.barh(
+            y, values, left=left, height=0.52, color=color,
+            edgecolor="0.15", linewidth=0.5, label=label,
+        )
+        for row, (start, value) in enumerate(zip(left, values)):
+            if value:
+                axis.text(start + value / 2, row, str(value), ha="center", va="center")
+        left += values
+    axis.set_yticks(y, source["measure"])
+    axis.set_xlabel("parameter settings")
+    axis.set_xlim(0, int(left.max()))
+    axis.invert_yaxis()
+    axis.legend(frameon=False, ncol=3, loc="lower center", bbox_to_anchor=(0.5, 1.0))
+    fig.subplots_adjust(left=0.30, right=0.97, top=0.80, bottom=0.23)
     save(fig, "method_count_robustness")
 
 
@@ -181,7 +179,7 @@ def main() -> None:
     OUT.mkdir(parents=True, exist_ok=True)
     parameter_search_difficulty()
     local_count_sensitivity()
-    method_count_robustness()
+    paired_ordering_effect()
     method_identity_recovery()
     print(f"minimal synthetic figures written to {OUT}")
 

@@ -1,27 +1,3 @@
-method,recovered_cells
-size ordered,360.0
-size ordered,360.0
-size ordered,362.0
-size ordered,358.0
-size ordered,360.0
-not ordered,360.0
-not ordered,359.0
-not ordered,359.0
-not ordered,359.0
-not ordered,359.0
-not ordered,360.0
-not ordered,360.0
-not ordered,361.0
-not ordered,358.0
-not ordered,361.0
-not ordered,359.0
-not ordered,357.0
-not ordered,360.0
-not ordered,359.0
-not ordered,359.0
-not ordered,361.0
-not ordered,361.0
-not ordered,359.0
-not ordered,359.0
-not ordered,358.0
-KAM,360.0
+measure,ordered_better,equal,ordered_worse
+count error,18,3,7
+correct-cell F1,23,3,2

@@ -1,0 +1,106 @@
+{
+  "cohort": {
+    "complete_pairs": 140,
+    "excluded_configurations": 4,
+    "exclusion_rule": "exclude settings without successful results for both algorithms",
+    "planned_configurations": 32,
+    "seed_orders": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "usable_configurations": 28
+  },
+  "comparison": "matched size-ordering ablation on the synthetic phantom",
+  "configuration_medians": {
+    "absolute_cell_count_error": {
+      "equal": 3,
+      "median_delta": -10.0,
+      "ordered_better": 18,
+      "ordered_worse": 7
+    },
+    "ari": {
+      "equal": 2,
+      "median_delta": 0.0018278958830609815,
+      "ordered_better": 20,
+      "ordered_worse": 6
+    },
+    "boundary_assd_um": {
+      "equal": 2,
+      "median_delta": -0.0019071223783073826,
+      "ordered_better": 19,
+      "ordered_worse": 7
+    },
+    "identity_f1": {
+      "equal": 3,
+      "median_delta": 0.009610228830202627,
+      "ordered_better": 23,
+      "ordered_worse": 2
+    },
+    "orientation_f1_at_0p02deg": {
+      "equal": 4,
+      "median_delta": 0.005656644055802185,
+      "ordered_better": 22,
+      "ordered_worse": 2
+    },
+    "vi_total_bits": {
+      "equal": 2,
+      "median_delta": -0.01698890825771837,
+      "ordered_better": 24,
+      "ordered_worse": 2
+    }
+  },
+  "interpretation": "At identical parameters and seed order, size ordering usually reduces cell-count error and improves correct-cell identity. Exact-count rates at independently selected settings remain a separate selection result.",
+  "pair_level": {
+    "absolute_cell_count_error": {
+      "equal": 15,
+      "median_paired_delta": -10.5,
+      "ordered_better": 90,
+      "ordered_median": 68.5,
+      "ordered_worse": 35,
+      "random_median": 115.0
+    },
+    "ari": {
+      "equal": 10,
+      "median_paired_delta": 0.001760969210521074,
+      "ordered_better": 94,
+      "ordered_median": 0.6807979459688738,
+      "ordered_worse": 36,
+      "random_median": 0.6669572968666384
+    },
+    "boundary_assd_um": {
+      "equal": 10,
+      "median_paired_delta": -0.0016980774962443296,
+      "ordered_better": 96,
+      "ordered_median": 0.1361646757255745,
+      "ordered_worse": 34,
+      "random_median": 0.13474206773336217
+    },
+    "identity_f1": {
+      "equal": 17,
+      "median_paired_delta": 0.007397201379585136,
+      "ordered_better": 110,
+      "ordered_median": 0.6230231483906606,
+      "ordered_worse": 13,
+      "random_median": 0.5758539145963328
+    },
+    "orientation_f1_at_0p02deg": {
+      "equal": 19,
+      "median_paired_delta": 0.005806745420462556,
+      "ordered_better": 106,
+      "ordered_median": 0.5757059527531887,
+      "ordered_worse": 15,
+      "random_median": 0.49767885970457304
+    },
+    "vi_total_bits": {
+      "equal": 10,
+      "median_paired_delta": -0.014522802302861848,
+      "ordered_better": 114,
+      "ordered_median": 1.1240525974254,
+      "ordered_worse": 16,
+      "random_median": 1.1406244347693373
+    }
+  }
+}
