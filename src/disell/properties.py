@@ -2,7 +2,8 @@ import numba
 import numpy as np
 from typing import Tuple
 
-def kam(vector_field, ndim=None, size=3):
+def kam(vector_field, ndim=None, size=3, footprint=None, fill_invalid=0.0,
+        per_channel_rms=False):
 
     #vector_field lets do ndim and than size
     """Compute the KAM (Kernel Average Misorientation) map on a data input for 2D or 3D data with C input channels.
@@ -55,6 +56,20 @@ def kam(vector_field, ndim=None, size=3):
         ndim (:obj:`int`): Needs to be specified, dimensionality of the data, must be 2 or 3.
         size (:obj:`int` or :obj:`tuple` or :obj:`numpy.ndarray`, optional): Kernel size used for neighborhood evaluation.
             Defaults to 3 . For 2D input use (ky, kx); for 3D input use (kz, ky, kx).
+        footprint (:obj:`numpy.ndarray` of bool, optional): Boolean neighbourhood
+            footprint with ``ndim`` odd-sized axes. When given it overrides
+            ``size`` and only the True offsets are treated as neighbours, so a
+            physically isotropic neighbourhood can be used on anisotropically
+            sampled volumes.
+        fill_invalid (:obj:`float`, optional): Value written where the KAM is
+            undefined (centre voxel NaN in any channel, or no valid neighbour,
+            which includes the kernel border margin). Defaults to 0.0 for
+            backwards compatibility; pass ``numpy.nan`` to make undefined
+            voxels explicit.
+        per_channel_rms (:obj:`bool`, optional): If True, each neighbour
+            misorientation is ``sqrt(sum_c d_c^2 / C)`` (the per-channel RMS
+            feature distance) instead of the plain L2 norm
+            ``sqrt(sum_c d_c^2)``. Defaults to False (historic behaviour).
 
     Returns:
         :obj:`numpy.ndarray`: KAM map of the same spatial shape as the input (without
@@ -67,7 +82,14 @@ def kam(vector_field, ndim=None, size=3):
         raise ValueError("ndim must be 2 or 3")
 
     # --- fit the size of the kernel to the input and ndim ---
-    if isinstance(size, int):
+    if footprint is not None:
+        footprint = np.asarray(footprint, dtype=bool)
+        if footprint.ndim != ndim:
+            raise ValueError(
+                f"footprint has {footprint.ndim} axes but ndim={ndim}."
+            )
+        size = np.array(footprint.shape, dtype=int)
+    elif isinstance(size, int):
         size = np.array([size] * ndim, dtype=int)
     elif isinstance(size, (tuple, np.ndarray)):
         size = np.array(size, dtype=int)
@@ -98,7 +120,16 @@ def kam(vector_field, ndim=None, size=3):
 
 
     assert all(s % 2 == 1 for s in size), "size must be odd"
-    assert all(s > 1 for s in size), "size must be larger than 1"
+    assert all(s >= 1 for s in size), "size must be at least 1"
+    assert any(s > 1 for s in size), "at least one kernel axis must exceed 1"
+
+    if footprint is None:
+        footprint = np.ones(tuple(size), dtype=bool)
+    if ndim == 2:
+        footprint_3d = footprint[None, ...]
+    else:
+        footprint_3d = footprint
+    footprint_3d = np.ascontiguousarray(footprint_3d, dtype=np.bool_)
 
     # --- compute the shape of the kam map ---
     shape = vector_field.shape[:-1] + (np.prod(size) - 1,)
@@ -106,31 +137,36 @@ def kam(vector_field, ndim=None, size=3):
     counts_map = np.zeros(shape[:-1], dtype=int)
 
     if ndim == 2:
-        _kam3D(vector_field[None,...], 1, size[0], size[1], kam_map[None,...], counts_map[None,...])
+        _kam3D(vector_field[None,...], footprint_3d, kam_map[None,...], counts_map[None,...])
     elif ndim == 3:
-        _kam3D(vector_field, size[0], size[1], size[2], kam_map, counts_map)
+        _kam3D(vector_field, footprint_3d, kam_map, counts_map)
 
     else:
         raise ValueError("Kernel size must be 2D or 3D")
 
-    counts_map[counts_map == 0] = 1
-    return np.sum(kam_map, axis=-1) / counts_map
+    valid = counts_map > 0
+    denom = np.where(valid, counts_map, 1)
+    out = np.sum(kam_map, axis=-1) / denom
+    if per_channel_rms:
+        out = out / np.sqrt(vector_field.shape[-1])
+    out[~valid] = fill_invalid
+    return out
 
 
 
 
 @numba.jit(nopython=True, parallel=True, cache=True)
-def _kam3D(vector_field, kz, ky, kx, kam_map, counts_map):
+def _kam3D(vector_field, footprint, kam_map, counts_map):
     """
     Fills the KAM and count maps in place.
 
     Args:
-        data (:obj:`numpy.ndarray`): The input map used for the KAM computation,
-            shape=(Z, Y, X, C), where Z is the slice dimension and C the number
-            of vector components.
-        kz (:obj:`int`): Kernel size along the slices (Z-axis).
-        ky (:obj:`int`): Kernel size along the rows (Y-axis).
-        kx (:obj:`int`): Kernel size along the columns (X-axis).
+        vector_field (:obj:`numpy.ndarray`): The input map used for the KAM
+            computation, shape=(Z, Y, X, C), where Z is the slice dimension and
+            C the number of vector components.
+        footprint (:obj:`numpy.ndarray` of bool): Boolean neighbourhood of
+            shape (kz, ky, kx) with odd sizes; only True offsets count as
+            neighbours (the centre offset is always skipped).
         kam_map (:obj:`numpy.ndarray`): Empty array to store the KAM values,
             shape=(Z, Y, X, (kz*ky*kx)-1).
         counts_map (:obj:`numpy.ndarray`): Empty array to store the valid
@@ -140,26 +176,39 @@ def _kam3D(vector_field, kz, ky, kx, kam_map, counts_map):
         This function computes the Kernel Average Misorientation (KAM) for
         each voxel by evaluating the Euclidean distance between the local
         vector `c` and its valid neighbors `n` within the defined kernel.
+        A voxel (centre or neighbour) is invalid if ANY channel is NaN.
         The results are stored directly in the provided `kam_map` and
-        `counts_map` arrays.
+        `counts_map` arrays; voxels closer than the kernel half-width to the
+        volume border are left with count 0.
 
         Technically we choose to prange over the x dimension, as it it is the largest and gives biggest performance boot.
     """
     Z, Y, X, C = vector_field.shape
+    kz, ky, kx = footprint.shape
 
     for x in numba.prange(kx // 2, X - kx // 2):
         for y in range(ky // 2, Y - ky // 2):
             for z in range(kz // 2, Z - kz // 2):
                 c = vector_field[z, y, x]
-                if not np.isnan(c[0]):
+                centre_ok = True
+                for d in range(C):
+                    if np.isnan(c[d]):
+                        centre_ok = False
+                if centre_ok:
                     count = 0
                     for dz in range(-(kz // 2), kz // 2 + 1):
                         for dy in range(-(ky // 2), ky // 2 + 1):
                             for dx in range(-(kx // 2), kx // 2 + 1):
                                 if dx == 0 and dy == 0 and dz == 0:
                                     continue
+                                if not footprint[dz + kz // 2, dy + ky // 2, dx + kx // 2]:
+                                    continue
                                 n = vector_field[z + dz, y + dy, x + dx]
-                                if not np.isnan(n[0]):
+                                neigh_ok = True
+                                for d in range(C):
+                                    if np.isnan(n[d]):
+                                        neigh_ok = False
+                                if neigh_ok:
                                     dist = 0.0
                                     for d in range(C):
                                         dist += (n[d] - c[d]) ** 2

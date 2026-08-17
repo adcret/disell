@@ -1,0 +1,36 @@
+# Large, reproducible run state stays local.
+oracle_results/
+two_stage_oracle_results/
+two_stage_oracle_f1_results/
+two_stage_oracle_count_results/
+two_stage_saltelli_v4_results/
+continuation_results/
+results/
+
+# Analysis folders are generated. Keep only the compact paper-facing products.
+analysis/*
+!analysis/count_first_v1/
+analysis/count_first_v1/*
+!analysis/count_first_v1/REPORT.md
+!analysis/count_first_v1/count_first_report.json
+!analysis/count_first_v1/five_seed_screen.json
+!analysis/count_first_v1/five_seed_screen.md
+!analysis/count_first_v1/local_oat/
+analysis/count_first_v1/local_oat/*
+!analysis/count_first_v1/local_oat/axis_summary.csv
+!analysis/count_first_v1/local_oat/profiles.csv
+!analysis/count_first_v1/local_oat/summary.json
+
+!analysis/synthetic_method_comparison_v1/
+analysis/synthetic_method_comparison_v1/*
+!analysis/synthetic_method_comparison_v1/REPORT.md
+!analysis/synthetic_method_comparison_v1/comparison.json
+!analysis/synthetic_method_comparison_v1/representative_metrics.csv
+
+!analysis/paper_minimal_v1/
+analysis/paper_minimal_v1/*
+!analysis/paper_minimal_v1/*.pdf
+!analysis/paper_minimal_v1/*_source.csv
+
+*.lock
+*.pid.json

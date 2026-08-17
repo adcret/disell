@@ -24,6 +24,20 @@ from .registration import (
     register,
     apply_transforms,
 )
+from .layer_dataset import (
+    LayerVolume,
+    LayerDatasetError,
+    discover_layers,
+    load_layer_volume,
+)
+from .metrics import (
+    inner_cell_spread,
+    boundary_band_kam,
+    variation_of_information,
+    matched_overlap,
+    connected_component_report,
+    split_disconnected_labels,
+)
 from .visualization import (
 
     export_grain_meshes,
@@ -55,6 +69,18 @@ __all__ = [
     "register_slice_2_volume",
     "register",
     "apply_transforms",
+    # layer_dataset
+    "LayerVolume",
+    "LayerDatasetError",
+    "discover_layers",
+    "load_layer_volume",
+    # metrics
+    "inner_cell_spread",
+    "boundary_band_kam",
+    "variation_of_information",
+    "matched_overlap",
+    "connected_component_report",
+    "split_disconnected_labels",
     # visualization
     "export_grain_meshes",
     # _flood_fill (C extension)

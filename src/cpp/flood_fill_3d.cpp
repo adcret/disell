@@ -284,6 +284,9 @@ py::dict flood_fill_random_seeds_3d(
     int label = 1;
     int iteration = 0;
     int last_success = -1;
+    int user_seeds_processed = 0;
+    int user_seeds_skipped_claimed = 0;
+    int small_regions_parked = 0;
 
     while (iteration < max_iterations) {
         if (remaining.empty()) break;
@@ -296,8 +299,10 @@ py::dict flood_fill_random_seeds_3d(
             if (cand < Nvox && mask[cand] &&
                 position_in_remaining[cand] != (size_t)-1) {
                 seed_idx = cand;
+                user_seeds_processed++;
                 break;
             }
+            user_seeds_skipped_claimed++;
         }
         if (seed_idx == (size_t)-1) {
             // No (more) usable user seeds. Only continue with random seeds if
@@ -334,6 +339,7 @@ py::dict flood_fill_random_seeds_3d(
             // region forever, but DO NOT clear the mask: leave these voxels
             // unlabelled (0) so a downstream watershed can still claim them.
             for (size_t idx : region_indices) remove_voxel(idx);
+            small_regions_parked++;
             iteration++;
             continue;
         }
@@ -391,6 +397,14 @@ py::dict flood_fill_random_seeds_3d(
     out["segmentation"] = seg_arr;
     out["means"] = means_arr;
     out["sizes"] = sizes_arr;
+    out["iterations"] = iteration;
+    out["max_iterations_reached"] = (iteration >= max_iterations && !remaining.empty());
+    out["remaining_voxels"] = (long long)remaining.size();
+    out["user_seeds_supplied"] = (long long)(user_seeds_processed + user_seeds_skipped_claimed + user_seeds.size());
+    out["user_seeds_processed"] = user_seeds_processed;
+    out["user_seeds_skipped_claimed"] = user_seeds_skipped_claimed;
+    out["user_seeds_unconsumed"] = (long long)user_seeds.size();
+    out["small_regions_parked"] = small_regions_parked;
     return out;
 }
 
@@ -506,5 +520,8 @@ py::dict flood_fill_collect_seeds(
     py::dict out;
     out["sizes"] = sizes_arr;
     out["seeds"] = seeds_arr;
+    out["iterations"] = iteration;
+    out["max_iterations_reached"] = (iteration >= max_iterations && !remaining.empty());
+    out["remaining_voxels"] = (long long)remaining.size();
     return out;
 }

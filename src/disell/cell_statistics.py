@@ -93,17 +93,12 @@ def get_cell_size_list(labeled_image, background=0, mask=None, pixel_size= None,
     # drop background label(s)
     if background is not None:
         if type(background) == int:
-            if background in counts:
-                counts[background] = 0
+            background = [background]
+        for i in background:
+            if 0 <= i < len(counts):
+                counts[i] = 0
             else:
-                print(f"Label {background} not found in counts")
-        else:
-            for i in background:
-                if i in counts:
-                    counts[i] = 0
-                else:
-                    print(f"Label {i} not found in counts")
-                    
+                print(f"Label {i} not found in counts")
 
     labels = np.flatnonzero(counts)
     sizes = counts[labels].astype(float)
@@ -112,8 +107,9 @@ def get_cell_size_list(labeled_image, background=0, mask=None, pixel_size= None,
         sizes = sizes * np.nanprod(pixel_size)
 
     if min_cell_size is not None:
-        sizes = sizes[sizes > min_cell_size]
-        labels = labels[sizes > min_cell_size]
+        keep = sizes > min_cell_size
+        sizes = sizes[keep]
+        labels = labels[keep]
 
     return labels, sizes
 

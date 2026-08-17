@@ -65,7 +65,8 @@ def register_slice_2_volume(slice_2d, ref_vol):
     return corr_list, max_index
 
 
-def register(volumes: np.ndarray, registration_channel=-1, verbose=False):
+def register(volumes: np.ndarray, registration_channel=-1, verbose=False,
+             upsample_factor=1, normalization=None):
     """
     Register a time series of volumes (T, ..., C) using phase correlation.
     T can also be interpreted as z when aligning slices.
@@ -78,6 +79,13 @@ def register(volumes: np.ndarray, registration_channel=-1, verbose=False):
         Channel index to use for alignment.
     verbose : bool
         If True, prints shift info.
+    upsample_factor : int
+        Upsampling factor passed to ``phase_cross_correlation``. 1 gives
+        integer-pixel shifts; e.g. 10 gives shifts to 1/10 pixel.
+    normalization : {None, "phase"}
+        Passed to ``phase_cross_correlation``. The default None (classic
+        cross-correlation) is reliable on smooth feature fields, where the
+        "phase" normalization is known to lock onto zero shift.
 
     Returns
     -------
@@ -102,25 +110,35 @@ def register(volumes: np.ndarray, registration_channel=-1, verbose=False):
             continue
 
         mov = np.nan_to_num(norm[t, ..., registration_channel], nan=0.0)
-        shift, _, _ = phase_cross_correlation(ref, mov, upsample_factor=1)
+        shift, _, _ = phase_cross_correlation(
+            ref, mov, upsample_factor=upsample_factor,
+            normalization=normalization,
+        )
         if verbose:
             print(f"[{t}] Shift: {shift}")
         transforms.append(shift)
 
     return transforms
 
-def apply_transforms(volumes: np.ndarray, transforms, pad_value=-1e10):
+def apply_transforms(volumes: np.ndarray, transforms, pad_value=np.nan):
     """
     Apply spatial shifts to a time series of volumes (T, ..., C), with optional Z-padding.
+
+    Voxels shifted in from outside the original domain are returned as NaN.
+    With the linear interpolation used here (order=1), a fractional shift also
+    invalidates the edge voxels that would blend original data with padding —
+    NaN propagates through the interpolation, which is the conservative
+    behaviour for feature fields.
 
     Parameters
     ----------
     volumes : np.ndarray
-        Input array of shape (T, ..., C).
+        Input array of shape (T, ..., C). Must be a float array (NaN padding).
     transforms : list of tuple or None
         Spatial shift vectors per time point. `None` for the reference frame.
     pad_value : float
-        Value used for padding and fill (default: -1e10).
+        Kept for backwards compatibility; padding is always marked with NaN in
+        the output regardless of this value.
 
     Returns
     -------
@@ -129,6 +147,9 @@ def apply_transforms(volumes: np.ndarray, transforms, pad_value=-1e10):
     """
     T, *spatial_dims, C = volumes.shape
     ndim = len(spatial_dims)
+
+    if not np.issubdtype(volumes.dtype, np.floating):
+        volumes = volumes.astype(np.float32)
 
     # Determine if Z exists (i.e., 3D spatial)
     has_z = (ndim == 3)
@@ -140,30 +161,29 @@ def apply_transforms(volumes: np.ndarray, transforms, pad_value=-1e10):
             int(np.ceil(abs(shift[0]))) if shift is not None else 0
             for shift in transforms
         )
-
-        pad_width = [(0, 0)] + [(max_z_pad, max_z_pad)] + [(0, 0)] * (ndim - 1) + [(0, 0)]
-        volumes = np.pad(volumes, pad_width=pad_width, mode='constant', constant_values=pad_value)
+        if max_z_pad > 0:
+            pad_width = [(0, 0)] + [(max_z_pad, max_z_pad)] + [(0, 0)] * (ndim - 1) + [(0, 0)]
+            volumes = np.pad(volumes, pad_width=pad_width, mode='constant', constant_values=np.nan)
 
     aligned = np.empty_like(volumes)
 
     for t in range(T):
         if transforms[t] is None:
-            aligned[t] = np.where(volumes[t] == pad_value, np.nan, volumes[t])
+            aligned[t] = volumes[t]
             continue
 
         shift_vec = transforms[t]
         for c in range(C):
-            shifted = ndi_shift(
+            aligned[t, ..., c] = ndi_shift(
                 volumes[t, ..., c],
                 shift=shift_vec,
                 order=1,
                 mode="constant",
-                cval=pad_value
+                cval=np.nan
             )
-            aligned[t, ..., c] = np.where(shifted == pad_value, np.nan, shifted)
 
     # Remove padding to match input shape
-    if has_z:
+    if has_z and max_z_pad > 0:
         aligned = aligned[:, max_z_pad:-max_z_pad, ...]
 
     return aligned

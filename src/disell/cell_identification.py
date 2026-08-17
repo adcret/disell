@@ -60,10 +60,10 @@ def flood_fill_dfxm_two_stage(
     Once the seed list is exhausted the loop stops, so only voxels
     reachable from a provided seed are labeled.
  
-    Note: stage 1 uses an internal RNG seeded from ``std::random_device``,
-    so the seed set itself varies across runs. This function stabilizes
-    the segmentation (large cells set the partition first) but does not
-    produce bit-exact reproducibility.
+    Note: when ``random_seed`` is a non-negative integer it is passed to the
+    RNG of both stages and the result is bit-exact reproducible. With
+    ``random_seed=None`` the RNG is seeded from ``std::random_device`` and
+    the seed set varies across runs.
  
     The wrapper supports both **2D and 3D datasets**:
  
@@ -211,7 +211,18 @@ def flood_fill_dfxm_two_stage(
         seg = np.zeros(property_map_3d.shape[:3], dtype=np.int32)
         if is_2d:
             seg = seg[0]
-        return dict(segmentation=seg, means=None, sizes=None), sizes_initial
+        return dict(segmentation=seg, means=None, sizes=None,
+                    diagnostics={
+                        "candidate_collection": {
+                            k: seed_info[k] for k in (
+                                "iterations", "max_iterations_reached",
+                                "remaining_voxels"
+                            ) if k in seed_info
+                        },
+                        "final_growth": None,
+                        "seeds_initial": seeds_initial,
+                        "seeds_sorted": seeds_initial,
+                    }), sizes_initial
  
     # Step (2): sort seeds by size ASCENDING in Python.
     # The C++ user-seed loop consumes via back()/pop_back() (LIFO), so the
@@ -244,7 +255,25 @@ def flood_fill_dfxm_two_stage(
     if is_2d:
         seg = seg[0]
  
-    return dict(segmentation=seg, means=means, sizes=sizes), sizes_initial
+    diagnostics = {
+        "candidate_collection": {
+            k: seed_info[k] for k in (
+                "iterations", "max_iterations_reached", "remaining_voxels"
+            ) if k in seed_info
+        },
+        "final_growth": {
+            k: result[k] for k in (
+                "iterations", "max_iterations_reached", "remaining_voxels",
+                "user_seeds_supplied", "user_seeds_processed",
+                "user_seeds_skipped_claimed", "user_seeds_unconsumed",
+                "small_regions_parked"
+            ) if k in result
+        },
+        "seeds_initial": seeds_initial,
+        "seeds_sorted": seeds_sorted,
+    }
+    return dict(segmentation=seg, means=means, sizes=sizes,
+                diagnostics=diagnostics), sizes_initial
 
 
 def flood_fill_dfxm(
@@ -378,7 +407,7 @@ def flood_fill_dfxm(
             if mask.ndim != 2:
                 raise ValueError("2D mask must be shape (H,W)")
             mask_3d = mask[None, ...]
-            mask_3d = mask_3d.astype(np.uint8, copy=False)
+            mask_3d = mask_3d.astype(np.uint8)
 
 
         is_2d = True
@@ -387,10 +416,15 @@ def flood_fill_dfxm(
         # 3D input: (Z,H,W,C)
         property_map_3d = property_map
         footprint_3d = footprint
-        mask_3d = mask.astype(np.uint8, copy=False)
+        mask_3d = mask.astype(np.uint8)
         is_2d = False
     else:
         raise ValueError("property_map must be 3D (H,W,C) or 4D (Z,H,W,C)")
+
+    # The C++ routine consumes the mask in place (claimed voxels are zeroed);
+    # a fresh contiguous copy keeps the caller's array intact.
+    if mask_3d is not None:
+        mask_3d = np.ascontiguousarray(mask_3d.copy())
 
     # Check footprint dims
     if footprint_3d.ndim != 3:

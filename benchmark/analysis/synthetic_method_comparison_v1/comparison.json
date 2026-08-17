@@ -1,0 +1,147 @@
+{
+  "claim_scope": "For three-dimensional orientation fields with the weak/incomplete interfaces and intradomain variation represented by this phantom, region-first identification is more reliable than pure thresholded KAM.",
+  "comparison": "synthetic phantom only",
+  "distributions": {
+    "KAM": {
+      "ari": {
+        "maximum": 0.7781528768298458,
+        "mean": 0.7781528768298458,
+        "median": 0.7781528768298458,
+        "minimum": 0.7781528768298458,
+        "n": 1,
+        "sd": 0.0
+      },
+      "boundary_assd_um": {
+        "maximum": 0.08025109913583407,
+        "mean": 0.08025109913583407,
+        "median": 0.08025109913583407,
+        "minimum": 0.08025109913583407,
+        "n": 1,
+        "sd": 0.0
+      },
+      "exact_count_seeds": 1,
+      "identity_f1": {
+        "maximum": 0.725,
+        "mean": 0.725,
+        "median": 0.725,
+        "minimum": 0.725,
+        "n": 1,
+        "sd": 0.0
+      },
+      "n_cells_pred": {
+        "maximum": 360.0,
+        "mean": 360.0,
+        "median": 360.0,
+        "minimum": 360.0,
+        "n": 1,
+        "sd": 0.0
+      },
+      "seeds": 1
+    },
+    "not size ordered": {
+      "ari": {
+        "maximum": 0.8306149137236979,
+        "mean": 0.8287656241938588,
+        "median": 0.8286297714852094,
+        "minimum": 0.8255919650258275,
+        "n": 20,
+        "sd": 0.0011795711289812989
+      },
+      "boundary_assd_um": {
+        "maximum": 0.07656367418555064,
+        "mean": 0.07426500416284829,
+        "median": 0.07538579676444962,
+        "minimum": 0.07082637281521786,
+        "n": 20,
+        "sd": 0.0021601024535163097
+      },
+      "exact_count_seeds": 4,
+      "identity_f1": {
+        "maximum": 0.841225626740947,
+        "mean": 0.839450925703375,
+        "median": 0.8400556328233658,
+        "minimum": 0.8377253814147018,
+        "n": 20,
+        "sd": 0.0010951774301650005
+      },
+      "n_cells_pred": {
+        "maximum": 361.0,
+        "mean": 359.4,
+        "median": 359.0,
+        "minimum": 357.0,
+        "n": 20,
+        "sd": 1.0954451150103324
+      },
+      "seeds": 20
+    },
+    "size ordered": {
+      "ari": {
+        "maximum": 0.8869847353439083,
+        "mean": 0.8841737540826546,
+        "median": 0.8860220930627988,
+        "minimum": 0.8759212276461582,
+        "n": 5,
+        "sd": 0.0046828338220627
+      },
+      "boundary_assd_um": {
+        "maximum": 0.042963313533121134,
+        "mean": 0.04146299145935806,
+        "median": 0.041242006712390075,
+        "minimum": 0.04076354264674631,
+        "n": 5,
+        "sd": 0.000905768398045867
+      },
+      "exact_count_seeds": 3,
+      "identity_f1": {
+        "maximum": 0.8361111111111111,
+        "mean": 0.833332818926072,
+        "median": 0.8333333333333334,
+        "minimum": 0.8305555555555556,
+        "n": 5,
+        "sd": 0.0019912795368518337
+      },
+      "n_cells_pred": {
+        "maximum": 362.0,
+        "mean": 360.0,
+        "median": 360.0,
+        "minimum": 358.0,
+        "n": 5,
+        "sd": 1.4142135623730951
+      },
+      "seeds": 5
+    }
+  },
+  "input": "same idealized orientation field, mask, spacing, and ground truth",
+  "representative_seed0": {
+    "KAM": {
+      "ari": 0.7781528768298458,
+      "boundary_assd_um": 0.08025109913583407,
+      "identity_f1": 0.725,
+      "n_cells_pred": 360,
+      "n_cells_true": 360,
+      "vi_total_bits": 1.2130300773383134
+    },
+    "not size ordered": {
+      "ari": 0.8294714547442144,
+      "boundary_assd_um": 0.07579850298930618,
+      "identity_f1": 0.8388888888888889,
+      "n_cells_pred": 360,
+      "n_cells_true": 360,
+      "vi_total_bits": 0.4251573371635873
+    },
+    "size ordered": {
+      "ari": 0.8850117123507025,
+      "boundary_assd_um": 0.041242006712390075,
+      "identity_f1": 0.8333333333333334,
+      "n_cells_pred": 360,
+      "n_cells_true": 360,
+      "vi_total_bits": 0.39454314540038204
+    }
+  },
+  "selection": {
+    "KAM": "deterministic count-matched KAM-marker watershed",
+    "not size ordered": "count-first winner among six twenty-seed unordered candidates",
+    "size ordered": "count-first five-seed winner"
+  },
+  "target_cells": 360
+}

@@ -1,0 +1,4 @@
+criterion,successful_parameter_sets_percent
+exact,0.0244140625
+within 1%,0.3662109375
+within 5%,2.3193359375

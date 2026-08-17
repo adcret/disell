@@ -1,0 +1,88 @@
+{
+  "axis_summary": [
+    {
+      "exact_count_fraction": 0.09090909090909091,
+      "exact_count_high": 0.0068041625343444306,
+      "exact_count_low": 0.0068041625343444306,
+      "exact_count_points": 1,
+      "maximum_absolute_count_error": 60,
+      "parameter": "local_threshold_deg",
+      "tested_points": 11,
+      "within_1_percent_high": 0.0068041625343444306,
+      "within_1_percent_low": 0.0068041625343444306,
+      "within_1_percent_points": 1
+    },
+    {
+      "exact_count_fraction": 1.0,
+      "exact_count_high": 0.8729926391777059,
+      "exact_count_low": 0.43649631958885293,
+      "exact_count_points": 12,
+      "maximum_absolute_count_error": 0,
+      "parameter": "global_threshold_deg",
+      "tested_points": 12,
+      "within_1_percent_high": 0.8729926391777059,
+      "within_1_percent_low": 0.43649631958885293,
+      "within_1_percent_points": 12
+    },
+    {
+      "exact_count_fraction": 0.09090909090909091,
+      "exact_count_high": 0.04,
+      "exact_count_low": 0.04,
+      "exact_count_points": 1,
+      "maximum_absolute_count_error": 11,
+      "parameter": "footprint_tolerance",
+      "tested_points": 11,
+      "within_1_percent_high": 0.056,
+      "within_1_percent_low": 0.04,
+      "within_1_percent_points": 5
+    },
+    {
+      "exact_count_fraction": 0.09090909090909091,
+      "exact_count_high": 1.948897380571898,
+      "exact_count_low": 1.948897380571898,
+      "exact_count_points": 1,
+      "maximum_absolute_count_error": 1333,
+      "parameter": "footprint_radius_um",
+      "tested_points": 11,
+      "within_1_percent_high": 1.948897380571898,
+      "within_1_percent_low": 1.948897380571898,
+      "within_1_percent_points": 1
+    },
+    {
+      "exact_count_fraction": 0.08333333333333333,
+      "exact_count_high": 116,
+      "exact_count_low": 116,
+      "exact_count_points": 1,
+      "maximum_absolute_count_error": 60,
+      "parameter": "min_cell_size",
+      "tested_points": 12,
+      "within_1_percent_high": 116,
+      "within_1_percent_low": 110,
+      "within_1_percent_points": 2
+    },
+    {
+      "exact_count_fraction": 1.0,
+      "exact_count_high": 2.0194058532152486,
+      "exact_count_low": 0.6724834570455993,
+      "exact_count_points": 10,
+      "maximum_absolute_count_error": 0,
+      "parameter": "kam_radius_um",
+      "tested_points": 10,
+      "within_1_percent_high": 2.0194058532152486,
+      "within_1_percent_low": 0.6724834570455993,
+      "within_1_percent_points": 10
+    }
+  ],
+  "centre": {
+    "footprint_radius_um": 1.948897380571898,
+    "footprint_tolerance": 0.04,
+    "global_threshold_deg": 0.8729926391777059,
+    "kam_radius_um": 1.1737337858305015,
+    "local_threshold_deg": 0.006804162534344432,
+    "min_cell_size": 116
+  },
+  "experiment": "count_first_local_oat_v1",
+  "interpretation": "Exact-count fractions are one-at-a-time local robustness measures. They do not include parameter interactions.",
+  "n_durable_rows": 63,
+  "target_cells": 360
+}

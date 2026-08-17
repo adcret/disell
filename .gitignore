@@ -209,5 +209,7 @@ __marimo__/
 # Ignore markdown notes/reports
 *.md
 !README.md
+!benchmark/PROVENANCE.md
 old_stuff/
 *.npy
+paper_outputs/
