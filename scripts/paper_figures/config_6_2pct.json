@@ -1,0 +1,40 @@
+{
+  "dataset_name": "6-2pct",
+  "strain_label": "6.2%",
+  "data_root": "~/Documents/Data/4dcells/111_cells_6-2pct_mosa_2x_raw",
+  "layer_pattern": "layer_(\\d+)_1$",
+  "expect_n_layers": 11,
+  "crop_rows_cols": [400, 600, 100, 600],
+  "expect_shape_yx": [200, 500],
+  "spacing_nm_zyx": [500.0, 1240.0, 400.0],
+  "angle_unit": "deg",
+  "channel_names": ["chi", "phi"],
+  "notes": {
+    "crop": "Analysis window of the historic study, recovered by cross-correlating segmap.npy boundaries with the angular gradient field of mean.npy (offset row=400, col=100 in all 11 layers).",
+    "spacing": "User-provided: dz=0.5 um (layer spacing), dy=1.24 um (detector rows, up-down in images), dx=0.4 um (detector columns). Manuscript Table 1 lists (50, 150) nm unbinned; discrepancy flagged in the final report.",
+    "channels": "mean.npy channel 0 = chi (roll), channel 1 = phi (diffry rocking), degrees; order fixed by darling ID03 defaults ['instrument/chi/value', 'instrument/diffry/data'].",
+    "registration": "A per-layer shift (x=6.5 px, y=0.4 px, direction=-1) was already applied during layer preparation (processing_info.json); a residual of about -0.55 px/layer along rows remains and is removed by sub-pixel phase correlation in run_preprocess.py."
+  },
+  "preprocess": {
+    "registration_channel": 0,
+    "registration_upsample": 10,
+    "median_filter_kernel_zyx": [1, 3, 3]
+  },
+  "segmentation": {
+    "flood_footprint": "inplane8_plus_z",
+    "local_threshold_deg": 0.06,
+    "global_threshold_deg": 0.30,
+    "footprint_tolerance": 0.85,
+    "min_grain_size": 20,
+    "max_iterations": 5000,
+    "stagnation_tolerance": 2000,
+    "random_seed": 42,
+    "kam_radius_nm": 1300.0,
+    "watershed_connectivity": 1,
+    "split_min_component_size": 1
+  },
+  "kam_baseline": {
+    "threshold_percentiles": [10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90],
+    "min_component_size": 20
+  }
+}
