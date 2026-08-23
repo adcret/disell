@@ -1,0 +1,4028 @@
+{
+  "dimension_replicates": {
+    "records": [
+      {
+        "arm": "flood fill",
+        "gain_cells": 1955,
+        "rate_2d": 0.014601420678768745,
+        "rate_3d": 0.7861089187056038,
+        "recovered_2d": 37,
+        "recovered_3d": 1992,
+        "replicate": 0,
+        "unlinked_2d_cells": 10466
+      },
+      {
+        "arm": "KAM threshold",
+        "gain_cells": 124,
+        "rate_2d": 0.0007892659826361484,
+        "rate_3d": 0.049723756906077346,
+        "recovered_2d": 2,
+        "recovered_3d": 126,
+        "replicate": 0,
+        "unlinked_2d_cells": 4144
+      },
+      {
+        "arm": "flood fill",
+        "gain_cells": 1917,
+        "rate_2d": 0.01226751088246933,
+        "rate_3d": 0.7708745548080728,
+        "recovered_2d": 31,
+        "recovered_3d": 1948,
+        "replicate": 1,
+        "unlinked_2d_cells": 10408
+      },
+      {
+        "arm": "KAM threshold",
+        "gain_cells": 127,
+        "rate_2d": 0.0019786307874950534,
+        "rate_3d": 0.05223585278986941,
+        "recovered_2d": 5,
+        "recovered_3d": 132,
+        "replicate": 1,
+        "unlinked_2d_cells": 4077
+      },
+      {
+        "arm": "flood fill",
+        "gain_cells": 1884,
+        "rate_2d": 0.013513513513513514,
+        "rate_3d": 0.7623211446740858,
+        "recovered_2d": 34,
+        "recovered_3d": 1918,
+        "replicate": 2,
+        "unlinked_2d_cells": 10595
+      },
+      {
+        "arm": "KAM threshold",
+        "gain_cells": 115,
+        "rate_2d": 0.000397456279809221,
+        "rate_3d": 0.046104928457869634,
+        "recovered_2d": 1,
+        "recovered_3d": 116,
+        "replicate": 2,
+        "unlinked_2d_cells": 3912
+      },
+      {
+        "arm": "flood fill",
+        "gain_cells": 1901,
+        "rate_2d": 0.011928429423459244,
+        "rate_3d": 0.7677932405566601,
+        "recovered_2d": 30,
+        "recovered_3d": 1931,
+        "replicate": 3,
+        "unlinked_2d_cells": 10429
+      },
+      {
+        "arm": "KAM threshold",
+        "gain_cells": 111,
+        "rate_2d": 0.0019880715705765406,
+        "rate_3d": 0.046123260437375746,
+        "recovered_2d": 5,
+        "recovered_3d": 116,
+        "replicate": 3,
+        "unlinked_2d_cells": 3958
+      },
+      {
+        "arm": "flood fill",
+        "gain_cells": 1900,
+        "rate_2d": 0.011517077045274026,
+        "rate_3d": 0.7660841938046068,
+        "recovered_2d": 29,
+        "recovered_3d": 1929,
+        "replicate": 4,
+        "unlinked_2d_cells": 10513
+      },
+      {
+        "arm": "KAM threshold",
+        "gain_cells": 126,
+        "rate_2d": 0.0011914217633042098,
+        "rate_3d": 0.05123113582208102,
+        "recovered_2d": 3,
+        "recovered_3d": 129,
+        "replicate": 4,
+        "unlinked_2d_cells": 4003
+      },
+      {
+        "arm": "flood fill",
+        "gain_cells": 1922,
+        "rate_2d": 0.01066772026866851,
+        "rate_3d": 0.7700513630975899,
+        "recovered_2d": 27,
+        "recovered_3d": 1949,
+        "replicate": 5,
+        "unlinked_2d_cells": 10362
+      },
+      {
+        "arm": "KAM threshold",
+        "gain_cells": 114,
+        "rate_2d": 0.002765705254839984,
+        "rate_3d": 0.04780719083366258,
+        "recovered_2d": 7,
+        "recovered_3d": 121,
+        "replicate": 5,
+        "unlinked_2d_cells": 3932
+      }
+    ],
+    "summary": {
+      "KAM threshold": {
+        "gain_cells": {
+          "max": 127.0,
+          "mean": 119.5,
+          "min": 111.0,
+          "sd": 6.9498201415576215
+        },
+        "n": 6,
+        "rate_2d": {
+          "max": 0.002765705254839984,
+          "mean": 0.0015184252731101928,
+          "min": 0.000397456279809221,
+          "sd": 0.0008812763656504343
+        },
+        "rate_3d": {
+          "max": 0.05223585278986941,
+          "mean": 0.04887102087448928,
+          "min": 0.046104928457869634,
+          "sd": 0.002605862013115339
+        },
+        "recovered_2d": {
+          "max": 7.0,
+          "mean": 3.8333333333333335,
+          "min": 1.0,
+          "sd": 2.228601953392904
+        },
+        "recovered_3d": {
+          "max": 132.0,
+          "mean": 123.33333333333333,
+          "min": 116.0,
+          "sd": 6.742897497861485
+        }
+      },
+      "flood fill": {
+        "gain_cells": {
+          "max": 1955.0,
+          "mean": 1913.1666666666667,
+          "min": 1884.0,
+          "sd": 24.555379587102024
+        },
+        "n": 6,
+        "rate_2d": {
+          "max": 0.014601420678768745,
+          "mean": 0.012415945302025562,
+          "min": 0.01066772026866851,
+          "sd": 0.0014216130289382348
+        },
+        "rate_3d": {
+          "max": 0.7861089187056038,
+          "mean": 0.7705389026077699,
+          "min": 0.7623211446740858,
+          "sd": 0.008218155444342403
+        },
+        "recovered_2d": {
+          "max": 37.0,
+          "mean": 31.333333333333332,
+          "min": 27.0,
+          "sd": 3.6147844564602556
+        },
+        "recovered_3d": {
+          "max": 1992.0,
+          "mean": 1944.5,
+          "min": 1918.0,
+          "sd": 26.128528469854555
+        }
+      }
+    }
+  },
+  "generalisation": {
+    "breadth": {
+      "arms": {
+        "KAM threshold": {
+          "best_recovered_at_90": 621,
+          "fraction_within_80pct_of_best": 0.012395053324256864,
+          "fraction_within_90pct_of_best": 0.0036589516678012255,
+          "fraction_within_95pct_of_best": 0.0012196505559337418,
+          "mean_best_rate": 0.08580820232249167,
+          "n_configurations": 70512
+        },
+        "flood fill": {
+          "best_recovered_at_90": 5184,
+          "fraction_within_80pct_of_best": 0.6613319064065768,
+          "fraction_within_90pct_of_best": 0.3795300870749623,
+          "fraction_within_95pct_of_best": 0.16495597606654666,
+          "mean_best_rate": 0.6643680919851997,
+          "n_configurations": 20557
+        },
+        "flood fill + merge": {
+          "best_recovered_at_90": 5202,
+          "fraction_within_80pct_of_best": 0.6700266429840143,
+          "fraction_within_90pct_of_best": 0.38015097690941385,
+          "fraction_within_95pct_of_best": 0.16851687388987566,
+          "mean_best_rate": 0.6665924414644344,
+          "n_configurations": 22520
+        }
+      },
+      "coarse_arms": {
+        "KAM threshold": {
+          "best_recovered_at_90": 126,
+          "fraction_within_50pct_of_best": 0.03941589811155029,
+          "fraction_within_80pct_of_best": 0.007246376811594203,
+          "fraction_within_90pct_of_best": 0.0021958717610891525,
+          "fraction_within_95pct_of_best": 0.0012077294685990338,
+          "median_recovered_at_90": 5.0,
+          "n_configurations": 9108
+        },
+        "flood fill": {
+          "best_recovered_at_90": 2010,
+          "fraction_within_50pct_of_best": 0.36628401360544216,
+          "fraction_within_80pct_of_best": 0.16732374768089053,
+          "fraction_within_90pct_of_best": 0.08860930735930736,
+          "fraction_within_95pct_of_best": 0.04019789734075448,
+          "median_recovered_at_90": 612.0,
+          "n_configurations": 51744
+        },
+        "flood fill + merge": {
+          "best_recovered_at_90": 2024,
+          "fraction_within_50pct_of_best": 0.8167619047619048,
+          "fraction_within_80pct_of_best": 0.6666666666666666,
+          "fraction_within_90pct_of_best": 0.6195238095238095,
+          "fraction_within_95pct_of_best": 0.5070476190476191,
+          "median_recovered_at_90": 1930.0,
+          "n_configurations": 10500
+        }
+      },
+      "evaluation_scope": {
+        "KAM threshold": {
+          "exhaustive": true,
+          "selection": "exhaustive baseline grid",
+          "source": "baseline.jsonl"
+        },
+        "flood fill": {
+          "exhaustive": true,
+          "selection": "exhaustive marker grid",
+          "source": "markers.jsonl"
+        },
+        "flood fill + merge": {
+          "exhaustive": false,
+          "selection": "staged marker finalists x merge grid",
+          "source": "merge.jsonl"
+        }
+      },
+      "levels": [
+        0.95,
+        0.9,
+        0.8,
+        0.5
+      ],
+      "note": "each arm is measured against its own best, so the fractions compare tunability rather than accuracy."
+    },
+    "breadth_finalised": {
+      "arms": {
+        "KAM threshold": {
+          "best_recovered_at_90": 126,
+          "fraction_within_50pct_of_best": 0.9534883720930233,
+          "fraction_within_80pct_of_best": 0.38372093023255816,
+          "fraction_within_90pct_of_best": 0.11627906976744186,
+          "fraction_within_95pct_of_best": 0.06395348837209303,
+          "median_recovered_at_90": 96.0,
+          "n_configurations": 172
+        },
+        "flood fill": {
+          "best_recovered_at_90": 2009,
+          "fraction_within_50pct_of_best": 0.8526315789473684,
+          "fraction_within_80pct_of_best": 0.8189473684210526,
+          "fraction_within_90pct_of_best": 0.5915789473684211,
+          "fraction_within_95pct_of_best": 0.56,
+          "median_recovered_at_90": 1983.0,
+          "n_configurations": 475
+        },
+        "flood fill + merge": {
+          "best_recovered_at_90": 2024,
+          "fraction_within_50pct_of_best": 1.0,
+          "fraction_within_80pct_of_best": 1.0,
+          "fraction_within_90pct_of_best": 1.0,
+          "fraction_within_95pct_of_best": 0.9497907949790795,
+          "median_recovered_at_90": 2012.0,
+          "n_configurations": 239
+        }
+      },
+      "exhaustive": false,
+      "source": "final.jsonl"
+    },
+    "transfer": {
+      "rows": [
+        {
+          "ari": 0.582587523359534,
+          "arm": "flood fill",
+          "contamination": 0.226611328125,
+          "fused_true_cells": 668,
+          "n_cells_pred": 1530,
+          "n_cells_true": 1481,
+          "recovered_at_90": 701,
+          "recovery_rate_at_90": 0.47332883187035785,
+          "source_strain": "2p4",
+          "status": "ok",
+          "target_strain": "2p4"
+        },
+        {
+          "ari": 0.7641667740271134,
+          "arm": "flood fill",
+          "contamination": 0.12859375,
+          "fused_true_cells": 469,
+          "n_cells_pred": 1882,
+          "n_cells_true": 1622,
+          "recovered_at_90": 993,
+          "recovery_rate_at_90": 0.6122071516646116,
+          "source_strain": "2p4",
+          "status": "ok",
+          "target_strain": "3p5"
+        },
+        {
+          "ari": 0.8963142686826788,
+          "arm": "flood fill",
+          "contamination": 0.059231770833333336,
+          "fused_true_cells": 383,
+          "n_cells_pred": 2310,
+          "n_cells_true": 1924,
+          "recovered_at_90": 1344,
+          "recovery_rate_at_90": 0.6985446985446986,
+          "source_strain": "2p4",
+          "status": "ok",
+          "target_strain": "4p6"
+        },
+        {
+          "ari": 0.8926227671592726,
+          "arm": "flood fill",
+          "contamination": 0.05220052083333333,
+          "fused_true_cells": 434,
+          "n_cells_pred": 2986,
+          "n_cells_true": 2525,
+          "recovered_at_90": 1782,
+          "recovery_rate_at_90": 0.7057425742574257,
+          "source_strain": "2p4",
+          "status": "ok",
+          "target_strain": "6p2"
+        },
+        {
+          "ari": 0.5849277979391435,
+          "arm": "flood fill + merge",
+          "contamination": 0.22198893229166666,
+          "fused_true_cells": 647,
+          "n_cells_pred": 1748,
+          "n_cells_true": 1481,
+          "recovered_at_90": 706,
+          "recovery_rate_at_90": 0.47670492910195816,
+          "source_strain": "2p4",
+          "status": "ok",
+          "target_strain": "2p4"
+        },
+        {
+          "ari": 0.7707527293673954,
+          "arm": "flood fill + merge",
+          "contamination": 0.1200146484375,
+          "fused_true_cells": 426,
+          "n_cells_pred": 2273,
+          "n_cells_true": 1622,
+          "recovered_at_90": 1025,
+          "recovery_rate_at_90": 0.6319358816276203,
+          "source_strain": "2p4",
+          "status": "ok",
+          "target_strain": "3p5"
+        },
+        {
+          "ari": 0.9007662898358999,
+          "arm": "flood fill + merge",
+          "contamination": 0.051178385416666666,
+          "fused_true_cells": 297,
+          "n_cells_pred": 2646,
+          "n_cells_true": 1924,
+          "recovered_at_90": 1401,
+          "recovery_rate_at_90": 0.7281704781704782,
+          "source_strain": "2p4",
+          "status": "ok",
+          "target_strain": "4p6"
+        },
+        {
+          "ari": 0.8984322426259935,
+          "arm": "flood fill + merge",
+          "contamination": 0.040908203125,
+          "fused_true_cells": 281,
+          "n_cells_pred": 3444,
+          "n_cells_true": 2525,
+          "recovered_at_90": 1881,
+          "recovery_rate_at_90": 0.744950495049505,
+          "source_strain": "2p4",
+          "status": "ok",
+          "target_strain": "6p2"
+        },
+        {
+          "ari": 0.6555498325952893,
+          "arm": "KAM threshold",
+          "contamination": 0.27873046875,
+          "fused_true_cells": 1099,
+          "n_cells_pred": 909,
+          "n_cells_true": 1481,
+          "recovered_at_90": 131,
+          "recovery_rate_at_90": 0.08845374746792707,
+          "source_strain": "2p4",
+          "status": "ok",
+          "target_strain": "2p4"
+        },
+        {
+          "ari": 0.6798873391525794,
+          "arm": "KAM threshold",
+          "contamination": 0.25549967447916666,
+          "fused_true_cells": 1177,
+          "n_cells_pred": 1043,
+          "n_cells_true": 1622,
+          "recovered_at_90": 166,
+          "recovery_rate_at_90": 0.10234278668310727,
+          "source_strain": "2p4",
+          "status": "ok",
+          "target_strain": "3p5"
+        },
+        {
+          "ari": 0.6932053550608936,
+          "arm": "KAM threshold",
+          "contamination": 0.235078125,
+          "fused_true_cells": 1404,
+          "n_cells_pred": 1272,
+          "n_cells_true": 1924,
+          "recovered_at_90": 148,
+          "recovery_rate_at_90": 0.07692307692307693,
+          "source_strain": "2p4",
+          "status": "ok",
+          "target_strain": "4p6"
+        },
+        {
+          "ari": 0.6411276967110088,
+          "arm": "KAM threshold",
+          "contamination": 0.27728190104166667,
+          "fused_true_cells": 2104,
+          "n_cells_pred": 1427,
+          "n_cells_true": 2525,
+          "recovered_at_90": 133,
+          "recovery_rate_at_90": 0.05267326732673267,
+          "source_strain": "2p4",
+          "status": "ok",
+          "target_strain": "6p2"
+        },
+        {
+          "ari": 0.34457401003477667,
+          "arm": "flood fill",
+          "contamination": 0.30035807291666666,
+          "fused_true_cells": 736,
+          "n_cells_pred": 1235,
+          "n_cells_true": 1481,
+          "recovered_at_90": 675,
+          "recovery_rate_at_90": 0.45577312626603644,
+          "source_strain": "3p5",
+          "status": "ok",
+          "target_strain": "2p4"
+        },
+        {
+          "ari": 0.7357797119718699,
+          "arm": "flood fill",
+          "contamination": 0.15345540364583332,
+          "fused_true_cells": 520,
+          "n_cells_pred": 1622,
+          "n_cells_true": 1622,
+          "recovered_at_90": 1006,
+          "recovery_rate_at_90": 0.6202219482120839,
+          "source_strain": "3p5",
+          "status": "ok",
+          "target_strain": "3p5"
+        },
+        {
+          "ari": 0.8807809028037664,
+          "arm": "flood fill",
+          "contamination": 0.07566080729166667,
+          "fused_true_cells": 423,
+          "n_cells_pred": 2065,
+          "n_cells_true": 1924,
+          "recovered_at_90": 1364,
+          "recovery_rate_at_90": 0.7089397089397089,
+          "source_strain": "3p5",
+          "status": "ok",
+          "target_strain": "4p6"
+        },
+        {
+          "ari": 0.9062291169242274,
+          "arm": "flood fill",
+          "contamination": 0.0560595703125,
+          "fused_true_cells": 448,
+          "n_cells_pred": 2733,
+          "n_cells_true": 2525,
+          "recovered_at_90": 1872,
+          "recovery_rate_at_90": 0.7413861386138614,
+          "source_strain": "3p5",
+          "status": "ok",
+          "target_strain": "6p2"
+        },
+        {
+          "ari": 0.34541881238050054,
+          "arm": "flood fill + merge",
+          "contamination": 0.297822265625,
+          "fused_true_cells": 727,
+          "n_cells_pred": 1336,
+          "n_cells_true": 1481,
+          "recovered_at_90": 677,
+          "recovery_rate_at_90": 0.4571235651586766,
+          "source_strain": "3p5",
+          "status": "ok",
+          "target_strain": "2p4"
+        },
+        {
+          "ari": 0.7398251289878991,
+          "arm": "flood fill + merge",
+          "contamination": 0.14837239583333334,
+          "fused_true_cells": 496,
+          "n_cells_pred": 1795,
+          "n_cells_true": 1622,
+          "recovered_at_90": 1031,
+          "recovery_rate_at_90": 0.6356350184956844,
+          "source_strain": "3p5",
+          "status": "ok",
+          "target_strain": "3p5"
+        },
+        {
+          "ari": 0.8845126223044202,
+          "arm": "flood fill + merge",
+          "contamination": 0.06959798177083333,
+          "fused_true_cells": 374,
+          "n_cells_pred": 2264,
+          "n_cells_true": 1924,
+          "recovered_at_90": 1404,
+          "recovery_rate_at_90": 0.7297297297297297,
+          "source_strain": "3p5",
+          "status": "ok",
+          "target_strain": "4p6"
+        },
+        {
+          "ari": 0.9101571280082841,
+          "arm": "flood fill + merge",
+          "contamination": 0.048308919270833334,
+          "fused_true_cells": 332,
+          "n_cells_pred": 2977,
+          "n_cells_true": 2525,
+          "recovered_at_90": 1952,
+          "recovery_rate_at_90": 0.7730693069306931,
+          "source_strain": "3p5",
+          "status": "ok",
+          "target_strain": "6p2"
+        },
+        {
+          "ari": 0.6290576965563154,
+          "arm": "KAM threshold",
+          "contamination": 0.29109049479166665,
+          "fused_true_cells": 1093,
+          "n_cells_pred": 908,
+          "n_cells_true": 1481,
+          "recovered_at_90": 127,
+          "recovery_rate_at_90": 0.08575286968264687,
+          "source_strain": "3p5",
+          "status": "ok",
+          "target_strain": "2p4"
+        },
+        {
+          "ari": 0.6641477877352105,
+          "arm": "KAM threshold",
+          "contamination": 0.26184244791666667,
+          "fused_true_cells": 1165,
+          "n_cells_pred": 1051,
+          "n_cells_true": 1622,
+          "recovered_at_90": 170,
+          "recovery_rate_at_90": 0.10480887792848335,
+          "source_strain": "3p5",
+          "status": "ok",
+          "target_strain": "3p5"
+        },
+        {
+          "ari": 0.598761001956172,
+          "arm": "KAM threshold",
+          "contamination": 0.2710465494791667,
+          "fused_true_cells": 1420,
+          "n_cells_pred": 1235,
+          "n_cells_true": 1924,
+          "recovered_at_90": 147,
+          "recovery_rate_at_90": 0.07640332640332641,
+          "source_strain": "3p5",
+          "status": "ok",
+          "target_strain": "4p6"
+        },
+        {
+          "ari": 0.5531206075116633,
+          "arm": "KAM threshold",
+          "contamination": 0.31414388020833334,
+          "fused_true_cells": 2120,
+          "n_cells_pred": 1378,
+          "n_cells_true": 2525,
+          "recovered_at_90": 127,
+          "recovery_rate_at_90": 0.0502970297029703,
+          "source_strain": "3p5",
+          "status": "ok",
+          "target_strain": "6p2"
+        },
+        {
+          "ari": 0.2481667629045436,
+          "arm": "flood fill",
+          "contamination": 0.36873697916666665,
+          "fused_true_cells": 806,
+          "n_cells_pred": 1024,
+          "n_cells_true": 1481,
+          "recovered_at_90": 642,
+          "recovery_rate_at_90": 0.4334908845374747,
+          "source_strain": "4p6",
+          "status": "ok",
+          "target_strain": "2p4"
+        },
+        {
+          "ari": 0.666584690370397,
+          "arm": "flood fill",
+          "contamination": 0.1866845703125,
+          "fused_true_cells": 576,
+          "n_cells_pred": 1460,
+          "n_cells_true": 1622,
+          "recovered_at_90": 980,
+          "recovery_rate_at_90": 0.6041923551171393,
+          "source_strain": "4p6",
+          "status": "ok",
+          "target_strain": "3p5"
+        },
+        {
+          "ari": 0.8702527033681081,
+          "arm": "flood fill",
+          "contamination": 0.081943359375,
+          "fused_true_cells": 418,
+          "n_cells_pred": 1955,
+          "n_cells_true": 1924,
+          "recovered_at_90": 1405,
+          "recovery_rate_at_90": 0.7302494802494802,
+          "source_strain": "4p6",
+          "status": "ok",
+          "target_strain": "4p6"
+        },
+        {
+          "ari": 0.9072671424546217,
+          "arm": "flood fill",
+          "contamination": 0.058050130208333335,
+          "fused_true_cells": 426,
+          "n_cells_pred": 2600,
+          "n_cells_true": 2525,
+          "recovered_at_90": 1959,
+          "recovery_rate_at_90": 0.7758415841584159,
+          "source_strain": "4p6",
+          "status": "ok",
+          "target_strain": "6p2"
+        },
+        {
+          "ari": 0.24852840315606012,
+          "arm": "flood fill + merge",
+          "contamination": 0.36755208333333333,
+          "fused_true_cells": 801,
+          "n_cells_pred": 1092,
+          "n_cells_true": 1481,
+          "recovered_at_90": 645,
+          "recovery_rate_at_90": 0.4355165428764348,
+          "source_strain": "4p6",
+          "status": "ok",
+          "target_strain": "2p4"
+        },
+        {
+          "ari": 0.6688518070936897,
+          "arm": "flood fill + merge",
+          "contamination": 0.18387044270833333,
+          "fused_true_cells": 564,
+          "n_cells_pred": 1639,
+          "n_cells_true": 1622,
+          "recovered_at_90": 993,
+          "recovery_rate_at_90": 0.6122071516646116,
+          "source_strain": "4p6",
+          "status": "ok",
+          "target_strain": "3p5"
+        },
+        {
+          "ari": 0.8723153788630789,
+          "arm": "flood fill + merge",
+          "contamination": 0.07927897135416667,
+          "fused_true_cells": 391,
+          "n_cells_pred": 2099,
+          "n_cells_true": 1924,
+          "recovered_at_90": 1428,
+          "recovery_rate_at_90": 0.7422037422037422,
+          "source_strain": "4p6",
+          "status": "ok",
+          "target_strain": "4p6"
+        },
+        {
+          "ari": 0.9104666779609883,
+          "arm": "flood fill + merge",
+          "contamination": 0.0543212890625,
+          "fused_true_cells": 354,
+          "n_cells_pred": 2772,
+          "n_cells_true": 2525,
+          "recovered_at_90": 2010,
+          "recovery_rate_at_90": 0.7960396039603961,
+          "source_strain": "4p6",
+          "status": "ok",
+          "target_strain": "6p2"
+        },
+        {
+          "ari": 0.6532339448918104,
+          "arm": "KAM threshold",
+          "contamination": 0.28072428385416665,
+          "fused_true_cells": 1118,
+          "n_cells_pred": 846,
+          "n_cells_true": 1481,
+          "recovered_at_90": 126,
+          "recovery_rate_at_90": 0.08507765023632681,
+          "source_strain": "4p6",
+          "status": "ok",
+          "target_strain": "2p4"
+        },
+        {
+          "ari": 0.6614576113597422,
+          "arm": "KAM threshold",
+          "contamination": 0.2795166015625,
+          "fused_true_cells": 1233,
+          "n_cells_pred": 922,
+          "n_cells_true": 1622,
+          "recovered_at_90": 150,
+          "recovery_rate_at_90": 0.09247842170160296,
+          "source_strain": "4p6",
+          "status": "ok",
+          "target_strain": "3p5"
+        },
+        {
+          "ari": 0.7173012931904164,
+          "arm": "KAM threshold",
+          "contamination": 0.23372884114583334,
+          "fused_true_cells": 1430,
+          "n_cells_pred": 1182,
+          "n_cells_true": 1924,
+          "recovered_at_90": 150,
+          "recovery_rate_at_90": 0.07796257796257797,
+          "source_strain": "4p6",
+          "status": "ok",
+          "target_strain": "4p6"
+        },
+        {
+          "ari": 0.6718394819820643,
+          "arm": "KAM threshold",
+          "contamination": 0.26287272135416667,
+          "fused_true_cells": 2120,
+          "n_cells_pred": 1355,
+          "n_cells_true": 2525,
+          "recovered_at_90": 136,
+          "recovery_rate_at_90": 0.05386138613861386,
+          "source_strain": "4p6",
+          "status": "ok",
+          "target_strain": "6p2"
+        },
+        {
+          "ari": 0.045411471235503535,
+          "arm": "flood fill",
+          "contamination": 0.4616650390625,
+          "fused_true_cells": 868,
+          "n_cells_pred": 884,
+          "n_cells_true": 1481,
+          "recovered_at_90": 592,
+          "recovery_rate_at_90": 0.399729912221472,
+          "source_strain": "6p2",
+          "status": "ok",
+          "target_strain": "2p4"
+        },
+        {
+          "ari": 0.6176944333943228,
+          "arm": "flood fill",
+          "contamination": 0.21154947916666667,
+          "fused_true_cells": 620,
+          "n_cells_pred": 1363,
+          "n_cells_true": 1622,
+          "recovered_at_90": 962,
+          "recovery_rate_at_90": 0.593094944512947,
+          "source_strain": "6p2",
+          "status": "ok",
+          "target_strain": "3p5"
+        },
+        {
+          "ari": 0.8568263698586146,
+          "arm": "flood fill",
+          "contamination": 0.09859375,
+          "fused_true_cells": 483,
+          "n_cells_pred": 1863,
+          "n_cells_true": 1924,
+          "recovered_at_90": 1374,
+          "recovery_rate_at_90": 0.7141372141372141,
+          "source_strain": "6p2",
+          "status": "ok",
+          "target_strain": "4p6"
+        },
+        {
+          "ari": 0.8989661098420385,
+          "arm": "flood fill",
+          "contamination": 0.06587890625,
+          "fused_true_cells": 415,
+          "n_cells_pred": 2567,
+          "n_cells_true": 2525,
+          "recovered_at_90": 1997,
+          "recovery_rate_at_90": 0.7908910891089109,
+          "source_strain": "6p2",
+          "status": "ok",
+          "target_strain": "6p2"
+        },
+        {
+          "ari": 0.04540059669426741,
+          "arm": "flood fill + merge",
+          "contamination": 0.46160970052083333,
+          "fused_true_cells": 874,
+          "n_cells_pred": 876,
+          "n_cells_true": 1481,
+          "recovered_at_90": 589,
+          "recovery_rate_at_90": 0.3977042538825118,
+          "source_strain": "6p2",
+          "status": "ok",
+          "target_strain": "2p4"
+        },
+        {
+          "ari": 0.6192296699910416,
+          "arm": "flood fill + merge",
+          "contamination": 0.21024739583333332,
+          "fused_true_cells": 623,
+          "n_cells_pred": 1373,
+          "n_cells_true": 1622,
+          "recovered_at_90": 964,
+          "recovery_rate_at_90": 0.594327990135635,
+          "source_strain": "6p2",
+          "status": "ok",
+          "target_strain": "3p5"
+        },
+        {
+          "ari": 0.8570909061303374,
+          "arm": "flood fill + merge",
+          "contamination": 0.09864420572916667,
+          "fused_true_cells": 490,
+          "n_cells_pred": 1839,
+          "n_cells_true": 1924,
+          "recovered_at_90": 1375,
+          "recovery_rate_at_90": 0.7146569646569647,
+          "source_strain": "6p2",
+          "status": "ok",
+          "target_strain": "4p6"
+        },
+        {
+          "ari": 0.8995014757292706,
+          "arm": "flood fill + merge",
+          "contamination": 0.06557779947916667,
+          "fused_true_cells": 414,
+          "n_cells_pred": 2514,
+          "n_cells_true": 2525,
+          "recovered_at_90": 2019,
+          "recovery_rate_at_90": 0.7996039603960396,
+          "source_strain": "6p2",
+          "status": "ok",
+          "target_strain": "6p2"
+        },
+        {
+          "ari": 0.6862042456256335,
+          "arm": "KAM threshold",
+          "contamination": 0.25976236979166667,
+          "fused_true_cells": 1110,
+          "n_cells_pred": 921,
+          "n_cells_true": 1481,
+          "recovered_at_90": 127,
+          "recovery_rate_at_90": 0.08575286968264687,
+          "source_strain": "6p2",
+          "status": "ok",
+          "target_strain": "2p4"
+        },
+        {
+          "ari": 0.6974877127206554,
+          "arm": "KAM threshold",
+          "contamination": 0.24972330729166667,
+          "fused_true_cells": 1199,
+          "n_cells_pred": 1018,
+          "n_cells_true": 1622,
+          "recovered_at_90": 161,
+          "recovery_rate_at_90": 0.09926017262638717,
+          "source_strain": "6p2",
+          "status": "ok",
+          "target_strain": "3p5"
+        },
+        {
+          "ari": 0.7168814487317904,
+          "arm": "KAM threshold",
+          "contamination": 0.22670572916666668,
+          "fused_true_cells": 1414,
+          "n_cells_pred": 1255,
+          "n_cells_true": 1924,
+          "recovered_at_90": 147,
+          "recovery_rate_at_90": 0.07640332640332641,
+          "source_strain": "6p2",
+          "status": "ok",
+          "target_strain": "4p6"
+        },
+        {
+          "ari": 0.6716671751477357,
+          "arm": "KAM threshold",
+          "contamination": 0.2572379557291667,
+          "fused_true_cells": 2094,
+          "n_cells_pred": 1441,
+          "n_cells_true": 2525,
+          "recovered_at_90": 140,
+          "recovery_rate_at_90": 0.055445544554455446,
+          "source_strain": "6p2",
+          "status": "ok",
+          "target_strain": "6p2"
+        }
+      ],
+      "strains": [
+        "2p4",
+        "3p5",
+        "4p6",
+        "6p2"
+      ]
+    }
+  },
+  "parameter_economy": {
+    "KAM threshold": {
+      "marginal": {
+        "connectivity": {
+          "best_fixed": 1,
+          "configurations": 36432,
+          "mean_cost": 0.0002598752598752599,
+          "tuned_per_strain": {
+            "2p4": 1,
+            "3p5": 1,
+            "4p6": 2,
+            "6p2": 1
+          },
+          "values_searched": 3,
+          "worst_cost": 0.0010395010395010396
+        },
+        "kam_radius_um": {
+          "best_fixed": 1.08,
+          "configurations": 36432,
+          "mean_cost": 0.0,
+          "tuned_per_strain": {
+            "2p4": 1.08,
+            "3p5": 1.08,
+            "4p6": 1.08,
+            "6p2": 1.08
+          },
+          "values_searched": 22,
+          "worst_cost": 0.0
+        },
+        "min_cell_size": {
+          "best_fixed": 3,
+          "configurations": 36432,
+          "mean_cost": 0.0,
+          "tuned_per_strain": {
+            "2p4": 3,
+            "3p5": 3,
+            "4p6": 3,
+            "6p2": 3
+          },
+          "values_searched": 6,
+          "worst_cost": 0.0
+        },
+        "percentile": {
+          "best_fixed": 30.0,
+          "configurations": 36432,
+          "mean_cost": 0.0015694673781499746,
+          "tuned_per_strain": {
+            "2p4": 30.0,
+            "3p5": 32.5,
+            "4p6": 25.0,
+            "6p2": 27.5
+          },
+          "values_searched": 23,
+          "worst_cost": 0.0027722772277227747
+        }
+      }
+    },
+    "defaults": {
+      "footprint_radius_um": 1.15,
+      "footprint_tolerance": 0.04,
+      "global_threshold_deg": -1.0,
+      "kam_radius_um": 1.2,
+      "local_threshold_deg": {
+        "flood fill": 0.015055,
+        "flood fill + merge": 0.009495
+      },
+      "merge_size_voxels": 20,
+      "merge_threshold_deg": 0.05,
+      "min_cell_size": {
+        "flood fill": 20,
+        "flood fill + merge": 3
+      }
+    },
+    "flood fill": {
+      "joint": {
+        "mean_cost": -0.003122363453933852,
+        "per_strain": [
+          {
+            "configurations_frozen": 19,
+            "configurations_full": 458,
+            "cost": -0.0013504388926401378,
+            "frozen_sweep": 0.474679270762998,
+            "full_search": 0.47332883187035785,
+            "strain_key": "2p4",
+            "threshold": 0.009495
+          },
+          {
+            "configurations_frozen": 19,
+            "configurations_full": 408,
+            "cost": -0.004932182490752113,
+            "frozen_sweep": 0.625154130702836,
+            "full_search": 0.6202219482120839,
+            "strain_key": "3p5",
+            "threshold": 0.011956
+          },
+          {
+            "configurations_frozen": 18,
+            "configurations_full": 453,
+            "cost": -0.010914760914760957,
+            "frozen_sweep": 0.7411642411642412,
+            "full_search": 0.7302494802494802,
+            "strain_key": "4p6",
+            "threshold": 0.011956
+          },
+          {
+            "configurations_frozen": 22,
+            "configurations_full": 452,
+            "cost": 0.001980198019801982,
+            "frozen_sweep": 0.788910891089109,
+            "full_search": 0.7908910891089109,
+            "strain_key": "6p2",
+            "threshold": 0.015055
+          },
+          {
+            "configurations_frozen": 21,
+            "configurations_full": 475,
+            "cost": -0.00039463299131803353,
+            "frozen_sweep": 0.7932123125493291,
+            "full_search": 0.7928176795580111,
+            "strain_key": "primary",
+            "threshold": 0.015055
+          }
+        ],
+        "threshold_also_fixed": {
+          "mean_cost": 0.008261677619483765,
+          "threshold": 0.011956,
+          "worst_cost": 0.019581363943281582
+        },
+        "worst_cost": 0.001980198019801982
+      },
+      "marginal": {
+        "footprint_radius_um": {
+          "best_fixed": 1.15,
+          "mean_cost": 0.006272356582144034,
+          "per_strain_cost": {
+            "2p4": 0.0,
+            "3p5": 0.009247842170160281,
+            "4p6": 0.0,
+            "6p2": 0.015841584158415856
+          },
+          "tuned_per_strain": {
+            "2p4": 1.15,
+            "3p5": 1.345,
+            "4p6": 1.15,
+            "6p2": 1.345
+          },
+          "values_searched": 13,
+          "worst_cost": 0.015841584158415856
+        },
+        "footprint_tolerance": {
+          "best_fixed": 0.04,
+          "mean_cost": 0.0,
+          "per_strain_cost": {
+            "2p4": 0.0,
+            "3p5": 0.0,
+            "4p6": 0.0,
+            "6p2": 0.0
+          },
+          "tuned_per_strain": {
+            "2p4": 0.04,
+            "3p5": 0.04,
+            "4p6": 0.04,
+            "6p2": 0.04
+          },
+          "values_searched": 3,
+          "worst_cost": 0.0
+        },
+        "global_threshold_deg": {
+          "best_fixed": -1.0,
+          "mean_cost": 0.0,
+          "per_strain_cost": {
+            "2p4": 0.0,
+            "3p5": 0.0,
+            "4p6": 0.0,
+            "6p2": 0.0
+          },
+          "tuned_per_strain": {
+            "2p4": -1.0,
+            "3p5": 0.873,
+            "4p6": 0.873,
+            "6p2": -1.0
+          },
+          "values_searched": 2,
+          "worst_cost": 0.0
+        },
+        "kam_radius_um": {
+          "best_fixed": 1.15,
+          "mean_cost": 0.0006947820954780332,
+          "per_strain_cost": {
+            "2p4": 0.0006752194463200412,
+            "3p5": 0.0,
+            "4p6": 0.0005197505197505059,
+            "6p2": 0.0015841584158415856
+          },
+          "tuned_per_strain": {
+            "2p4": 1.135,
+            "3p5": 1.15,
+            "4p6": 1.135,
+            "6p2": 1.0
+          },
+          "values_searched": 22,
+          "worst_cost": 0.0015841584158415856
+        },
+        "local_threshold_deg": {
+          "best_fixed": 0.013416,
+          "mean_cost": 0.008895350144160596,
+          "per_strain_cost": {
+            "2p4": 0.026333558406482105,
+            "3p5": 0.009247842170160281,
+            "4p6": 0.0,
+            "6p2": 0.0
+          },
+          "tuned_per_strain": {
+            "2p4": 0.009226,
+            "3p5": 0.009226,
+            "4p6": 0.013416,
+            "6p2": 0.013416
+          },
+          "values_searched": 9,
+          "worst_cost": 0.026333558406482105
+        },
+        "min_cell_size": {
+          "best_fixed": 20,
+          "mean_cost": 0.002871287128712874,
+          "per_strain_cost": {
+            "2p4": 0.0,
+            "3p5": 0.0,
+            "4p6": 0.0,
+            "6p2": 0.011485148514851495
+          },
+          "tuned_per_strain": {
+            "2p4": 20,
+            "3p5": 20,
+            "4p6": 20,
+            "6p2": 10
+          },
+          "values_searched": 7,
+          "worst_cost": 0.011485148514851495
+        }
+      }
+    },
+    "flood fill + merge": {
+      "joint": {
+        "mean_cost": 0.0010468246057727005,
+        "per_strain": [
+          {
+            "configurations_frozen": 3,
+            "configurations_full": 248,
+            "cost": 0.0006752194463200967,
+            "frozen_sweep": 0.47602970965563807,
+            "full_search": 0.47670492910195816,
+            "strain_key": "2p4",
+            "threshold": 0.009495
+          },
+          {
+            "configurations_frozen": 6,
+            "configurations_full": 248,
+            "cost": 0.0036991368680641123,
+            "frozen_sweep": 0.6319358816276203,
+            "full_search": 0.6356350184956844,
+            "strain_key": "3p5",
+            "threshold": 0.009495
+          },
+          {
+            "configurations_frozen": 6,
+            "configurations_full": 250,
+            "cost": -0.004677754677754664,
+            "frozen_sweep": 0.7468814968814969,
+            "full_search": 0.7422037422037422,
+            "strain_key": "4p6",
+            "threshold": 0.011956
+          },
+          {
+            "configurations_frozen": 10,
+            "configurations_full": 250,
+            "cost": 0.0035643564356435675,
+            "frozen_sweep": 0.7960396039603961,
+            "full_search": 0.7996039603960396,
+            "strain_key": "6p2",
+            "threshold": 0.015055
+          },
+          {
+            "configurations_frozen": 9,
+            "configurations_full": 239,
+            "cost": 0.0019731649565903897,
+            "frozen_sweep": 0.7967640094711917,
+            "full_search": 0.7987371744277821,
+            "strain_key": "primary",
+            "threshold": 0.015055
+          }
+        ],
+        "threshold_also_fixed": {
+          "mean_cost": 0.015711234844898225,
+          "threshold": 0.009495,
+          "worst_cost": 0.046732673267326774
+        },
+        "worst_cost": 0.0036991368680641123
+      },
+      "marginal": {
+        "footprint_radius_um": {
+          "best_fixed": 1.15,
+          "mean_cost": 0.0010125624153044244,
+          "per_strain_cost": {
+            "2p4": 0.0,
+            "3p5": 0.002466091245376112,
+            "4p6": 0.0,
+            "6p2": 0.0015841584158415856
+          },
+          "tuned_per_strain": {
+            "2p4": 1.15,
+            "3p5": 1.345,
+            "4p6": 1.15,
+            "6p2": 1.345
+          },
+          "values_searched": 12,
+          "worst_cost": 0.002466091245376112
+        },
+        "footprint_tolerance": {
+          "best_fixed": 0.04,
+          "mean_cost": 0.0,
+          "per_strain_cost": {
+            "2p4": 0.0,
+            "3p5": 0.0,
+            "4p6": 0.0,
+            "6p2": 0.0
+          },
+          "tuned_per_strain": {
+            "2p4": 0.04,
+            "3p5": 0.04,
+            "4p6": 0.04,
+            "6p2": 0.04
+          },
+          "values_searched": 3,
+          "worst_cost": 0.0
+        },
+        "global_threshold_deg": {
+          "best_fixed": -1.0,
+          "mean_cost": 0.0,
+          "per_strain_cost": {
+            "2p4": 0.0,
+            "3p5": 0.0,
+            "4p6": 0.0,
+            "6p2": 0.0
+          },
+          "tuned_per_strain": {
+            "2p4": -1.0,
+            "3p5": 0.873,
+            "4p6": -1.0,
+            "6p2": -1.0
+          },
+          "values_searched": 2,
+          "worst_cost": 0.0
+        },
+        "local_threshold_deg": {
+          "best_fixed": 0.013416,
+          "mean_cost": 0.012976119211616802,
+          "per_strain_cost": {
+            "2p4": 0.02970965563808242,
+            "3p5": 0.022194821208384785,
+            "4p6": 0.0,
+            "6p2": 0.0
+          },
+          "tuned_per_strain": {
+            "2p4": 0.009226,
+            "3p5": 0.009226,
+            "4p6": 0.013416,
+            "6p2": 0.013416
+          },
+          "values_searched": 4,
+          "worst_cost": 0.02970965563808242
+        },
+        "merge_size_voxels": {
+          "best_fixed": 20,
+          "mean_cost": 0.0,
+          "per_strain_cost": {
+            "2p4": 0.0,
+            "3p5": 0.0,
+            "4p6": 0.0,
+            "6p2": 0.0
+          },
+          "tuned_per_strain": {
+            "2p4": 20,
+            "3p5": 20,
+            "4p6": 20,
+            "6p2": 20
+          },
+          "values_searched": 7,
+          "worst_cost": 0.0
+        },
+        "merge_threshold_deg": {
+          "best_fixed": 0.05,
+          "mean_cost": 0.0008584317124684104,
+          "per_strain_cost": {
+            "2p4": 0.0,
+            "3p5": 0.0018495684340320562,
+            "4p6": 0.0,
+            "6p2": 0.0015841584158415856
+          },
+          "tuned_per_strain": {
+            "2p4": 0.05,
+            "3p5": 0.1,
+            "4p6": 0.05,
+            "6p2": 0.1
+          },
+          "values_searched": 6,
+          "worst_cost": 0.0018495684340320562
+        },
+        "min_cell_size": {
+          "best_fixed": 3,
+          "mean_cost": 0.0,
+          "per_strain_cost": {
+            "2p4": 0.0,
+            "3p5": 0.0,
+            "4p6": 0.0,
+            "6p2": 0.0
+          },
+          "tuned_per_strain": {
+            "2p4": 3,
+            "3p5": 3,
+            "4p6": 3,
+            "6p2": 3
+          },
+          "values_searched": 5,
+          "worst_cost": 0.0
+        }
+      }
+    }
+  },
+  "refined_tuning_profile": {
+    "KAM threshold": {
+      "axis": "percentile",
+      "best_single_value": 30.5,
+      "curves": {
+        "2p4": {
+          "4.0": 0.010803511141120865,
+          "4.5": 0.01350438892640108,
+          "5.0": 0.014179608372721135,
+          "5.5": 0.014854827819041188,
+          "6.0": 0.01688048615800135,
+          "6.5": 0.017555705604321403,
+          "7.0": 0.020931802835921675,
+          "7.5": 0.02160702228224173,
+          "8.0": 0.02228224172856178,
+          "8.5": 0.022957461174881837,
+          "9.0": 0.024307900067521943,
+          "9.5": 0.024307900067521943,
+          "10.0": 0.02633355840648211,
+          "10.5": 0.02903443619176232,
+          "11.0": 0.03241053342336259,
+          "11.5": 0.03241053342336259,
+          "12.0": 0.039837947332883185,
+          "12.5": 0.041188386225523295,
+          "13.0": 0.042538825118163405,
+          "13.5": 0.04456448345712356,
+          "14.0": 0.04726536124240378,
+          "14.5": 0.04929101958136394,
+          "15.0": 0.05266711681296422,
+          "15.5": 0.054692775151924375,
+          "16.0": 0.05536799459824443,
+          "16.5": 0.056043214044564485,
+          "17.0": 0.05806887238352464,
+          "17.5": 0.05739365293720459,
+          "18.0": 0.05806887238352464,
+          "18.5": 0.06076975016880486,
+          "19.0": 0.06279540850776502,
+          "19.5": 0.0661715057393653,
+          "20.0": 0.06954760297096556,
+          "20.5": 0.0675219446320054,
+          "21.0": 0.07022282241728561,
+          "21.5": 0.07427413909520594,
+          "22.0": 0.07629979743416611,
+          "22.5": 0.07967589466576637,
+          "23.0": 0.07900067521944631,
+          "23.5": 0.08035111411208642,
+          "24.0": 0.08170155300472653,
+          "24.5": 0.08507765023632681,
+          "25.0": 0.08507765023632681,
+          "25.5": 0.08440243079000675,
+          "26.0": 0.08440243079000675,
+          "26.5": 0.08507765023632681,
+          "27.0": 0.08777852802160702,
+          "27.5": 0.08642808912896692,
+          "28.0": 0.09047940580688724,
+          "28.5": 0.08912896691424713,
+          "29.0": 0.09047940580688724,
+          "29.5": 0.09047940580688724,
+          "30.0": 0.09182984469952735,
+          "30.5": 0.09318028359216746,
+          "31.0": 0.09115462525320729,
+          "31.5": 0.09047940580688724,
+          "32.0": 0.09047940580688724,
+          "32.5": 0.08845374746792707,
+          "33.0": 0.08980418636056718,
+          "33.5": 0.08777852802160702,
+          "34.0": 0.08845374746792707,
+          "34.5": 0.08710330857528698,
+          "35.0": 0.08710330857528698,
+          "35.5": 0.08642808912896692,
+          "36.0": 0.08710330857528698,
+          "36.5": 0.08507765023632681,
+          "37.0": 0.08440243079000675,
+          "37.5": 0.0837272113436867,
+          "38.0": 0.0837272113436867,
+          "38.5": 0.08237677245104659,
+          "39.0": 0.08102633355840648,
+          "39.5": 0.07900067521944631,
+          "40.0": 0.07697501688048616,
+          "40.5": 0.07359891964888589,
+          "41.0": 0.07224848075624578,
+          "41.5": 0.07157326130992572,
+          "42.0": 0.06954760297096556,
+          "42.5": 0.0675219446320054,
+          "43.0": 0.0675219446320054,
+          "43.5": 0.06684672518568535,
+          "44.0": 0.0661715057393653,
+          "44.5": 0.0675219446320054,
+          "45.0": 0.06414584740040513,
+          "45.5": 0.06279540850776502,
+          "46.0": 0.062120189061444966,
+          "46.5": 0.05941931127616475,
+          "47.0": 0.05536799459824443,
+          "47.5": 0.05266711681296422,
+          "48.0": 0.05064145847400405,
+          "48.5": 0.04794058068872384,
+          "49.0": 0.04726536124240378,
+          "49.5": 0.04523970290344362,
+          "50.0": 0.04388926401080351,
+          "50.5": 0.04321404456448346,
+          "51.0": 0.04186360567184335,
+          "51.5": 0.04051316677920324,
+          "52.0": 0.039837947332883185,
+          "52.5": 0.03848750844024308,
+          "53.0": 0.03578663065496286,
+          "53.5": 0.035111411208642807,
+          "54.0": 0.03443619176232275,
+          "54.5": 0.03308575286968265,
+          "55.0": 0.03038487508440243,
+          "55.5": 0.02700877785280216,
+          "56.0": 0.02700877785280216,
+          "56.5": 0.025658338960162053,
+          "57.0": 0.024307900067521943,
+          "57.5": 0.024307900067521943,
+          "58.0": 0.02363268062120189,
+          "58.5": 0.022957461174881837,
+          "59.0": 0.02160702228224173,
+          "59.5": 0.019581363943281565,
+          "60.0": 0.018906144496961513
+        },
+        "3p5": {
+          "4.0": 0.010480887792848335,
+          "4.5": 0.011097410604192354,
+          "5.0": 0.014180024660912454,
+          "5.5": 0.014180024660912454,
+          "6.0": 0.01726263871763255,
+          "6.5": 0.017879161528976572,
+          "7.0": 0.01972872996300863,
+          "7.5": 0.02281134401972873,
+          "8.0": 0.02527743526510481,
+          "8.5": 0.025893958076448828,
+          "9.0": 0.027743526510480888,
+          "9.5": 0.03020961775585697,
+          "10.0": 0.032675709001233046,
+          "10.5": 0.03329223181257707,
+          "11.0": 0.036374845869297165,
+          "11.5": 0.03884093711467324,
+          "12.0": 0.040690505548705305,
+          "12.5": 0.04315659679408138,
+          "13.0": 0.0468557336621455,
+          "13.5": 0.04870530209617756,
+          "14.0": 0.051171393341553635,
+          "14.5": 0.05425400739827373,
+          "15.0": 0.056103575832305796,
+          "15.5": 0.056103575832305796,
+          "16.0": 0.059186189889025895,
+          "16.5": 0.06288532675709001,
+          "17.0": 0.06535141800246609,
+          "17.5": 0.06473489519112208,
+          "18.0": 0.0690505548705302,
+          "18.5": 0.07028360049321825,
+          "19.0": 0.07336621454993834,
+          "19.5": 0.0752157829839704,
+          "20.0": 0.07459926017262639,
+          "20.5": 0.07706535141800247,
+          "21.0": 0.07829839704069051,
+          "21.5": 0.08261405672009864,
+          "22.0": 0.08384710234278668,
+          "22.5": 0.08939580764488286,
+          "23.0": 0.09124537607891492,
+          "23.5": 0.09124537607891492,
+          "24.0": 0.09432799013563502,
+          "24.5": 0.09802712700369914,
+          "25.0": 0.09864364981504316,
+          "25.5": 0.09926017262638717,
+          "26.0": 0.10110974106041924,
+          "26.5": 0.10234278668310727,
+          "27.0": 0.10480887792848335,
+          "27.5": 0.10480887792848335,
+          "28.0": 0.10727496917385944,
+          "28.5": 0.10665844636251541,
+          "29.0": 0.10665844636251541,
+          "29.5": 0.10850801479654747,
+          "30.0": 0.11035758323057954,
+          "30.5": 0.1091245376078915,
+          "31.0": 0.10789149198520345,
+          "31.5": 0.10974106041923551,
+          "32.0": 0.1091245376078915,
+          "32.5": 0.10850801479654747,
+          "33.0": 0.10727496917385944,
+          "33.5": 0.10234278668310727,
+          "34.0": 0.10172626387176326,
+          "34.5": 0.10110974106041924,
+          "35.0": 0.09617755856966707,
+          "35.5": 0.09556103575832306,
+          "36.0": 0.09186189889025893,
+          "36.5": 0.09247842170160296,
+          "37.0": 0.09124537607891492,
+          "37.5": 0.0906288532675709,
+          "38.0": 0.08877928483353884,
+          "38.5": 0.08754623921085081,
+          "39.0": 0.08631319358816276,
+          "39.5": 0.08508014796547472,
+          "40.0": 0.08323057953144267,
+          "40.5": 0.08199753390875462,
+          "41.0": 0.08138101109741061,
+          "41.5": 0.08076448828606658,
+          "42.0": 0.08014796547472257,
+          "42.5": 0.07829839704069051,
+          "43.0": 0.0752157829839704,
+          "43.5": 0.07336621454993834,
+          "44.0": 0.0721331689272503,
+          "44.5": 0.0690505548705302,
+          "45.0": 0.0690505548705302,
+          "45.5": 0.06843403205918619,
+          "46.0": 0.06535141800246609,
+          "46.5": 0.06350184956843404,
+          "47.0": 0.06165228113440197,
+          "47.5": 0.06041923551171394,
+          "48.0": 0.055487053020961775,
+          "48.5": 0.05425400739827373,
+          "49.0": 0.0499383477188656,
+          "49.5": 0.0499383477188656,
+          "50.0": 0.04870530209617756,
+          "50.5": 0.04562268803945746,
+          "51.0": 0.04500616522811344,
+          "51.5": 0.043773119605425403,
+          "52.0": 0.04254007398273736,
+          "52.5": 0.040073982737361284,
+          "53.0": 0.03822441430332922,
+          "53.5": 0.036991368680641186,
+          "54.0": 0.036374845869297165,
+          "54.5": 0.035758323057953144,
+          "55.0": 0.03514180024660912,
+          "55.5": 0.032675709001233046,
+          "56.0": 0.032675709001233046,
+          "56.5": 0.032675709001233046,
+          "57.0": 0.031442663378545004,
+          "57.5": 0.030826140567200986,
+          "58.0": 0.029593094944512947,
+          "58.5": 0.02651048088779285,
+          "59.0": 0.025893958076448828,
+          "59.5": 0.02466091245376079,
+          "60.0": 0.02342786683107275
+        },
+        "4p6": {
+          "4.0": 0.008835758835758836,
+          "4.5": 0.010395010395010396,
+          "5.0": 0.011434511434511435,
+          "5.5": 0.011954261954261955,
+          "6.0": 0.012474012474012475,
+          "6.5": 0.013513513513513514,
+          "7.0": 0.016632016632016633,
+          "7.5": 0.017151767151767153,
+          "8.0": 0.017151767151767153,
+          "8.5": 0.019230769230769232,
+          "9.0": 0.02027027027027027,
+          "9.5": 0.02234927234927235,
+          "10.0": 0.02494802494802495,
+          "10.5": 0.02598752598752599,
+          "11.0": 0.02754677754677755,
+          "11.5": 0.028586278586278588,
+          "12.0": 0.030665280665280667,
+          "12.5": 0.03170478170478171,
+          "13.0": 0.034823284823284825,
+          "13.5": 0.035862785862785865,
+          "14.0": 0.0395010395010395,
+          "14.5": 0.04158004158004158,
+          "15.0": 0.04417879417879418,
+          "15.5": 0.0446985446985447,
+          "16.0": 0.04885654885654886,
+          "16.5": 0.04937629937629938,
+          "17.0": 0.0550935550935551,
+          "17.5": 0.058212058212058215,
+          "18.0": 0.06340956340956341,
+          "18.5": 0.06756756756756757,
+          "19.0": 0.06964656964656965,
+          "19.5": 0.07276507276507277,
+          "20.0": 0.07276507276507277,
+          "20.5": 0.07484407484407485,
+          "21.0": 0.07328482328482329,
+          "21.5": 0.07536382536382537,
+          "22.0": 0.07744282744282745,
+          "22.5": 0.07848232848232849,
+          "23.0": 0.07848232848232849,
+          "23.5": 0.079002079002079,
+          "24.0": 0.07848232848232849,
+          "24.5": 0.07952182952182953,
+          "25.0": 0.08108108108108109,
+          "25.5": 0.07952182952182953,
+          "26.0": 0.07744282744282745,
+          "26.5": 0.07796257796257797,
+          "27.0": 0.079002079002079,
+          "27.5": 0.07640332640332641,
+          "28.0": 0.07744282744282745,
+          "28.5": 0.07796257796257797,
+          "29.0": 0.07848232848232849,
+          "29.5": 0.07744282744282745,
+          "30.0": 0.07796257796257797,
+          "30.5": 0.079002079002079,
+          "31.0": 0.07952182952182953,
+          "31.5": 0.07952182952182953,
+          "32.0": 0.07952182952182953,
+          "32.5": 0.07848232848232849,
+          "33.0": 0.07692307692307693,
+          "33.5": 0.07640332640332641,
+          "34.0": 0.07536382536382537,
+          "34.5": 0.07380457380457381,
+          "35.0": 0.07224532224532225,
+          "35.5": 0.07328482328482329,
+          "36.0": 0.07068607068607069,
+          "36.5": 0.06756756756756757,
+          "37.0": 0.06756756756756757,
+          "37.5": 0.06392931392931393,
+          "38.0": 0.0628898128898129,
+          "38.5": 0.061850311850311854,
+          "39.0": 0.061330561330561334,
+          "39.5": 0.058212058212058215,
+          "40.0": 0.057692307692307696,
+          "40.5": 0.057172557172557176,
+          "41.0": 0.057172557172557176,
+          "41.5": 0.05405405405405406,
+          "42.0": 0.05405405405405406,
+          "42.5": 0.05353430353430354,
+          "43.0": 0.05093555093555094,
+          "43.5": 0.0498960498960499,
+          "44.0": 0.04833679833679834,
+          "44.5": 0.0472972972972973,
+          "45.0": 0.0472972972972973,
+          "45.5": 0.04625779625779626,
+          "46.0": 0.04313929313929314,
+          "46.5": 0.0420997920997921,
+          "47.0": 0.04106029106029106,
+          "47.5": 0.04002079002079002,
+          "48.0": 0.038461538461538464,
+          "48.5": 0.037422037422037424,
+          "49.0": 0.036902286902286904,
+          "49.5": 0.033783783783783786,
+          "50.0": 0.034303534303534305,
+          "50.5": 0.032224532224532226,
+          "51.0": 0.031185031185031187,
+          "51.5": 0.031185031185031187,
+          "52.0": 0.030665280665280667,
+          "52.5": 0.030665280665280667,
+          "53.0": 0.028066528066528068,
+          "53.5": 0.02650727650727651,
+          "54.0": 0.02650727650727651,
+          "54.5": 0.02494802494802495,
+          "55.0": 0.02494802494802495,
+          "55.5": 0.02182952182952183,
+          "56.0": 0.02130977130977131,
+          "56.5": 0.02027027027027027,
+          "57.0": 0.019230769230769232,
+          "57.5": 0.018191268191268192,
+          "58.0": 0.016112266112266113,
+          "58.5": 0.015592515592515593,
+          "59.0": 0.014553014553014554,
+          "59.5": 0.013513513513513514,
+          "60.0": 0.012993762993762994
+        },
+        "6p2": {
+          "4.0": 0.009108910891089108,
+          "4.5": 0.010297029702970298,
+          "5.0": 0.011881188118811881,
+          "5.5": 0.011881188118811881,
+          "6.0": 0.011485148514851485,
+          "6.5": 0.012277227722772278,
+          "7.0": 0.013069306930693069,
+          "7.5": 0.014257425742574258,
+          "8.0": 0.014257425742574258,
+          "8.5": 0.014653465346534653,
+          "9.0": 0.015841584158415842,
+          "9.5": 0.018217821782178217,
+          "10.0": 0.019405940594059406,
+          "10.5": 0.01900990099009901,
+          "11.0": 0.0201980198019802,
+          "11.5": 0.021386138613861388,
+          "12.0": 0.023762376237623763,
+          "12.5": 0.024554455445544555,
+          "13.0": 0.02574257425742574,
+          "13.5": 0.02811881188118812,
+          "14.0": 0.030099009900990098,
+          "14.5": 0.032475247524752476,
+          "15.0": 0.03405940594059406,
+          "15.5": 0.034851485148514855,
+          "16.0": 0.03603960396039604,
+          "16.5": 0.03881188118811881,
+          "17.0": 0.04,
+          "17.5": 0.04237623762376238,
+          "18.0": 0.04396039603960396,
+          "18.5": 0.044356435643564354,
+          "19.0": 0.046336633663366336,
+          "19.5": 0.047524752475247525,
+          "20.0": 0.04910891089108911,
+          "20.5": 0.048712871287128715,
+          "21.0": 0.050693069306930696,
+          "21.5": 0.05306930693069307,
+          "22.0": 0.05386138613861386,
+          "22.5": 0.05465346534653465,
+          "23.0": 0.05465346534653465,
+          "23.5": 0.05584158415841584,
+          "24.0": 0.05584158415841584,
+          "24.5": 0.05702970297029703,
+          "25.0": 0.05702970297029703,
+          "25.5": 0.05742574257425743,
+          "26.0": 0.05742574257425743,
+          "26.5": 0.05742574257425743,
+          "27.0": 0.057821782178217825,
+          "27.5": 0.05861386138613861,
+          "28.0": 0.05702970297029703,
+          "28.5": 0.05623762376237624,
+          "29.0": 0.05584158415841584,
+          "29.5": 0.055445544554455446,
+          "30.0": 0.05425742574257426,
+          "30.5": 0.05465346534653465,
+          "31.0": 0.05386138613861386,
+          "31.5": 0.05267326732673267,
+          "32.0": 0.05188118811881188,
+          "32.5": 0.05148514851485148,
+          "33.0": 0.050693069306930696,
+          "33.5": 0.0502970297029703,
+          "34.0": 0.04910891089108911,
+          "34.5": 0.04792079207920792,
+          "35.0": 0.047524752475247525,
+          "35.5": 0.04712871287128713,
+          "36.0": 0.04712871287128713,
+          "36.5": 0.04594059405940594,
+          "37.0": 0.04514851485148515,
+          "37.5": 0.04396039603960396,
+          "38.0": 0.04396039603960396,
+          "38.5": 0.041584158415841586,
+          "39.0": 0.04,
+          "39.5": 0.04,
+          "40.0": 0.03801980198019802,
+          "40.5": 0.037227722772277226,
+          "41.0": 0.03603960396039604,
+          "41.5": 0.03445544554455446,
+          "42.0": 0.033663366336633666,
+          "42.5": 0.03287128712871287,
+          "43.0": 0.031683168316831684,
+          "43.5": 0.030495049504950494,
+          "44.0": 0.0297029702970297,
+          "44.5": 0.028514851485148516,
+          "45.0": 0.027326732673267327,
+          "45.5": 0.026138613861386138,
+          "46.0": 0.024950495049504952,
+          "46.5": 0.02415841584158416,
+          "47.0": 0.02297029702970297,
+          "47.5": 0.02178217821782178,
+          "48.0": 0.0201980198019802,
+          "48.5": 0.019801980198019802,
+          "49.0": 0.018613861386138613,
+          "49.5": 0.016237623762376238,
+          "50.0": 0.014653465346534653,
+          "50.5": 0.014653465346534653,
+          "51.0": 0.013861386138613862,
+          "51.5": 0.013861386138613862,
+          "52.0": 0.013465346534653465,
+          "52.5": 0.011485148514851485,
+          "53.0": 0.011089108910891089,
+          "53.5": 0.011089108910891089,
+          "54.0": 0.010693069306930694,
+          "54.5": 0.009900990099009901,
+          "55.0": 0.008712871287128714,
+          "55.5": 0.008316831683168317,
+          "56.0": 0.007920792079207921,
+          "56.5": 0.0075247524752475245,
+          "57.0": 0.0075247524752475245,
+          "57.5": 0.006732673267326733,
+          "58.0": 0.006732673267326733,
+          "58.5": 0.006732673267326733,
+          "59.0": 0.006732673267326733,
+          "59.5": 0.006336633663366337,
+          "60.0": 0.006336633663366337
+        }
+      },
+      "mean_cost": 0.0018181109353235247,
+      "mean_fixed": 0.08399009138716815,
+      "mean_tuned": 0.08580820232249167,
+      "per_phantom_optimum": {
+        "2p4": 30.5,
+        "3p5": 30.0,
+        "4p6": 25.0,
+        "6p2": 27.5
+      },
+      "relative_cost": 0.02118807859988193,
+      "worst_cost": 0.003960396039603957
+    },
+    "flood fill": {
+      "axis": "local_threshold_deg",
+      "best_single_value": 0.010483,
+      "curves": {
+        "2p4": {
+          "0.006": 0.4571235651586766,
+          "0.006708": 0.4638757596218771,
+          "0.0075": 0.4686022957461175,
+          "0.008386": 0.474679270762998,
+          "0.009376": 0.47805536799459825,
+          "0.010483": 0.48278190411883865,
+          "0.011721": 0.4686022957461175,
+          "0.013104": 0.44699527346387574,
+          "0.014652": 0.42808912896691426,
+          "0.016381": 0.41053342336259285,
+          "0.018315": 0.37677245104659013,
+          "0.020478": 0.3538149898717083,
+          "0.022896": 0.32680621201890614,
+          "0.025599": 0.2970965563808238,
+          "0.028621": 0.25523295070898044,
+          "0.032": 0.2174206617150574
+        },
+        "3p5": {
+          "0.006": 0.561652281134402,
+          "0.006708": 0.5869297163995068,
+          "0.0075": 0.6048088779284834,
+          "0.008386": 0.6196054254007398,
+          "0.009376": 0.6282367447595562,
+          "0.010483": 0.6368680641183724,
+          "0.011721": 0.6337854500616523,
+          "0.013104": 0.6226880394574599,
+          "0.014652": 0.6128236744759556,
+          "0.016381": 0.5955610357583231,
+          "0.018315": 0.5789149198520345,
+          "0.020478": 0.5511713933415536,
+          "0.022896": 0.5228113440197287,
+          "0.025599": 0.4913686806411837,
+          "0.028621": 0.45006165228113443,
+          "0.032": 0.4118372379778052
+        },
+        "4p6": {
+          "0.006": 0.6288981288981289,
+          "0.006708": 0.6663201663201663,
+          "0.0075": 0.6954261954261954,
+          "0.008386": 0.7130977130977131,
+          "0.009376": 0.7234927234927235,
+          "0.010483": 0.7328482328482329,
+          "0.011721": 0.7375259875259875,
+          "0.013104": 0.7437629937629938,
+          "0.014652": 0.7338877338877339,
+          "0.016381": 0.7286902286902287,
+          "0.018315": 0.7094594594594594,
+          "0.020478": 0.6855509355509356,
+          "0.022896": 0.6585239085239085,
+          "0.025599": 0.6382536382536382,
+          "0.028621": 0.5982328482328483,
+          "0.032": 0.5665280665280665
+        },
+        "6p2": {
+          "0.006": 0.6356435643564357,
+          "0.006708": 0.6732673267326733,
+          "0.0075": 0.7049504950495049,
+          "0.008386": 0.7445544554455445,
+          "0.009376": 0.7631683168316832,
+          "0.010483": 0.7801980198019802,
+          "0.011721": 0.784950495049505,
+          "0.013104": 0.7893069306930693,
+          "0.014652": 0.7893069306930693,
+          "0.016381": 0.7940594059405941,
+          "0.018315": 0.7837623762376238,
+          "0.020478": 0.7722772277227723,
+          "0.022896": 0.7552475247524753,
+          "0.025599": 0.7374257425742574,
+          "0.028621": 0.7176237623762376,
+          "0.032": 0.6926732673267326
+        }
+      },
+      "mean_cost": 0.006194036763343735,
+      "mean_fixed": 0.658174055221856,
+      "mean_tuned": 0.6643680919851997,
+      "per_phantom_optimum": {
+        "2p4": 0.010483,
+        "3p5": 0.010483,
+        "4p6": 0.013104,
+        "6p2": 0.016381
+      },
+      "relative_cost": 0.009323200253093614,
+      "worst_cost": 0.013861386138613874
+    },
+    "flood fill + merge": {
+      "axis": "local_threshold_deg",
+      "best_single_value": 0.010483,
+      "curves": {
+        "2p4": {
+          "0.006": 0.462525320729237,
+          "0.006708": 0.4659014179608373,
+          "0.0075": 0.4726536124240378,
+          "0.008386": 0.4773801485482782,
+          "0.009376": 0.4800810263335584,
+          "0.010483": 0.4834571235651587,
+          "0.011721": 0.4699527346387576,
+          "0.013104": 0.44767049291019584,
+          "0.014652": 0.4267386900742741,
+          "0.016381": 0.4098582039162728,
+          "0.018315": 0.37812288993923027,
+          "0.020478": 0.35313977042538824,
+          "0.022896": 0.3261309925725861,
+          "0.025599": 0.29642133693450373,
+          "0.028621": 0.25455773126266035,
+          "0.032": 0.2174206617150574
+        },
+        "3p5": {
+          "0.006": 0.5881627620221949,
+          "0.006708": 0.6029593094944513,
+          "0.0075": 0.623921085080148,
+          "0.008386": 0.6325524044389642,
+          "0.009376": 0.6331689272503083,
+          "0.010483": 0.6424167694204685,
+          "0.011721": 0.6350184956843403,
+          "0.013104": 0.6220715166461159,
+          "0.014652": 0.6128236744759556,
+          "0.016381": 0.5924784217016029,
+          "0.018315": 0.5789149198520345,
+          "0.020478": 0.5505548705302096,
+          "0.022896": 0.5203452527743526,
+          "0.025599": 0.49013563501849566,
+          "0.028621": 0.45006165228113443,
+          "0.032": 0.4118372379778052
+        },
+        "4p6": {
+          "0.006": 0.6616424116424117,
+          "0.006708": 0.6975051975051975,
+          "0.0075": 0.7177754677754677,
+          "0.008386": 0.7312889812889813,
+          "0.009376": 0.7333679833679834,
+          "0.010483": 0.7416839916839917,
+          "0.011721": 0.7401247401247402,
+          "0.013104": 0.7411642411642412,
+          "0.014652": 0.7307692307692307,
+          "0.016381": 0.7234927234927235,
+          "0.018315": 0.7053014553014553,
+          "0.020478": 0.6798336798336798,
+          "0.022896": 0.6533264033264033,
+          "0.025599": 0.6340956340956341,
+          "0.028621": 0.5945945945945946,
+          "0.032": 0.5634095634095634
+        },
+        "6p2": {
+          "0.006": 0.7029702970297029,
+          "0.006708": 0.7283168316831683,
+          "0.0075": 0.7481188118811881,
+          "0.008386": 0.7738613861386139,
+          "0.009376": 0.782970297029703,
+          "0.010483": 0.7948514851485149,
+          "0.011721": 0.7960396039603961,
+          "0.013104": 0.7984158415841585,
+          "0.014652": 0.7988118811881189,
+          "0.016381": 0.7976237623762377,
+          "0.018315": 0.7837623762376238,
+          "0.020478": 0.7702970297029703,
+          "0.022896": 0.7540594059405941,
+          "0.025599": 0.7346534653465346,
+          "0.028621": 0.7136633663366336,
+          "0.032": 0.6906930693069306
+        }
+      },
+      "mean_cost": 0.000990099009900991,
+      "mean_fixed": 0.6656023424545334,
+      "mean_tuned": 0.6665924414644344,
+      "per_phantom_optimum": {
+        "2p4": 0.010483,
+        "3p5": 0.010483,
+        "4p6": 0.010483,
+        "6p2": 0.014652
+      },
+      "relative_cost": 0.001485313886436885,
+      "worst_cost": 0.003960396039603964
+    }
+  },
+  "replicates": {
+    "out_of_sample": {
+      "flood fill": [
+        {
+          "n": 5,
+          "r0_frozen": 0.474679270762998,
+          "r0_full_search": 0.47332883187035785,
+          "replicates_mean": 0.4722275538505887,
+          "replicates_sd": 0.012659872014740694,
+          "strain_key": "2p4"
+        },
+        {
+          "n": 5,
+          "r0_frozen": 0.625154130702836,
+          "r0_full_search": 0.6202219482120839,
+          "replicates_mean": 0.6187317418894368,
+          "replicates_sd": 0.009454273177521039,
+          "strain_key": "3p5"
+        },
+        {
+          "n": 5,
+          "r0_frozen": 0.7411642411642412,
+          "r0_full_search": 0.7302494802494802,
+          "replicates_mean": 0.734064903903177,
+          "replicates_sd": 0.014121905303528514,
+          "strain_key": "4p6"
+        },
+        {
+          "n": 5,
+          "r0_frozen": 0.788910891089109,
+          "r0_full_search": 0.7908910891089109,
+          "replicates_mean": 0.782361059060357,
+          "replicates_sd": 0.014664239227085851,
+          "strain_key": "6p2"
+        }
+      ],
+      "flood fill + merge": [
+        {
+          "n": 5,
+          "r0_frozen": 0.47602970965563807,
+          "r0_full_search": 0.47670492910195816,
+          "replicates_mean": 0.48279472506814053,
+          "replicates_sd": 0.013786821315814223,
+          "strain_key": "2p4"
+        },
+        {
+          "n": 5,
+          "r0_frozen": 0.6319358816276203,
+          "r0_full_search": 0.6356350184956844,
+          "replicates_mean": 0.624906307591717,
+          "replicates_sd": 0.011191534607187253,
+          "strain_key": "3p5"
+        },
+        {
+          "n": 5,
+          "r0_frozen": 0.7468814968814969,
+          "r0_full_search": 0.7422037422037422,
+          "replicates_mean": 0.7404852792728582,
+          "replicates_sd": 0.015566947601046294,
+          "strain_key": "4p6"
+        },
+        {
+          "n": 5,
+          "r0_frozen": 0.7960396039603961,
+          "r0_full_search": 0.7996039603960396,
+          "replicates_mean": 0.7868086365636489,
+          "replicates_sd": 0.015212251250969106,
+          "strain_key": "6p2"
+        }
+      ]
+    },
+    "paired": {
+      "flood fill": {
+        "all_positive": true,
+        "block_mean": 0.5743057097960949,
+        "block_means": {
+          "2p4": 0.3820180911798158,
+          "3p5": 0.5294880377522349,
+          "4p6": 0.6532167499408261,
+          "6p2": 0.7324999603115024
+        },
+        "block_p": 0.004898165728722085,
+        "block_sd": 0.15300928637766348,
+        "block_t": 7.506808552502769,
+        "mean": 0.5743057097960949,
+        "min": 0.35405405405405405,
+        "n_blocks": 4,
+        "n_pairs": 20,
+        "p": 9.770292602952496e-14,
+        "per_strain": {
+          "2p4": {
+            "mean": 0.3820180911798158,
+            "min": 0.35405405405405405,
+            "n": 5,
+            "sd": 0.016265820998574744
+          },
+          "3p5": {
+            "mean": 0.5294880377522349,
+            "min": 0.5189088654680719,
+            "n": 5,
+            "sd": 0.011072616517719184
+          },
+          "4p6": {
+            "mean": 0.6532167499408261,
+            "min": 0.6408668730650154,
+            "n": 5,
+            "sd": 0.013804755677150256
+          },
+          "6p2": {
+            "mean": 0.7324999603115024,
+            "min": 0.7130885873902634,
+            "n": 5,
+            "sd": 0.016537021197010074
+          }
+        },
+        "sd": 0.1366098020374967,
+        "t": 18.800797421810934,
+        "wilcoxon_p": 1.9073486328125e-06
+      },
+      "flood fill + merge": {
+        "all_positive": true,
+        "block_mean": 0.581208132244296,
+        "block_means": {
+          "2p4": 0.3925852623973677,
+          "3p5": 0.5356626034545149,
+          "4p6": 0.6596371253105072,
+          "6p2": 0.7369475378147943
+        },
+        "block_p": 0.004522562772928259,
+        "block_sd": 0.1506196662932434,
+        "block_t": 7.717559685900968,
+        "mean": 0.581208132244296,
+        "min": 0.3655405405405405,
+        "n_blocks": 4,
+        "n_pairs": 20,
+        "p": 5.960465246663127e-14,
+        "per_strain": {
+          "2p4": {
+            "mean": 0.3925852623973677,
+            "min": 0.3655405405405405,
+            "n": 5,
+            "sd": 0.016700900682169235
+          },
+          "3p5": {
+            "mean": 0.5356626034545149,
+            "min": 0.5220086794792312,
+            "n": 5,
+            "sd": 0.00895641943963589
+          },
+          "4p6": {
+            "mean": 0.6596371253105072,
+            "min": 0.6434468524251806,
+            "n": 5,
+            "sd": 0.015523592247069128
+          },
+          "6p2": {
+            "mean": 0.7369475378147943,
+            "min": 0.7186751795690343,
+            "n": 5,
+            "sd": 0.017052892968728826
+          }
+        },
+        "sd": 0.1345280132331753,
+        "t": 19.321193579530842,
+        "wilcoxon_p": 1.9073486328125e-06
+      }
+    },
+    "primary": {
+      "paired": {
+        "flood fill": {
+          "mean": 0.7361082910906431,
+          "min": 0.729355985776373,
+          "n": 5,
+          "sd": 0.004646984409380075
+        },
+        "flood fill + merge": {
+          "mean": 0.7380106480954037,
+          "min": 0.7333069932832873,
+          "n": 5,
+          "sd": 0.0038456678647536403
+        }
+      },
+      "records": [
+        {
+          "ari": 0.8352353348640713,
+          "arm": "flood fill",
+          "contamination": 0.07872395833333333,
+          "n_cells_pred": 2734,
+          "n_cells_true": 2527,
+          "recovered_at_90": 1995,
+          "recovery_rate_at_90": 0.7894736842105263,
+          "replicate": 1
+        },
+        {
+          "ari": 0.8352230223465384,
+          "arm": "flood fill + merge",
+          "contamination": 0.07892415364583333,
+          "n_cells_pred": 2620,
+          "n_cells_true": 2527,
+          "recovered_at_90": 1998,
+          "recovery_rate_at_90": 0.7906608626830234,
+          "replicate": 1
+        },
+        {
+          "ari": 0.5769603642016419,
+          "arm": "KAM threshold",
+          "contamination": 0.2814632161458333,
+          "n_cells_pred": 1435,
+          "n_cells_true": 2527,
+          "recovered_at_90": 140,
+          "recovery_rate_at_90": 0.055401662049861494,
+          "replicate": 1
+        },
+        {
+          "ari": 0.880179626885822,
+          "arm": "flood fill",
+          "contamination": 0.0729833984375,
+          "n_cells_pred": 2783,
+          "n_cells_true": 2516,
+          "recovered_at_90": 1974,
+          "recovery_rate_at_90": 0.7845786963434023,
+          "replicate": 2
+        },
+        {
+          "ari": 0.8801858349642943,
+          "arm": "flood fill + merge",
+          "contamination": 0.07325358072916667,
+          "n_cells_pred": 2627,
+          "n_cells_true": 2516,
+          "recovered_at_90": 1978,
+          "recovery_rate_at_90": 0.7861685214626392,
+          "replicate": 2
+        },
+        {
+          "ari": 0.6567963198820075,
+          "arm": "KAM threshold",
+          "contamination": 0.26323893229166667,
+          "n_cells_pred": 1435,
+          "n_cells_true": 2516,
+          "recovered_at_90": 121,
+          "recovery_rate_at_90": 0.04809220985691574,
+          "replicate": 2
+        },
+        {
+          "ari": 0.9118185718434504,
+          "arm": "flood fill",
+          "contamination": 0.06457194010416667,
+          "n_cells_pred": 2748,
+          "n_cells_true": 2515,
+          "recovered_at_90": 1977,
+          "recovery_rate_at_90": 0.7860834990059642,
+          "replicate": 3
+        },
+        {
+          "ari": 0.9118202863434987,
+          "arm": "flood fill + merge",
+          "contamination": 0.0647509765625,
+          "n_cells_pred": 2600,
+          "n_cells_true": 2515,
+          "recovered_at_90": 1985,
+          "recovery_rate_at_90": 0.7892644135188867,
+          "replicate": 3
+        },
+        {
+          "ari": 0.7069524831233616,
+          "arm": "KAM threshold",
+          "contamination": 0.24928873697916668,
+          "n_cells_pred": 1405,
+          "n_cells_true": 2515,
+          "recovered_at_90": 117,
+          "recovery_rate_at_90": 0.046520874751491054,
+          "replicate": 3
+        },
+        {
+          "ari": 0.9129691054916683,
+          "arm": "flood fill",
+          "contamination": 0.0602490234375,
+          "n_cells_pred": 2838,
+          "n_cells_true": 2518,
+          "recovered_at_90": 1998,
+          "recovery_rate_at_90": 0.7934868943606036,
+          "replicate": 4
+        },
+        {
+          "ari": 0.9129187537065205,
+          "arm": "flood fill + merge",
+          "contamination": 0.0606689453125,
+          "n_cells_pred": 2657,
+          "n_cells_true": 2518,
+          "recovered_at_90": 1997,
+          "recovery_rate_at_90": 0.7930897537728356,
+          "replicate": 4
+        },
+        {
+          "ari": 0.689554613469719,
+          "arm": "KAM threshold",
+          "contamination": 0.2505387369791667,
+          "n_cells_pred": 1447,
+          "n_cells_true": 2518,
+          "recovered_at_90": 132,
+          "recovery_rate_at_90": 0.05242255758538523,
+          "replicate": 4
+        },
+        {
+          "ari": 0.8792398219374405,
+          "arm": "flood fill",
+          "contamination": 0.06976399739583333,
+          "n_cells_pred": 2805,
+          "n_cells_true": 2531,
+          "recovered_at_90": 1979,
+          "recovery_rate_at_90": 0.7819043856183326,
+          "replicate": 5
+        },
+        {
+          "ari": 0.8792456315058578,
+          "arm": "flood fill + merge",
+          "contamination": 0.07002278645833333,
+          "n_cells_pred": 2653,
+          "n_cells_true": 2531,
+          "recovered_at_90": 1989,
+          "recovery_rate_at_90": 0.785855393125247,
+          "replicate": 5
+        },
+        {
+          "ari": 0.6568721789434147,
+          "arm": "KAM threshold",
+          "contamination": 0.2553271484375,
+          "n_cells_pred": 1510,
+          "n_cells_true": 2531,
+          "recovered_at_90": 133,
+          "recovery_rate_at_90": 0.0525483998419597,
+          "replicate": 5
+        }
+      ],
+      "summary": {
+        "KAM threshold": {
+          "ari_mean": 0.6574271919240289,
+          "ari_sd": 0.0499012577151106,
+          "mean": 0.050997140817122644,
+          "n": 5,
+          "sd": 0.003616407284478736
+        },
+        "flood fill": {
+          "ari_mean": 0.8838884922044905,
+          "ari_sd": 0.031734314842896745,
+          "mean": 0.7871054319077658,
+          "n": 5,
+          "sd": 0.004494755387652918
+        },
+        "flood fill + merge": {
+          "ari_mean": 0.8838787057733419,
+          "ari_sd": 0.03172749009309407,
+          "mean": 0.7890077889125262,
+          "n": 5,
+          "sd": 0.0030602281390339275
+        }
+      }
+    },
+    "protocol": {
+      "flood_fill": "blind: every axis at capped_search.DEFAULTS, chosen on r0; threshold swept, and also fixed",
+      "kam": "re-tuned per replicate over 828 configurations",
+      "replicates_per_strain": 5
+    },
+    "records": [
+      {
+        "ari": 0.5301044207089166,
+        "arm": "flood fill",
+        "blind_rate_at_90": 0.3912162162162162,
+        "contamination": 0.21074381510416668,
+        "local_threshold_deg": 0.007541,
+        "n_cells_true": 1480,
+        "recovered_at_90": 678,
+        "recovery_rate_at_90": 0.4581081081081081,
+        "replicate": 1,
+        "strain_key": "2p4"
+      },
+      {
+        "ari": 0.5351199529214294,
+        "arm": "flood fill + merge",
+        "blind_rate_at_90": 0.4648648648648649,
+        "contamination": 0.19989420572916666,
+        "local_threshold_deg": 0.007541,
+        "n_cells_true": 1480,
+        "recovered_at_90": 695,
+        "recovery_rate_at_90": 0.46959459459459457,
+        "replicate": 1,
+        "strain_key": "2p4"
+      },
+      {
+        "ari": 0.6334376596442275,
+        "arm": "KAM threshold",
+        "contamination": 0.2808610026041667,
+        "local_threshold_deg": null,
+        "n_cells_true": 1480,
+        "recovered_at_90": 154,
+        "recovery_rate_at_90": 0.10405405405405406,
+        "replicate": 1,
+        "strain_key": "2p4"
+      },
+      {
+        "ari": 0.5897461887094045,
+        "arm": "flood fill",
+        "blind_rate_at_90": 0.4071815718157182,
+        "contamination": 0.21324055989583332,
+        "local_threshold_deg": 0.007541,
+        "n_cells_true": 1476,
+        "recovered_at_90": 694,
+        "recovery_rate_at_90": 0.470189701897019,
+        "replicate": 2,
+        "strain_key": "2p4"
+      },
+      {
+        "ari": 0.5936752891422988,
+        "arm": "flood fill + merge",
+        "blind_rate_at_90": 0.4803523035230352,
+        "contamination": 0.19864095052083333,
+        "local_threshold_deg": 0.007541,
+        "n_cells_true": 1476,
+        "recovered_at_90": 719,
+        "recovery_rate_at_90": 0.48712737127371275,
+        "replicate": 2,
+        "strain_key": "2p4"
+      },
+      {
+        "ari": 0.5103895755612311,
+        "arm": "KAM threshold",
+        "contamination": 0.3387093098958333,
+        "local_threshold_deg": null,
+        "n_cells_true": 1476,
+        "recovered_at_90": 120,
+        "recovery_rate_at_90": 0.08130081300813008,
+        "replicate": 2,
+        "strain_key": "2p4"
+      },
+      {
+        "ari": 0.6343189336127528,
+        "arm": "flood fill",
+        "blind_rate_at_90": 0.3881000676132522,
+        "contamination": 0.18775065104166666,
+        "local_threshold_deg": 0.007541,
+        "n_cells_true": 1479,
+        "recovered_at_90": 695,
+        "recovery_rate_at_90": 0.46991210277214335,
+        "replicate": 3,
+        "strain_key": "2p4"
+      },
+      {
+        "ari": 0.4460255136710596,
+        "arm": "flood fill + merge",
+        "blind_rate_at_90": 0.47329276538201487,
+        "contamination": 0.2556070963541667,
+        "local_threshold_deg": 0.009495,
+        "n_cells_true": 1479,
+        "recovered_at_90": 700,
+        "recovery_rate_at_90": 0.47329276538201487,
+        "replicate": 3,
+        "strain_key": "2p4"
+      },
+      {
+        "ari": 0.5864488512408745,
+        "arm": "KAM threshold",
+        "contamination": 0.29722493489583335,
+        "local_threshold_deg": null,
+        "n_cells_true": 1479,
+        "recovered_at_90": 120,
+        "recovery_rate_at_90": 0.08113590263691683,
+        "replicate": 3,
+        "strain_key": "2p4"
+      },
+      {
+        "ari": 0.58003423302823,
+        "arm": "flood fill",
+        "blind_rate_at_90": 0.41311697092630156,
+        "contamination": 0.24169759114583333,
+        "local_threshold_deg": 0.009495,
+        "n_cells_true": 1479,
+        "recovered_at_90": 729,
+        "recovery_rate_at_90": 0.49290060851926976,
+        "replicate": 4,
+        "strain_key": "2p4"
+      },
+      {
+        "ari": 0.5749068622156018,
+        "arm": "flood fill + merge",
+        "blind_rate_at_90": 0.504394861392833,
+        "contamination": 0.23596516927083333,
+        "local_threshold_deg": 0.009495,
+        "n_cells_true": 1479,
+        "recovered_at_90": 746,
+        "recovery_rate_at_90": 0.504394861392833,
+        "replicate": 4,
+        "strain_key": "2p4"
+      },
+      {
+        "ari": 0.6401842912579532,
+        "arm": "KAM threshold",
+        "contamination": 0.2826806640625,
+        "local_threshold_deg": null,
+        "n_cells_true": 1479,
+        "recovered_at_90": 144,
+        "recovery_rate_at_90": 0.0973630831643002,
+        "replicate": 4,
+        "strain_key": "2p4"
+      },
+      {
+        "ari": 0.5531531417058937,
+        "arm": "flood fill",
+        "blind_rate_at_90": 0.4271117166212534,
+        "contamination": 0.24458333333333335,
+        "local_threshold_deg": 0.009495,
+        "n_cells_true": 1468,
+        "recovered_at_90": 690,
+        "recovery_rate_at_90": 0.47002724795640327,
+        "replicate": 5,
+        "strain_key": "2p4"
+      },
+      {
+        "ari": 0.5550641621269314,
+        "arm": "flood fill + merge",
+        "blind_rate_at_90": 0.47956403269754766,
+        "contamination": 0.23890787760416668,
+        "local_threshold_deg": 0.009495,
+        "n_cells_true": 1468,
+        "recovered_at_90": 704,
+        "recovery_rate_at_90": 0.47956403269754766,
+        "replicate": 5,
+        "strain_key": "2p4"
+      },
+      {
+        "ari": 0.5747283185623389,
+        "arm": "KAM threshold",
+        "contamination": 0.30224772135416667,
+        "local_threshold_deg": null,
+        "n_cells_true": 1468,
+        "recovered_at_90": 128,
+        "recovery_rate_at_90": 0.08719346049046321,
+        "replicate": 5,
+        "strain_key": "2p4"
+      },
+      {
+        "ari": 0.7140809218259919,
+        "arm": "flood fill",
+        "blind_rate_at_90": 0.5880541871921182,
+        "contamination": 0.1425634765625,
+        "local_threshold_deg": 0.011956,
+        "n_cells_true": 1624,
+        "recovered_at_90": 1002,
+        "recovery_rate_at_90": 0.6169950738916257,
+        "replicate": 1,
+        "strain_key": "3p5"
+      },
+      {
+        "ari": 0.7140529939595223,
+        "arm": "flood fill + merge",
+        "blind_rate_at_90": 0.6188423645320197,
+        "contamination": 0.14290690104166667,
+        "local_threshold_deg": 0.011956,
+        "n_cells_true": 1624,
+        "recovered_at_90": 1013,
+        "recovery_rate_at_90": 0.6237684729064039,
+        "replicate": 1,
+        "strain_key": "3p5"
+      },
+      {
+        "ari": 0.6322824326475178,
+        "arm": "KAM threshold",
+        "contamination": 0.276162109375,
+        "local_threshold_deg": null,
+        "n_cells_true": 1624,
+        "recovered_at_90": 144,
+        "recovery_rate_at_90": 0.08866995073891626,
+        "replicate": 1,
+        "strain_key": "3p5"
+      },
+      {
+        "ari": 0.7772285538075165,
+        "arm": "flood fill",
+        "blind_rate_at_90": 0.5875077303648732,
+        "contamination": 0.142490234375,
+        "local_threshold_deg": 0.011956,
+        "n_cells_true": 1617,
+        "recovered_at_90": 1019,
+        "recovery_rate_at_90": 0.6301793444650587,
+        "replicate": 2,
+        "strain_key": "3p5"
+      },
+      {
+        "ari": 0.7769548484942712,
+        "arm": "flood fill + merge",
+        "blind_rate_at_90": 0.6202844774273346,
+        "contamination": 0.14301595052083332,
+        "local_threshold_deg": 0.011956,
+        "n_cells_true": 1617,
+        "recovered_at_90": 1019,
+        "recovery_rate_at_90": 0.6301793444650587,
+        "replicate": 2,
+        "strain_key": "3p5"
+      },
+      {
+        "ari": 0.6996536445795645,
+        "arm": "KAM threshold",
+        "contamination": 0.24770345052083334,
+        "local_threshold_deg": null,
+        "n_cells_true": 1617,
+        "recovered_at_90": 136,
+        "recovery_rate_at_90": 0.08410636982065553,
+        "replicate": 2,
+        "strain_key": "3p5"
+      },
+      {
+        "ari": 0.7657481072646077,
+        "arm": "flood fill",
+        "blind_rate_at_90": 0.5747055176689398,
+        "contamination": 0.11866373697916667,
+        "local_threshold_deg": 0.009495,
+        "n_cells_true": 1613,
+        "recovered_at_90": 995,
+        "recovery_rate_at_90": 0.6168629882207067,
+        "replicate": 3,
+        "strain_key": "3p5"
+      },
+      {
+        "ari": 0.7674545009664422,
+        "arm": "flood fill + merge",
+        "blind_rate_at_90": 0.6236825790452573,
+        "contamination": 0.11227376302083333,
+        "local_threshold_deg": 0.009495,
+        "n_cells_true": 1613,
+        "recovered_at_90": 1006,
+        "recovery_rate_at_90": 0.6236825790452573,
+        "replicate": 3,
+        "strain_key": "3p5"
+      },
+      {
+        "ari": 0.6756280526686993,
+        "arm": "KAM threshold",
+        "contamination": 0.2586962890625,
+        "local_threshold_deg": null,
+        "n_cells_true": 1613,
+        "recovered_at_90": 134,
+        "recovery_rate_at_90": 0.08307501549907005,
+        "replicate": 3,
+        "strain_key": "3p5"
+      },
+      {
+        "ari": 0.7132915670292248,
+        "arm": "flood fill",
+        "blind_rate_at_90": 0.5846249225046497,
+        "contamination": 0.16389811197916668,
+        "local_threshold_deg": 0.011956,
+        "n_cells_true": 1613,
+        "recovered_at_90": 976,
+        "recovery_rate_at_90": 0.6050836949783013,
+        "replicate": 4,
+        "strain_key": "3p5"
+      },
+      {
+        "ari": 0.7851259305329665,
+        "arm": "flood fill + merge",
+        "blind_rate_at_90": 0.6081835089894606,
+        "contamination": 0.1223876953125,
+        "local_threshold_deg": 0.009495,
+        "n_cells_true": 1613,
+        "recovered_at_90": 981,
+        "recovery_rate_at_90": 0.6081835089894606,
+        "replicate": 4,
+        "strain_key": "3p5"
+      },
+      {
+        "ari": 0.6541624583174075,
+        "arm": "KAM threshold",
+        "contamination": 0.2570882161458333,
+        "local_threshold_deg": null,
+        "n_cells_true": 1613,
+        "recovered_at_90": 139,
+        "recovery_rate_at_90": 0.08617482951022938,
+        "replicate": 4,
+        "strain_key": "3p5"
+      },
+      {
+        "ari": 0.7782947145378944,
+        "arm": "flood fill",
+        "blind_rate_at_90": 0.5967940813810111,
+        "contamination": 0.137490234375,
+        "local_threshold_deg": 0.011956,
+        "n_cells_true": 1622,
+        "recovered_at_90": 1013,
+        "recovery_rate_at_90": 0.6245376078914919,
+        "replicate": 5,
+        "strain_key": "3p5"
+      },
+      {
+        "ari": 0.807645428910832,
+        "arm": "flood fill + merge",
+        "blind_rate_at_90": 0.6387176325524044,
+        "contamination": 0.1056005859375,
+        "local_threshold_deg": 0.009495,
+        "n_cells_true": 1622,
+        "recovered_at_90": 1036,
+        "recovery_rate_at_90": 0.6387176325524044,
+        "replicate": 5,
+        "strain_key": "3p5"
+      },
+      {
+        "ari": 0.6823483466393182,
+        "arm": "KAM threshold",
+        "contamination": 0.24711588541666665,
+        "local_threshold_deg": null,
+        "n_cells_true": 1622,
+        "recovered_at_90": 169,
+        "recovery_rate_at_90": 0.10419235511713934,
+        "replicate": 5,
+        "strain_key": "3p5"
+      },
+      {
+        "ari": 0.8651669988046194,
+        "arm": "flood fill",
+        "blind_rate_at_90": 0.7442946058091287,
+        "contamination": 0.07152180989583333,
+        "local_threshold_deg": 0.011956,
+        "n_cells_true": 1928,
+        "recovered_at_90": 1439,
+        "recovery_rate_at_90": 0.7463692946058091,
+        "replicate": 1,
+        "strain_key": "4p6"
+      },
+      {
+        "ari": 0.865273082544883,
+        "arm": "flood fill + merge",
+        "blind_rate_at_90": 0.7406639004149378,
+        "contamination": 0.0717919921875,
+        "local_threshold_deg": 0.011956,
+        "n_cells_true": 1928,
+        "recovered_at_90": 1451,
+        "recovery_rate_at_90": 0.7525933609958506,
+        "replicate": 1,
+        "strain_key": "4p6"
+      },
+      {
+        "ari": 0.6863116585476003,
+        "arm": "KAM threshold",
+        "contamination": 0.24412434895833332,
+        "local_threshold_deg": null,
+        "n_cells_true": 1928,
+        "recovered_at_90": 160,
+        "recovery_rate_at_90": 0.08298755186721991,
+        "replicate": 1,
+        "strain_key": "4p6"
+      },
+      {
+        "ari": 0.8902067993458129,
+        "arm": "flood fill",
+        "blind_rate_at_90": 0.7167270844122217,
+        "contamination": 0.06908854166666667,
+        "local_threshold_deg": 0.011956,
+        "n_cells_true": 1931,
+        "recovered_at_90": 1390,
+        "recovery_rate_at_90": 0.7198342827550492,
+        "replicate": 2,
+        "strain_key": "4p6"
+      },
+      {
+        "ari": 0.8902845686673138,
+        "arm": "flood fill + merge",
+        "blind_rate_at_90": 0.7141377524598653,
+        "contamination": 0.0693603515625,
+        "local_threshold_deg": 0.011956,
+        "n_cells_true": 1931,
+        "recovered_at_90": 1404,
+        "recovery_rate_at_90": 0.7270844122216468,
+        "replicate": 2,
+        "strain_key": "4p6"
+      },
+      {
+        "ari": 0.7107112564220333,
+        "arm": "KAM threshold",
+        "contamination": 0.23754069010416667,
+        "local_threshold_deg": null,
+        "n_cells_true": 1931,
+        "recovered_at_90": 150,
+        "recovery_rate_at_90": 0.07767995857068877,
+        "replicate": 2,
+        "strain_key": "4p6"
+      },
+      {
+        "ari": 0.852822982782329,
+        "arm": "flood fill",
+        "blind_rate_at_90": 0.7382307294361097,
+        "contamination": 0.0851953125,
+        "local_threshold_deg": 0.011956,
+        "n_cells_true": 1933,
+        "recovered_at_90": 1453,
+        "recovery_rate_at_90": 0.75168132436627,
+        "replicate": 3,
+        "strain_key": "4p6"
+      },
+      {
+        "ari": 0.876301708209173,
+        "arm": "flood fill + merge",
+        "blind_rate_at_90": 0.760993274702535,
+        "contamination": 0.0592333984375,
+        "local_threshold_deg": 0.009495,
+        "n_cells_true": 1933,
+        "recovered_at_90": 1471,
+        "recovery_rate_at_90": 0.760993274702535,
+        "replicate": 3,
+        "strain_key": "4p6"
+      },
+      {
+        "ari": 0.7058051671530077,
+        "arm": "KAM threshold",
+        "contamination": 0.23227864583333332,
+        "local_threshold_deg": null,
+        "n_cells_true": 1933,
+        "recovered_at_90": 154,
+        "recovery_rate_at_90": 0.07966890843248836,
+        "replicate": 3,
+        "strain_key": "4p6"
+      },
+      {
+        "ari": 0.8425803294726559,
+        "arm": "flood fill",
+        "blind_rate_at_90": 0.7156862745098039,
+        "contamination": 0.07936848958333333,
+        "local_threshold_deg": 0.011956,
+        "n_cells_true": 1938,
+        "recovered_at_90": 1403,
+        "recovery_rate_at_90": 0.7239422084623323,
+        "replicate": 4,
+        "strain_key": "4p6"
+      },
+      {
+        "ari": 0.8425644526976974,
+        "arm": "flood fill + merge",
+        "blind_rate_at_90": 0.7012383900928792,
+        "contamination": 0.07986328125,
+        "local_threshold_deg": 0.011956,
+        "n_cells_true": 1938,
+        "recovered_at_90": 1408,
+        "recovery_rate_at_90": 0.7265221878224974,
+        "replicate": 4,
+        "strain_key": "4p6"
+      },
+      {
+        "ari": 0.7121268894230703,
+        "arm": "KAM threshold",
+        "contamination": 0.22733235677083333,
+        "local_threshold_deg": null,
+        "n_cells_true": 1938,
+        "recovered_at_90": 161,
+        "recovery_rate_at_90": 0.08307533539731682,
+        "replicate": 4,
+        "strain_key": "4p6"
+      },
+      {
+        "ari": 0.8517829782433928,
+        "arm": "flood fill",
+        "blind_rate_at_90": 0.7160621761658031,
+        "contamination": 0.0792431640625,
+        "local_threshold_deg": 0.011956,
+        "n_cells_true": 1930,
+        "recovered_at_90": 1406,
+        "recovery_rate_at_90": 0.7284974093264248,
+        "replicate": 5,
+        "strain_key": "4p6"
+      },
+      {
+        "ari": 0.8518655583930187,
+        "arm": "flood fill + merge",
+        "blind_rate_at_90": 0.7233160621761658,
+        "contamination": 0.07948079427083334,
+        "local_threshold_deg": 0.011956,
+        "n_cells_true": 1930,
+        "recovered_at_90": 1419,
+        "recovery_rate_at_90": 0.7352331606217617,
+        "replicate": 5,
+        "strain_key": "4p6"
+      },
+      {
+        "ari": 0.717768355959767,
+        "arm": "KAM threshold",
+        "contamination": 0.22754720052083333,
+        "local_threshold_deg": null,
+        "n_cells_true": 1930,
+        "recovered_at_90": 156,
+        "recovery_rate_at_90": 0.08082901554404145,
+        "replicate": 5,
+        "strain_key": "4p6"
+      },
+      {
+        "ari": 0.907573386536368,
+        "arm": "flood fill",
+        "blind_rate_at_90": 0.7997625643055006,
+        "contamination": 0.0631689453125,
+        "local_threshold_deg": 0.015055,
+        "n_cells_true": 2527,
+        "recovered_at_90": 2021,
+        "recovery_rate_at_90": 0.7997625643055006,
+        "replicate": 1,
+        "strain_key": "6p2"
+      },
+      {
+        "ari": 0.9075504695622679,
+        "arm": "flood fill + merge",
+        "blind_rate_at_90": 0.7760189948555599,
+        "contamination": 0.0634521484375,
+        "local_threshold_deg": 0.015055,
+        "n_cells_true": 2527,
+        "recovered_at_90": 2031,
+        "recovery_rate_at_90": 0.8037198258804907,
+        "replicate": 1,
+        "strain_key": "6p2"
+      },
+      {
+        "ari": 0.6978336500752035,
+        "arm": "KAM threshold",
+        "contamination": 0.2564794921875,
+        "local_threshold_deg": null,
+        "n_cells_true": 2527,
+        "recovered_at_90": 120,
+        "recovery_rate_at_90": 0.04748713889988128,
+        "replicate": 1,
+        "strain_key": "6p2"
+      },
+      {
+        "ari": 0.8881003814806757,
+        "arm": "flood fill",
+        "blind_rate_at_90": 0.7810015898251192,
+        "contamination": 0.0674267578125,
+        "local_threshold_deg": 0.015055,
+        "n_cells_true": 2516,
+        "recovered_at_90": 1965,
+        "recovery_rate_at_90": 0.7810015898251192,
+        "replicate": 2,
+        "strain_key": "6p2"
+      },
+      {
+        "ari": 0.904452673001159,
+        "arm": "flood fill + merge",
+        "blind_rate_at_90": 0.7631160572337043,
+        "contamination": 0.049591471354166666,
+        "local_threshold_deg": 0.011956,
+        "n_cells_true": 2516,
+        "recovered_at_90": 1977,
+        "recovery_rate_at_90": 0.7857710651828299,
+        "replicate": 2,
+        "strain_key": "6p2"
+      },
+      {
+        "ari": 0.6539471513522079,
+        "arm": "KAM threshold",
+        "contamination": 0.260927734375,
+        "local_threshold_deg": null,
+        "n_cells_true": 2516,
+        "recovered_at_90": 125,
+        "recovery_rate_at_90": 0.049682034976152624,
+        "replicate": 2,
+        "strain_key": "6p2"
+      },
+      {
+        "ari": 0.8889741705272658,
+        "arm": "flood fill",
+        "blind_rate_at_90": 0.7713040031708284,
+        "contamination": 0.07136881510416666,
+        "local_threshold_deg": 0.015055,
+        "n_cells_true": 2523,
+        "recovered_at_90": 1946,
+        "recovery_rate_at_90": 0.7713040031708284,
+        "replicate": 3,
+        "strain_key": "6p2"
+      },
+      {
+        "ari": 0.8888840414152704,
+        "arm": "flood fill + merge",
+        "blind_rate_at_90": 0.7415774871185097,
+        "contamination": 0.071748046875,
+        "local_threshold_deg": 0.015055,
+        "n_cells_true": 2523,
+        "recovered_at_90": 1950,
+        "recovery_rate_at_90": 0.7728894173602854,
+        "replicate": 3,
+        "strain_key": "6p2"
+      },
+      {
+        "ari": 0.6694711311615723,
+        "arm": "KAM threshold",
+        "contamination": 0.26414388020833335,
+        "local_threshold_deg": null,
+        "n_cells_true": 2523,
+        "recovered_at_90": 129,
+        "recovery_rate_at_90": 0.05112960760998811,
+        "replicate": 3,
+        "strain_key": "6p2"
+      },
+      {
+        "ari": 0.899292062529421,
+        "arm": "flood fill",
+        "blind_rate_at_90": 0.7943740095087163,
+        "contamination": 0.06451822916666666,
+        "local_threshold_deg": 0.015055,
+        "n_cells_true": 2524,
+        "recovered_at_90": 2005,
+        "recovery_rate_at_90": 0.7943740095087163,
+        "replicate": 4,
+        "strain_key": "6p2"
+      },
+      {
+        "ari": 0.913245956032169,
+        "arm": "flood fill + merge",
+        "blind_rate_at_90": 0.7717908082408875,
+        "contamination": 0.0457568359375,
+        "local_threshold_deg": 0.011956,
+        "n_cells_true": 2524,
+        "recovered_at_90": 2021,
+        "recovery_rate_at_90": 0.8007131537242472,
+        "replicate": 4,
+        "strain_key": "6p2"
+      },
+      {
+        "ari": 0.6594538898563972,
+        "arm": "KAM threshold",
+        "contamination": 0.261923828125,
+        "local_threshold_deg": null,
+        "n_cells_true": 2524,
+        "recovered_at_90": 123,
+        "recovery_rate_at_90": 0.04873217115689382,
+        "replicate": 4,
+        "strain_key": "6p2"
+      },
+      {
+        "ari": 0.8860500151044427,
+        "arm": "flood fill",
+        "blind_rate_at_90": 0.7653631284916201,
+        "contamination": 0.07129720052083334,
+        "local_threshold_deg": 0.015055,
+        "n_cells_true": 2506,
+        "recovered_at_90": 1918,
+        "recovery_rate_at_90": 0.7653631284916201,
+        "replicate": 5,
+        "strain_key": "6p2"
+      },
+      {
+        "ari": 0.8861109764439065,
+        "arm": "flood fill + merge",
+        "blind_rate_at_90": 0.6979249800478851,
+        "contamination": 0.07145182291666667,
+        "local_threshold_deg": 0.015055,
+        "n_cells_true": 2506,
+        "recovered_at_90": 1932,
+        "recovery_rate_at_90": 0.770949720670391,
+        "replicate": 5,
+        "strain_key": "6p2"
+      },
+      {
+        "ari": 0.6984069683829518,
+        "arm": "KAM threshold",
+        "contamination": 0.24267740885416667,
+        "local_threshold_deg": null,
+        "n_cells_true": 2506,
+        "recovered_at_90": 131,
+        "recovery_rate_at_90": 0.05227454110135674,
+        "replicate": 5,
+        "strain_key": "6p2"
+      }
+    ],
+    "replicate_grid_verification": [],
+    "summary": {
+      "KAM threshold": {
+        "2p4": {
+          "max": 0.10405405405405406,
+          "mean": 0.09020946267077287,
+          "min": 0.08113590263691683,
+          "n": 5,
+          "sd": 0.010169031374555366
+        },
+        "3p5": {
+          "max": 0.10419235511713934,
+          "mean": 0.0892437041372021,
+          "min": 0.08307501549907005,
+          "n": 5,
+          "sd": 0.008626329954741566
+        },
+        "4p6": {
+          "max": 0.08307533539731682,
+          "mean": 0.08084815396235105,
+          "min": 0.07767995857068877,
+          "n": 5,
+          "sd": 0.0022894218090011346
+        },
+        "6p2": {
+          "max": 0.05227454110135674,
+          "mean": 0.04986109874885451,
+          "min": 0.04748713889988128,
+          "n": 5,
+          "sd": 0.0018957877931579901
+        }
+      },
+      "flood fill": {
+        "2p4": {
+          "blind_mean": 0.4053453086385483,
+          "blind_sd": 0.01608241822876493,
+          "max": 0.49290060851926976,
+          "mean": 0.4722275538505887,
+          "min": 0.4581081081081081,
+          "n": 5,
+          "sd": 0.012659872014740694
+        },
+        "3p5": {
+          "blind_mean": 0.5863372878223185,
+          "blind_sd": 0.007935560512697589,
+          "max": 0.6301793444650587,
+          "mean": 0.6187317418894368,
+          "min": 0.6050836949783013,
+          "n": 5,
+          "sd": 0.009454273177521039
+        },
+        "4p6": {
+          "blind_mean": 0.7262001740666135,
+          "blind_sd": 0.01392123589620112,
+          "max": 0.75168132436627,
+          "mean": 0.734064903903177,
+          "min": 0.7198342827550492,
+          "n": 5,
+          "sd": 0.014121905303528514
+        },
+        "6p2": {
+          "blind_mean": 0.782361059060357,
+          "blind_sd": 0.014664239227085851,
+          "max": 0.7997625643055006,
+          "mean": 0.782361059060357,
+          "min": 0.7653631284916201,
+          "n": 5,
+          "sd": 0.014664239227085851
+        }
+      },
+      "flood fill + merge": {
+        "2p4": {
+          "blind_mean": 0.48049376557205914,
+          "blind_sd": 0.014733157648781775,
+          "max": 0.504394861392833,
+          "mean": 0.48279472506814053,
+          "min": 0.46959459459459457,
+          "n": 5,
+          "sd": 0.013786821315814223
+        },
+        "3p5": {
+          "blind_mean": 0.6219421125092953,
+          "blind_sd": 0.011023867956429113,
+          "max": 0.6387176325524044,
+          "mean": 0.624906307591717,
+          "min": 0.6081835089894606,
+          "n": 5,
+          "sd": 0.011191534607187253
+        },
+        "4p6": {
+          "blind_mean": 0.7280698759692766,
+          "blind_sd": 0.023340903374138078,
+          "max": 0.760993274702535,
+          "mean": 0.7404852792728582,
+          "min": 0.7265221878224974,
+          "n": 5,
+          "sd": 0.015566947601046294
+        },
+        "6p2": {
+          "blind_mean": 0.7500856654993093,
+          "blind_sd": 0.03204125507765642,
+          "max": 0.8037198258804907,
+          "mean": 0.7868086365636489,
+          "min": 0.770949720670391,
+          "n": 5,
+          "sd": 0.015212251250969106
+        }
+      }
+    },
+    "verification": [
+      {
+        "difference": 0.0,
+        "full_grid": 0.08845374746792707,
+        "reduced_grid": 0.08845374746792707,
+        "strain_key": "2p4"
+      },
+      {
+        "difference": 0.0,
+        "full_grid": 0.10480887792848335,
+        "reduced_grid": 0.10480887792848335,
+        "strain_key": "3p5"
+      },
+      {
+        "difference": 0.0,
+        "full_grid": 0.07796257796257797,
+        "reduced_grid": 0.07796257796257797,
+        "strain_key": "4p6"
+      },
+      {
+        "difference": 0.0,
+        "full_grid": 0.055445544554455446,
+        "reduced_grid": 0.055445544554455446,
+        "strain_key": "6p2"
+      }
+    ]
+  },
+  "seed_ablation": {
+    "decomposition": {
+      "flood fill": [
+        {
+          "n_seeds": 5,
+          "ratio_seed_to_replicate": null,
+          "replicate_sd": null,
+          "seed_mean": 0.474679270762998,
+          "seed_range": 0.0,
+          "seed_sd": 0.0,
+          "strain_key": "2p4"
+        },
+        {
+          "n_seeds": 5,
+          "ratio_seed_to_replicate": null,
+          "replicate_sd": null,
+          "seed_mean": 0.625154130702836,
+          "seed_range": 0.0,
+          "seed_sd": 0.0,
+          "strain_key": "3p5"
+        },
+        {
+          "n_seeds": 5,
+          "ratio_seed_to_replicate": null,
+          "replicate_sd": null,
+          "seed_mean": 0.7411642411642412,
+          "seed_range": 0.0,
+          "seed_sd": 0.0,
+          "strain_key": "4p6"
+        },
+        {
+          "n_seeds": 5,
+          "ratio_seed_to_replicate": null,
+          "replicate_sd": null,
+          "seed_mean": 0.788910891089109,
+          "seed_range": 0.0,
+          "seed_sd": 0.0,
+          "strain_key": "6p2"
+        }
+      ],
+      "flood fill + merge": [
+        {
+          "n_seeds": 5,
+          "ratio_seed_to_replicate": null,
+          "replicate_sd": null,
+          "seed_mean": 0.476029709655638,
+          "seed_range": 0.0,
+          "seed_sd": 6.206335383118183e-17,
+          "strain_key": "2p4"
+        },
+        {
+          "n_seeds": 5,
+          "ratio_seed_to_replicate": null,
+          "replicate_sd": null,
+          "seed_mean": 0.6324290998766954,
+          "seed_range": 0.0006165228113439447,
+          "seed_sd": 0.00027571738316886776,
+          "strain_key": "3p5"
+        },
+        {
+          "n_seeds": 5,
+          "ratio_seed_to_replicate": null,
+          "replicate_sd": null,
+          "seed_mean": 0.7468814968814969,
+          "seed_range": 0.0,
+          "seed_sd": 0.0,
+          "strain_key": "4p6"
+        },
+        {
+          "n_seeds": 5,
+          "ratio_seed_to_replicate": null,
+          "replicate_sd": null,
+          "seed_mean": 0.7960396039603961,
+          "seed_range": 0.0,
+          "seed_sd": 0.0,
+          "strain_key": "6p2"
+        }
+      ]
+    },
+    "determinism": [
+      {
+        "ari_against_seed_0": 1.0,
+        "label_arrays_identical": false,
+        "labels_other": 109,
+        "labels_reference": 109,
+        "seed": 1,
+        "strain_key": "2p4"
+      },
+      {
+        "ari_against_seed_0": 1.0,
+        "label_arrays_identical": false,
+        "labels_other": 109,
+        "labels_reference": 109,
+        "seed": 2,
+        "strain_key": "2p4"
+      },
+      {
+        "ari_against_seed_0": 1.0,
+        "label_arrays_identical": false,
+        "labels_other": 109,
+        "labels_reference": 109,
+        "seed": 3,
+        "strain_key": "2p4"
+      },
+      {
+        "ari_against_seed_0": 1.0,
+        "label_arrays_identical": false,
+        "labels_other": 109,
+        "labels_reference": 109,
+        "seed": "random_device",
+        "strain_key": "2p4"
+      },
+      {
+        "ari_against_seed_0": 1.0,
+        "label_arrays_identical": false,
+        "labels_other": 407,
+        "labels_reference": 407,
+        "seed": 1,
+        "strain_key": "3p5"
+      },
+      {
+        "ari_against_seed_0": 1.0,
+        "label_arrays_identical": false,
+        "labels_other": 407,
+        "labels_reference": 407,
+        "seed": 2,
+        "strain_key": "3p5"
+      },
+      {
+        "ari_against_seed_0": 1.0,
+        "label_arrays_identical": false,
+        "labels_other": 407,
+        "labels_reference": 407,
+        "seed": 3,
+        "strain_key": "3p5"
+      },
+      {
+        "ari_against_seed_0": 1.0,
+        "label_arrays_identical": false,
+        "labels_other": 407,
+        "labels_reference": 407,
+        "seed": "random_device",
+        "strain_key": "3p5"
+      },
+      {
+        "ari_against_seed_0": 1.0,
+        "label_arrays_identical": false,
+        "labels_other": 857,
+        "labels_reference": 857,
+        "seed": 1,
+        "strain_key": "4p6"
+      },
+      {
+        "ari_against_seed_0": 1.0,
+        "label_arrays_identical": false,
+        "labels_other": 857,
+        "labels_reference": 857,
+        "seed": 2,
+        "strain_key": "4p6"
+      },
+      {
+        "ari_against_seed_0": 1.0,
+        "label_arrays_identical": false,
+        "labels_other": 857,
+        "labels_reference": 857,
+        "seed": 3,
+        "strain_key": "4p6"
+      },
+      {
+        "ari_against_seed_0": 1.0,
+        "label_arrays_identical": false,
+        "labels_other": 857,
+        "labels_reference": 857,
+        "seed": "random_device",
+        "strain_key": "4p6"
+      },
+      {
+        "ari_against_seed_0": 1.0,
+        "label_arrays_identical": false,
+        "labels_other": 1468,
+        "labels_reference": 1468,
+        "seed": 1,
+        "strain_key": "6p2"
+      },
+      {
+        "ari_against_seed_0": 1.0,
+        "label_arrays_identical": false,
+        "labels_other": 1468,
+        "labels_reference": 1468,
+        "seed": 2,
+        "strain_key": "6p2"
+      },
+      {
+        "ari_against_seed_0": 1.0,
+        "label_arrays_identical": false,
+        "labels_other": 1468,
+        "labels_reference": 1468,
+        "seed": 3,
+        "strain_key": "6p2"
+      },
+      {
+        "ari_against_seed_0": 1.0,
+        "label_arrays_identical": false,
+        "labels_other": 1468,
+        "labels_reference": 1468,
+        "seed": "random_device",
+        "strain_key": "6p2"
+      }
+    ],
+    "records": [
+      {
+        "ari": 0.5628822619765144,
+        "arm": "flood fill",
+        "local_threshold_deg": 0.009495,
+        "recovery_rate_at_90": 0.474679270762998,
+        "seed": 0,
+        "strain_key": "2p4"
+      },
+      {
+        "ari": 0.5628822619765144,
+        "arm": "flood fill",
+        "local_threshold_deg": 0.009495,
+        "recovery_rate_at_90": 0.474679270762998,
+        "seed": 1,
+        "strain_key": "2p4"
+      },
+      {
+        "ari": 0.5628822619765144,
+        "arm": "flood fill",
+        "local_threshold_deg": 0.009495,
+        "recovery_rate_at_90": 0.474679270762998,
+        "seed": 2,
+        "strain_key": "2p4"
+      },
+      {
+        "ari": 0.5628822619765144,
+        "arm": "flood fill",
+        "local_threshold_deg": 0.009495,
+        "recovery_rate_at_90": 0.474679270762998,
+        "seed": 3,
+        "strain_key": "2p4"
+      },
+      {
+        "ari": 0.5628822619765144,
+        "arm": "flood fill",
+        "local_threshold_deg": 0.009495,
+        "recovery_rate_at_90": 0.474679270762998,
+        "seed": 4,
+        "strain_key": "2p4"
+      },
+      {
+        "ari": 0.5622721461759164,
+        "arm": "flood fill + merge",
+        "local_threshold_deg": 0.009495,
+        "recovery_rate_at_90": 0.47602970965563807,
+        "seed": 0,
+        "strain_key": "2p4"
+      },
+      {
+        "ari": 0.562277898524488,
+        "arm": "flood fill + merge",
+        "local_threshold_deg": 0.009495,
+        "recovery_rate_at_90": 0.47602970965563807,
+        "seed": 1,
+        "strain_key": "2p4"
+      },
+      {
+        "ari": 0.5623084657166282,
+        "arm": "flood fill + merge",
+        "local_threshold_deg": 0.009495,
+        "recovery_rate_at_90": 0.47602970965563807,
+        "seed": 2,
+        "strain_key": "2p4"
+      },
+      {
+        "ari": 0.5622918203554784,
+        "arm": "flood fill + merge",
+        "local_threshold_deg": 0.009495,
+        "recovery_rate_at_90": 0.47602970965563807,
+        "seed": 3,
+        "strain_key": "2p4"
+      },
+      {
+        "ari": 0.5623031673547308,
+        "arm": "flood fill + merge",
+        "local_threshold_deg": 0.009495,
+        "recovery_rate_at_90": 0.47602970965563807,
+        "seed": 4,
+        "strain_key": "2p4"
+      },
+      {
+        "ari": 0.7287443278463386,
+        "arm": "flood fill",
+        "local_threshold_deg": 0.011956,
+        "recovery_rate_at_90": 0.625154130702836,
+        "seed": 0,
+        "strain_key": "3p5"
+      },
+      {
+        "ari": 0.7287443278463386,
+        "arm": "flood fill",
+        "local_threshold_deg": 0.011956,
+        "recovery_rate_at_90": 0.625154130702836,
+        "seed": 1,
+        "strain_key": "3p5"
+      },
+      {
+        "ari": 0.7287443278463386,
+        "arm": "flood fill",
+        "local_threshold_deg": 0.011956,
+        "recovery_rate_at_90": 0.625154130702836,
+        "seed": 2,
+        "strain_key": "3p5"
+      },
+      {
+        "ari": 0.7287443278463386,
+        "arm": "flood fill",
+        "local_threshold_deg": 0.011956,
+        "recovery_rate_at_90": 0.625154130702836,
+        "seed": 3,
+        "strain_key": "3p5"
+      },
+      {
+        "ari": 0.7287443278463386,
+        "arm": "flood fill",
+        "local_threshold_deg": 0.011956,
+        "recovery_rate_at_90": 0.625154130702836,
+        "seed": 4,
+        "strain_key": "3p5"
+      },
+      {
+        "ari": 0.7562034351367016,
+        "arm": "flood fill + merge",
+        "local_threshold_deg": 0.009495,
+        "recovery_rate_at_90": 0.6319358816276203,
+        "seed": 0,
+        "strain_key": "3p5"
+      },
+      {
+        "ari": 0.7562215007480256,
+        "arm": "flood fill + merge",
+        "local_threshold_deg": 0.009495,
+        "recovery_rate_at_90": 0.6325524044389642,
+        "seed": 1,
+        "strain_key": "3p5"
+      },
+      {
+        "ari": 0.7562237192934916,
+        "arm": "flood fill + merge",
+        "local_threshold_deg": 0.009495,
+        "recovery_rate_at_90": 0.6325524044389642,
+        "seed": 2,
+        "strain_key": "3p5"
+      },
+      {
+        "ari": 0.7562264635809656,
+        "arm": "flood fill + merge",
+        "local_threshold_deg": 0.009495,
+        "recovery_rate_at_90": 0.6325524044389642,
+        "seed": 3,
+        "strain_key": "3p5"
+      },
+      {
+        "ari": 0.7562376220855793,
+        "arm": "flood fill + merge",
+        "local_threshold_deg": 0.009495,
+        "recovery_rate_at_90": 0.6325524044389642,
+        "seed": 4,
+        "strain_key": "3p5"
+      },
+      {
+        "ari": 0.8914240005047994,
+        "arm": "flood fill",
+        "local_threshold_deg": 0.011956,
+        "recovery_rate_at_90": 0.7411642411642412,
+        "seed": 0,
+        "strain_key": "4p6"
+      },
+      {
+        "ari": 0.8914240005047994,
+        "arm": "flood fill",
+        "local_threshold_deg": 0.011956,
+        "recovery_rate_at_90": 0.7411642411642412,
+        "seed": 1,
+        "strain_key": "4p6"
+      },
+      {
+        "ari": 0.8914240005047994,
+        "arm": "flood fill",
+        "local_threshold_deg": 0.011956,
+        "recovery_rate_at_90": 0.7411642411642412,
+        "seed": 2,
+        "strain_key": "4p6"
+      },
+      {
+        "ari": 0.8914240005047994,
+        "arm": "flood fill",
+        "local_threshold_deg": 0.011956,
+        "recovery_rate_at_90": 0.7411642411642412,
+        "seed": 3,
+        "strain_key": "4p6"
+      },
+      {
+        "ari": 0.8914240005047994,
+        "arm": "flood fill",
+        "local_threshold_deg": 0.011956,
+        "recovery_rate_at_90": 0.7411642411642412,
+        "seed": 4,
+        "strain_key": "4p6"
+      },
+      {
+        "ari": 0.8913223050393351,
+        "arm": "flood fill + merge",
+        "local_threshold_deg": 0.011956,
+        "recovery_rate_at_90": 0.7468814968814969,
+        "seed": 0,
+        "strain_key": "4p6"
+      },
+      {
+        "ari": 0.8913196748558232,
+        "arm": "flood fill + merge",
+        "local_threshold_deg": 0.011956,
+        "recovery_rate_at_90": 0.7468814968814969,
+        "seed": 1,
+        "strain_key": "4p6"
+      },
+      {
+        "ari": 0.8913183388799825,
+        "arm": "flood fill + merge",
+        "local_threshold_deg": 0.011956,
+        "recovery_rate_at_90": 0.7468814968814969,
+        "seed": 2,
+        "strain_key": "4p6"
+      },
+      {
+        "ari": 0.8913215886027778,
+        "arm": "flood fill + merge",
+        "local_threshold_deg": 0.011956,
+        "recovery_rate_at_90": 0.7468814968814969,
+        "seed": 3,
+        "strain_key": "4p6"
+      },
+      {
+        "ari": 0.8913217590684751,
+        "arm": "flood fill + merge",
+        "local_threshold_deg": 0.011956,
+        "recovery_rate_at_90": 0.7468814968814969,
+        "seed": 4,
+        "strain_key": "4p6"
+      },
+      {
+        "ari": 0.9053473967796886,
+        "arm": "flood fill",
+        "local_threshold_deg": 0.015055,
+        "recovery_rate_at_90": 0.788910891089109,
+        "seed": 0,
+        "strain_key": "6p2"
+      },
+      {
+        "ari": 0.9053473967796886,
+        "arm": "flood fill",
+        "local_threshold_deg": 0.015055,
+        "recovery_rate_at_90": 0.788910891089109,
+        "seed": 1,
+        "strain_key": "6p2"
+      },
+      {
+        "ari": 0.9053473967796886,
+        "arm": "flood fill",
+        "local_threshold_deg": 0.015055,
+        "recovery_rate_at_90": 0.788910891089109,
+        "seed": 2,
+        "strain_key": "6p2"
+      },
+      {
+        "ari": 0.9053473967796886,
+        "arm": "flood fill",
+        "local_threshold_deg": 0.015055,
+        "recovery_rate_at_90": 0.788910891089109,
+        "seed": 3,
+        "strain_key": "6p2"
+      },
+      {
+        "ari": 0.9053473967796886,
+        "arm": "flood fill",
+        "local_threshold_deg": 0.015055,
+        "recovery_rate_at_90": 0.788910891089109,
+        "seed": 4,
+        "strain_key": "6p2"
+      },
+      {
+        "ari": 0.9053308493170644,
+        "arm": "flood fill + merge",
+        "local_threshold_deg": 0.015055,
+        "recovery_rate_at_90": 0.7960396039603961,
+        "seed": 0,
+        "strain_key": "6p2"
+      },
+      {
+        "ari": 0.9053308493170644,
+        "arm": "flood fill + merge",
+        "local_threshold_deg": 0.015055,
+        "recovery_rate_at_90": 0.7960396039603961,
+        "seed": 1,
+        "strain_key": "6p2"
+      },
+      {
+        "ari": 0.9053308493170644,
+        "arm": "flood fill + merge",
+        "local_threshold_deg": 0.015055,
+        "recovery_rate_at_90": 0.7960396039603961,
+        "seed": 2,
+        "strain_key": "6p2"
+      },
+      {
+        "ari": 0.9053308493170644,
+        "arm": "flood fill + merge",
+        "local_threshold_deg": 0.015055,
+        "recovery_rate_at_90": 0.7960396039603961,
+        "seed": 3,
+        "strain_key": "6p2"
+      },
+      {
+        "ari": 0.9053308493170644,
+        "arm": "flood fill + merge",
+        "local_threshold_deg": 0.015055,
+        "recovery_rate_at_90": 0.7960396039603961,
+        "seed": 4,
+        "strain_key": "6p2"
+      }
+    ]
+  },
+  "why": {
+    "dimension": {
+      "KAM threshold": {
+        "2D+link": {
+          "contamination": 0.9685123697916667,
+          "fused_true_cells": 2531,
+          "n_cells_pred": 48,
+          "recovered_at_90": 2,
+          "recovery_rate": 0.0007892659826361484
+        },
+        "3D": {
+          "contamination": 0.260625,
+          "fused_true_cells": 2078,
+          "n_cells_pred": 1396,
+          "recovered_at_90": 126,
+          "recovery_rate": 0.049723756906077346
+        },
+        "gain_from_3d_cells": 124,
+        "gain_from_3d_relative": 62.0,
+        "unlinked_2d_cells": 4144
+      },
+      "flood fill": {
+        "2D+link": {
+          "contamination": 0.977939453125,
+          "fused_true_cells": 2495,
+          "n_cells_pred": 77,
+          "recovered_at_90": 38,
+          "recovery_rate": 0.01499605367008682
+        },
+        "3D": {
+          "contamination": 0.06451171875,
+          "fused_true_cells": 376,
+          "n_cells_pred": 3029,
+          "recovered_at_90": 2010,
+          "recovery_rate": 0.7932123125493291
+        },
+        "gain_from_3d_cells": 1972,
+        "gain_from_3d_relative": 51.89473684210526,
+        "unlinked_2d_cells": 10806
+      },
+      "note": "2D+link segments each z slice independently and then joins labels through z on >=50 % overlap, which is what one does without a volumetric algorithm. 3D runs use the volumetric algorithm at the same settings."
+    },
+    "flood_parameters": {
+      "footprint_radius_um": 1.345,
+      "footprint_tolerance": 0.04,
+      "global_threshold_deg": 0.873,
+      "kam_radius_um": 1.2,
+      "local_threshold_deg": 0.011956,
+      "min_cell_size": 3
+    },
+    "interior": {
+      "kernel_radius_um": 1.08,
+      "phantoms": {
+        "primary (4.2 um cells)": {
+          "cells_with_no_interior": 907,
+          "fraction_of_cells_with_no_interior": 0.3579321231254933,
+          "kernel_over_diameter": 0.2571392877078977,
+          "mean_cell_diameter_um": 4.200058301580297,
+          "mean_interior_fraction": 0.08417136614392068,
+          "median_interior_fraction": 0.03265360522457684,
+          "n_cells": 2534
+        },
+        "strain 2p4": {
+          "cells_with_no_interior": 339,
+          "fraction_of_cells_with_no_interior": 0.2288993923024983,
+          "kernel_over_diameter": 0.21498983144235084,
+          "mean_cell_diameter_um": 5.023493403173351,
+          "mean_interior_fraction": 0.13375405142877342,
+          "median_interior_fraction": 0.0872093023255814,
+          "n_cells": 1481
+        },
+        "strain 3p5": {
+          "cells_with_no_interior": 412,
+          "fraction_of_cells_with_no_interior": 0.25400739827373614,
+          "kernel_over_diameter": 0.22160685123664312,
+          "mean_cell_diameter_um": 4.873495534877308,
+          "mean_interior_fraction": 0.12648134481162884,
+          "median_interior_fraction": 0.07768112534775283,
+          "n_cells": 1622
+        },
+        "strain 4p6": {
+          "cells_with_no_interior": 552,
+          "fraction_of_cells_with_no_interior": 0.2869022869022869,
+          "kernel_over_diameter": 0.23458554927873365,
+          "mean_cell_diameter_um": 4.603864148156664,
+          "mean_interior_fraction": 0.10847705246225939,
+          "median_interior_fraction": 0.06127262225644975,
+          "n_cells": 1924
+        },
+        "strain 6p2": {
+          "cells_with_no_interior": 980,
+          "fraction_of_cells_with_no_interior": 0.38811881188118813,
+          "kernel_over_diameter": 0.2568344996454383,
+          "mean_cell_diameter_um": 4.205042552659191,
+          "mean_interior_fraction": 0.08364004687407003,
+          "median_interior_fraction": 0.029787234042553193,
+          "n_cells": 2525
+        }
+      }
+    },
+    "kam_parameters": {
+      "connectivity": 2,
+      "kam_radius_um": 1.08,
+      "min_cell_size": 3,
+      "percentile": 22.5
+    },
+    "walls": {
+      "arms": {
+        "KAM threshold": {
+          "cluster_bootstrap": {
+            "difference_median_um_ci95": [
+              0.010200840979814529,
+              0.01530265063047409,
+              0.01977119594812393
+            ],
+            "n_boot": 2000,
+            "n_cluster_cells": 2534,
+            "n_cluster_cells_fused": 2122,
+            "n_cluster_cells_intact": 2532,
+            "ratio_median_ci95": [
+              1.03082123334212,
+              1.0462896331648834,
+              1.0599258415275346
+            ]
+          },
+          "fused_fraction": 0.2075298999267757,
+          "fused_interfaces": 3401,
+          "mannwhitney_u": 22970052.0,
+          "median_area_fused_voxels": 22.0,
+          "median_area_intact_voxels": 13.0,
+          "median_width_fused_um": 0.3456597924232483,
+          "median_width_intact_um": 0.33038949966430664,
+          "p_value_fused_walls_are_wider": 0.00015549155048538048,
+          "width_ratio_fused_over_intact": 1.0462190619691518
+        },
+        "flood fill": {
+          "cluster_bootstrap": {
+            "difference_median_um_ci95": [
+              -0.006797250360250473,
+              0.0012806877493858337,
+              0.013657020032405853
+            ],
+            "n_boot": 2000,
+            "n_cluster_cells": 2534,
+            "n_cluster_cells_fused": 373,
+            "n_cluster_cells_intact": 2534,
+            "ratio_median_ci95": [
+              0.9794668742125567,
+              1.0038396236515792,
+              1.0409750570627907
+            ]
+          },
+          "fused_fraction": 0.01464486209421528,
+          "fused_interfaces": 240,
+          "mannwhitney_u": 1947871.0,
+          "median_area_fused_voxels": 24.5,
+          "median_area_intact_voxels": 14.0,
+          "median_width_fused_um": 0.334805890917778,
+          "median_width_intact_um": 0.3330005556344986,
+          "p_value_fused_walls_are_wider": 0.44473680382762415,
+          "width_ratio_fused_over_intact": 1.0054214182310883
+        }
+      },
+      "n_interfaces": 16388,
+      "wall_width_um": {
+        "median": 0.3330126404762268,
+        "p10": 0.2503887414932251,
+        "p90": 0.6118909478187561
+      }
+    }
+  },
+  "winners": {
+    "KAM threshold": {
+      "absolute_count_error": 832,
+      "ari": 0.7179296351963534,
+      "arm": "KAM threshold",
+      "cell_count_error": -832,
+      "connectivity": 2,
+      "contaminated_voxels": 144090,
+      "contamination": 0.234521484375,
+      "fused_contamination": 0.27171957311772776,
+      "fused_predicted_cells": 859,
+      "fused_true_cell_fraction_at_90": 0.7853196527229677,
+      "fused_true_cells": 1990,
+      "kam_radius_um": 1.08,
+      "kam_threshold_deg": 0.015752248466014862,
+      "min_cell_size": 1,
+      "n_cells_pred": 1702,
+      "n_cells_true": 2534,
+      "percentile": 22.5,
+      "recovered_at_90": 138,
+      "recovered_purity_only_at_90": 406,
+      "recovery_rate_at_90": 0.05445935280189424,
+      "status": "ok",
+      "strict_split_true_cells": 33,
+      "vi_merge_bits": 1.2982487551563437,
+      "vi_split_bits": 0.7063983331269217,
+      "vi_total_bits": 2.0046470882832654
+    },
+    "flood fill": {
+      "absolute_count_error": 344,
+      "ari": 0.8918436277837765,
+      "arm": "flood fill",
+      "cell_count_error": 344,
+      "contaminated_voxels": 41299,
+      "contamination": 0.06721842447916666,
+      "footprint_radius_um": 1.15,
+      "footprint_tolerance": 0.1,
+      "fused_contamination": 0.30535342453484987,
+      "fused_predicted_cells": 186,
+      "fused_true_cell_fraction_at_90": 0.15430149960536702,
+      "fused_true_cells": 391,
+      "global_threshold_deg": -1.0,
+      "kam_radius_um": 1.2,
+      "local_threshold_deg": 0.014652,
+      "min_cell_size": 3,
+      "n_cells_pred": 2878,
+      "n_cells_true": 2534,
+      "recovered_at_90": 2008,
+      "recovered_purity_only_at_90": 2078,
+      "recovery_rate_at_90": 0.7924230465666929,
+      "seed": 0,
+      "status": "ok",
+      "strict_split_true_cells": 124,
+      "vi_merge_bits": 0.21185742564065002,
+      "vi_split_bits": 0.10118377753255281,
+      "vi_total_bits": 0.31304120317320283
+    },
+    "flood fill + merge": {
+      "absolute_count_error": 100,
+      "ari": 0.896848897288073,
+      "arm": "flood fill + merge",
+      "cell_count_error": 100,
+      "contaminated_voxels": 38764,
+      "contamination": 0.06309244791666667,
+      "footprint_radius_um": 1.345,
+      "footprint_tolerance": 0.04,
+      "fused_contamination": 0.30029154518950435,
+      "fused_predicted_cells": 191,
+      "fused_true_cell_fraction_at_90": 0.16022099447513813,
+      "fused_true_cells": 406,
+      "global_threshold_deg": -1.0,
+      "kam_radius_um": 1.2,
+      "local_threshold_deg": 0.011721,
+      "merge_factor": 0.15,
+      "merge_mode": "relative",
+      "merge_size_voxels": 40,
+      "merge_threshold_deg": 0.056805890467045816,
+      "merges": 455,
+      "min_cell_size": 3,
+      "n_cells_pred": 2634,
+      "n_cells_true": 2534,
+      "recovered_at_90": 2024,
+      "recovered_purity_only_at_90": 2097,
+      "recovery_rate_at_90": 0.7987371744277821,
+      "reference_deg": 0.37870593644697215,
+      "seed": 0,
+      "spread_factor": 1.0,
+      "spread_percentile": 95.0,
+      "status": "ok",
+      "strict_split_true_cells": 98,
+      "vi_merge_bits": 0.20368225885252933,
+      "vi_split_bits": 0.10457148613202527,
+      "vi_total_bits": 0.3082537449845546
+    }
+  }
+}

@@ -1,0 +1,1201 @@
+{
+  "out_of_sample": {
+    "flood fill": [
+      {
+        "n": 5,
+        "r0_frozen": 0.474679270762998,
+        "r0_full_search": 0.47332883187035785,
+        "replicates_mean": 0.4722275538505887,
+        "replicates_sd": 0.012659872014740694,
+        "strain_key": "2p4"
+      },
+      {
+        "n": 5,
+        "r0_frozen": 0.625154130702836,
+        "r0_full_search": 0.6202219482120839,
+        "replicates_mean": 0.6187317418894368,
+        "replicates_sd": 0.009454273177521039,
+        "strain_key": "3p5"
+      },
+      {
+        "n": 5,
+        "r0_frozen": 0.7411642411642412,
+        "r0_full_search": 0.7302494802494802,
+        "replicates_mean": 0.734064903903177,
+        "replicates_sd": 0.014121905303528514,
+        "strain_key": "4p6"
+      },
+      {
+        "n": 5,
+        "r0_frozen": 0.788910891089109,
+        "r0_full_search": 0.7908910891089109,
+        "replicates_mean": 0.782361059060357,
+        "replicates_sd": 0.014664239227085851,
+        "strain_key": "6p2"
+      }
+    ],
+    "flood fill + merge": [
+      {
+        "n": 5,
+        "r0_frozen": 0.47602970965563807,
+        "r0_full_search": 0.47670492910195816,
+        "replicates_mean": 0.48279472506814053,
+        "replicates_sd": 0.013786821315814223,
+        "strain_key": "2p4"
+      },
+      {
+        "n": 5,
+        "r0_frozen": 0.6319358816276203,
+        "r0_full_search": 0.6356350184956844,
+        "replicates_mean": 0.624906307591717,
+        "replicates_sd": 0.011191534607187253,
+        "strain_key": "3p5"
+      },
+      {
+        "n": 5,
+        "r0_frozen": 0.7468814968814969,
+        "r0_full_search": 0.7422037422037422,
+        "replicates_mean": 0.7404852792728582,
+        "replicates_sd": 0.015566947601046294,
+        "strain_key": "4p6"
+      },
+      {
+        "n": 5,
+        "r0_frozen": 0.7960396039603961,
+        "r0_full_search": 0.7996039603960396,
+        "replicates_mean": 0.7868086365636489,
+        "replicates_sd": 0.015212251250969106,
+        "strain_key": "6p2"
+      }
+    ]
+  },
+  "paired": {
+    "flood fill": {
+      "all_positive": true,
+      "block_mean": 0.5743057097960949,
+      "block_means": {
+        "2p4": 0.3820180911798158,
+        "3p5": 0.5294880377522349,
+        "4p6": 0.6532167499408261,
+        "6p2": 0.7324999603115024
+      },
+      "block_p": 0.004898165728722085,
+      "block_sd": 0.15300928637766348,
+      "block_t": 7.506808552502769,
+      "mean": 0.5743057097960949,
+      "min": 0.35405405405405405,
+      "n_blocks": 4,
+      "n_pairs": 20,
+      "p": 9.770292602952496e-14,
+      "per_strain": {
+        "2p4": {
+          "mean": 0.3820180911798158,
+          "min": 0.35405405405405405,
+          "n": 5,
+          "sd": 0.016265820998574744
+        },
+        "3p5": {
+          "mean": 0.5294880377522349,
+          "min": 0.5189088654680719,
+          "n": 5,
+          "sd": 0.011072616517719184
+        },
+        "4p6": {
+          "mean": 0.6532167499408261,
+          "min": 0.6408668730650154,
+          "n": 5,
+          "sd": 0.013804755677150256
+        },
+        "6p2": {
+          "mean": 0.7324999603115024,
+          "min": 0.7130885873902634,
+          "n": 5,
+          "sd": 0.016537021197010074
+        }
+      },
+      "sd": 0.1366098020374967,
+      "t": 18.800797421810934,
+      "wilcoxon_p": 1.9073486328125e-06
+    },
+    "flood fill + merge": {
+      "all_positive": true,
+      "block_mean": 0.581208132244296,
+      "block_means": {
+        "2p4": 0.3925852623973677,
+        "3p5": 0.5356626034545149,
+        "4p6": 0.6596371253105072,
+        "6p2": 0.7369475378147943
+      },
+      "block_p": 0.004522562772928259,
+      "block_sd": 0.1506196662932434,
+      "block_t": 7.717559685900968,
+      "mean": 0.581208132244296,
+      "min": 0.3655405405405405,
+      "n_blocks": 4,
+      "n_pairs": 20,
+      "p": 5.960465246663127e-14,
+      "per_strain": {
+        "2p4": {
+          "mean": 0.3925852623973677,
+          "min": 0.3655405405405405,
+          "n": 5,
+          "sd": 0.016700900682169235
+        },
+        "3p5": {
+          "mean": 0.5356626034545149,
+          "min": 0.5220086794792312,
+          "n": 5,
+          "sd": 0.00895641943963589
+        },
+        "4p6": {
+          "mean": 0.6596371253105072,
+          "min": 0.6434468524251806,
+          "n": 5,
+          "sd": 0.015523592247069128
+        },
+        "6p2": {
+          "mean": 0.7369475378147943,
+          "min": 0.7186751795690343,
+          "n": 5,
+          "sd": 0.017052892968728826
+        }
+      },
+      "sd": 0.1345280132331753,
+      "t": 19.321193579530842,
+      "wilcoxon_p": 1.9073486328125e-06
+    }
+  },
+  "primary": {
+    "paired": {
+      "flood fill": {
+        "mean": 0.7361082910906431,
+        "min": 0.729355985776373,
+        "n": 5,
+        "sd": 0.004646984409380075
+      },
+      "flood fill + merge": {
+        "mean": 0.7380106480954037,
+        "min": 0.7333069932832873,
+        "n": 5,
+        "sd": 0.0038456678647536403
+      }
+    },
+    "records": [
+      {
+        "ari": 0.8352353348640713,
+        "arm": "flood fill",
+        "contamination": 0.07872395833333333,
+        "n_cells_pred": 2734,
+        "n_cells_true": 2527,
+        "recovered_at_90": 1995,
+        "recovery_rate_at_90": 0.7894736842105263,
+        "replicate": 1
+      },
+      {
+        "ari": 0.8352230223465384,
+        "arm": "flood fill + merge",
+        "contamination": 0.07892415364583333,
+        "n_cells_pred": 2620,
+        "n_cells_true": 2527,
+        "recovered_at_90": 1998,
+        "recovery_rate_at_90": 0.7906608626830234,
+        "replicate": 1
+      },
+      {
+        "ari": 0.5769603642016419,
+        "arm": "KAM threshold",
+        "contamination": 0.2814632161458333,
+        "n_cells_pred": 1435,
+        "n_cells_true": 2527,
+        "recovered_at_90": 140,
+        "recovery_rate_at_90": 0.055401662049861494,
+        "replicate": 1
+      },
+      {
+        "ari": 0.880179626885822,
+        "arm": "flood fill",
+        "contamination": 0.0729833984375,
+        "n_cells_pred": 2783,
+        "n_cells_true": 2516,
+        "recovered_at_90": 1974,
+        "recovery_rate_at_90": 0.7845786963434023,
+        "replicate": 2
+      },
+      {
+        "ari": 0.8801858349642943,
+        "arm": "flood fill + merge",
+        "contamination": 0.07325358072916667,
+        "n_cells_pred": 2627,
+        "n_cells_true": 2516,
+        "recovered_at_90": 1978,
+        "recovery_rate_at_90": 0.7861685214626392,
+        "replicate": 2
+      },
+      {
+        "ari": 0.6567963198820075,
+        "arm": "KAM threshold",
+        "contamination": 0.26323893229166667,
+        "n_cells_pred": 1435,
+        "n_cells_true": 2516,
+        "recovered_at_90": 121,
+        "recovery_rate_at_90": 0.04809220985691574,
+        "replicate": 2
+      },
+      {
+        "ari": 0.9118185718434504,
+        "arm": "flood fill",
+        "contamination": 0.06457194010416667,
+        "n_cells_pred": 2748,
+        "n_cells_true": 2515,
+        "recovered_at_90": 1977,
+        "recovery_rate_at_90": 0.7860834990059642,
+        "replicate": 3
+      },
+      {
+        "ari": 0.9118202863434987,
+        "arm": "flood fill + merge",
+        "contamination": 0.0647509765625,
+        "n_cells_pred": 2600,
+        "n_cells_true": 2515,
+        "recovered_at_90": 1985,
+        "recovery_rate_at_90": 0.7892644135188867,
+        "replicate": 3
+      },
+      {
+        "ari": 0.7069524831233616,
+        "arm": "KAM threshold",
+        "contamination": 0.24928873697916668,
+        "n_cells_pred": 1405,
+        "n_cells_true": 2515,
+        "recovered_at_90": 117,
+        "recovery_rate_at_90": 0.046520874751491054,
+        "replicate": 3
+      },
+      {
+        "ari": 0.9129691054916683,
+        "arm": "flood fill",
+        "contamination": 0.0602490234375,
+        "n_cells_pred": 2838,
+        "n_cells_true": 2518,
+        "recovered_at_90": 1998,
+        "recovery_rate_at_90": 0.7934868943606036,
+        "replicate": 4
+      },
+      {
+        "ari": 0.9129187537065205,
+        "arm": "flood fill + merge",
+        "contamination": 0.0606689453125,
+        "n_cells_pred": 2657,
+        "n_cells_true": 2518,
+        "recovered_at_90": 1997,
+        "recovery_rate_at_90": 0.7930897537728356,
+        "replicate": 4
+      },
+      {
+        "ari": 0.689554613469719,
+        "arm": "KAM threshold",
+        "contamination": 0.2505387369791667,
+        "n_cells_pred": 1447,
+        "n_cells_true": 2518,
+        "recovered_at_90": 132,
+        "recovery_rate_at_90": 0.05242255758538523,
+        "replicate": 4
+      },
+      {
+        "ari": 0.8792398219374405,
+        "arm": "flood fill",
+        "contamination": 0.06976399739583333,
+        "n_cells_pred": 2805,
+        "n_cells_true": 2531,
+        "recovered_at_90": 1979,
+        "recovery_rate_at_90": 0.7819043856183326,
+        "replicate": 5
+      },
+      {
+        "ari": 0.8792456315058578,
+        "arm": "flood fill + merge",
+        "contamination": 0.07002278645833333,
+        "n_cells_pred": 2653,
+        "n_cells_true": 2531,
+        "recovered_at_90": 1989,
+        "recovery_rate_at_90": 0.785855393125247,
+        "replicate": 5
+      },
+      {
+        "ari": 0.6568721789434147,
+        "arm": "KAM threshold",
+        "contamination": 0.2553271484375,
+        "n_cells_pred": 1510,
+        "n_cells_true": 2531,
+        "recovered_at_90": 133,
+        "recovery_rate_at_90": 0.0525483998419597,
+        "replicate": 5
+      }
+    ],
+    "summary": {
+      "KAM threshold": {
+        "ari_mean": 0.6574271919240289,
+        "ari_sd": 0.0499012577151106,
+        "mean": 0.050997140817122644,
+        "n": 5,
+        "sd": 0.003616407284478736
+      },
+      "flood fill": {
+        "ari_mean": 0.8838884922044905,
+        "ari_sd": 0.031734314842896745,
+        "mean": 0.7871054319077658,
+        "n": 5,
+        "sd": 0.004494755387652918
+      },
+      "flood fill + merge": {
+        "ari_mean": 0.8838787057733419,
+        "ari_sd": 0.03172749009309407,
+        "mean": 0.7890077889125262,
+        "n": 5,
+        "sd": 0.0030602281390339275
+      }
+    }
+  },
+  "protocol": {
+    "flood_fill": "blind: every axis at capped_search.DEFAULTS, chosen on r0; threshold swept, and also fixed",
+    "kam": "re-tuned per replicate over 828 configurations",
+    "replicates_per_strain": 5
+  },
+  "records": [
+    {
+      "ari": 0.5301044207089166,
+      "arm": "flood fill",
+      "blind_rate_at_90": 0.3912162162162162,
+      "contamination": 0.21074381510416668,
+      "local_threshold_deg": 0.007541,
+      "n_cells_true": 1480,
+      "recovered_at_90": 678,
+      "recovery_rate_at_90": 0.4581081081081081,
+      "replicate": 1,
+      "strain_key": "2p4"
+    },
+    {
+      "ari": 0.5351199529214294,
+      "arm": "flood fill + merge",
+      "blind_rate_at_90": 0.4648648648648649,
+      "contamination": 0.19989420572916666,
+      "local_threshold_deg": 0.007541,
+      "n_cells_true": 1480,
+      "recovered_at_90": 695,
+      "recovery_rate_at_90": 0.46959459459459457,
+      "replicate": 1,
+      "strain_key": "2p4"
+    },
+    {
+      "ari": 0.6334376596442275,
+      "arm": "KAM threshold",
+      "contamination": 0.2808610026041667,
+      "local_threshold_deg": null,
+      "n_cells_true": 1480,
+      "recovered_at_90": 154,
+      "recovery_rate_at_90": 0.10405405405405406,
+      "replicate": 1,
+      "strain_key": "2p4"
+    },
+    {
+      "ari": 0.5897461887094045,
+      "arm": "flood fill",
+      "blind_rate_at_90": 0.4071815718157182,
+      "contamination": 0.21324055989583332,
+      "local_threshold_deg": 0.007541,
+      "n_cells_true": 1476,
+      "recovered_at_90": 694,
+      "recovery_rate_at_90": 0.470189701897019,
+      "replicate": 2,
+      "strain_key": "2p4"
+    },
+    {
+      "ari": 0.5936752891422988,
+      "arm": "flood fill + merge",
+      "blind_rate_at_90": 0.4803523035230352,
+      "contamination": 0.19864095052083333,
+      "local_threshold_deg": 0.007541,
+      "n_cells_true": 1476,
+      "recovered_at_90": 719,
+      "recovery_rate_at_90": 0.48712737127371275,
+      "replicate": 2,
+      "strain_key": "2p4"
+    },
+    {
+      "ari": 0.5103895755612311,
+      "arm": "KAM threshold",
+      "contamination": 0.3387093098958333,
+      "local_threshold_deg": null,
+      "n_cells_true": 1476,
+      "recovered_at_90": 120,
+      "recovery_rate_at_90": 0.08130081300813008,
+      "replicate": 2,
+      "strain_key": "2p4"
+    },
+    {
+      "ari": 0.6343189336127528,
+      "arm": "flood fill",
+      "blind_rate_at_90": 0.3881000676132522,
+      "contamination": 0.18775065104166666,
+      "local_threshold_deg": 0.007541,
+      "n_cells_true": 1479,
+      "recovered_at_90": 695,
+      "recovery_rate_at_90": 0.46991210277214335,
+      "replicate": 3,
+      "strain_key": "2p4"
+    },
+    {
+      "ari": 0.4460255136710596,
+      "arm": "flood fill + merge",
+      "blind_rate_at_90": 0.47329276538201487,
+      "contamination": 0.2556070963541667,
+      "local_threshold_deg": 0.009495,
+      "n_cells_true": 1479,
+      "recovered_at_90": 700,
+      "recovery_rate_at_90": 0.47329276538201487,
+      "replicate": 3,
+      "strain_key": "2p4"
+    },
+    {
+      "ari": 0.5864488512408745,
+      "arm": "KAM threshold",
+      "contamination": 0.29722493489583335,
+      "local_threshold_deg": null,
+      "n_cells_true": 1479,
+      "recovered_at_90": 120,
+      "recovery_rate_at_90": 0.08113590263691683,
+      "replicate": 3,
+      "strain_key": "2p4"
+    },
+    {
+      "ari": 0.58003423302823,
+      "arm": "flood fill",
+      "blind_rate_at_90": 0.41311697092630156,
+      "contamination": 0.24169759114583333,
+      "local_threshold_deg": 0.009495,
+      "n_cells_true": 1479,
+      "recovered_at_90": 729,
+      "recovery_rate_at_90": 0.49290060851926976,
+      "replicate": 4,
+      "strain_key": "2p4"
+    },
+    {
+      "ari": 0.5749068622156018,
+      "arm": "flood fill + merge",
+      "blind_rate_at_90": 0.504394861392833,
+      "contamination": 0.23596516927083333,
+      "local_threshold_deg": 0.009495,
+      "n_cells_true": 1479,
+      "recovered_at_90": 746,
+      "recovery_rate_at_90": 0.504394861392833,
+      "replicate": 4,
+      "strain_key": "2p4"
+    },
+    {
+      "ari": 0.6401842912579532,
+      "arm": "KAM threshold",
+      "contamination": 0.2826806640625,
+      "local_threshold_deg": null,
+      "n_cells_true": 1479,
+      "recovered_at_90": 144,
+      "recovery_rate_at_90": 0.0973630831643002,
+      "replicate": 4,
+      "strain_key": "2p4"
+    },
+    {
+      "ari": 0.5531531417058937,
+      "arm": "flood fill",
+      "blind_rate_at_90": 0.4271117166212534,
+      "contamination": 0.24458333333333335,
+      "local_threshold_deg": 0.009495,
+      "n_cells_true": 1468,
+      "recovered_at_90": 690,
+      "recovery_rate_at_90": 0.47002724795640327,
+      "replicate": 5,
+      "strain_key": "2p4"
+    },
+    {
+      "ari": 0.5550641621269314,
+      "arm": "flood fill + merge",
+      "blind_rate_at_90": 0.47956403269754766,
+      "contamination": 0.23890787760416668,
+      "local_threshold_deg": 0.009495,
+      "n_cells_true": 1468,
+      "recovered_at_90": 704,
+      "recovery_rate_at_90": 0.47956403269754766,
+      "replicate": 5,
+      "strain_key": "2p4"
+    },
+    {
+      "ari": 0.5747283185623389,
+      "arm": "KAM threshold",
+      "contamination": 0.30224772135416667,
+      "local_threshold_deg": null,
+      "n_cells_true": 1468,
+      "recovered_at_90": 128,
+      "recovery_rate_at_90": 0.08719346049046321,
+      "replicate": 5,
+      "strain_key": "2p4"
+    },
+    {
+      "ari": 0.7140809218259919,
+      "arm": "flood fill",
+      "blind_rate_at_90": 0.5880541871921182,
+      "contamination": 0.1425634765625,
+      "local_threshold_deg": 0.011956,
+      "n_cells_true": 1624,
+      "recovered_at_90": 1002,
+      "recovery_rate_at_90": 0.6169950738916257,
+      "replicate": 1,
+      "strain_key": "3p5"
+    },
+    {
+      "ari": 0.7140529939595223,
+      "arm": "flood fill + merge",
+      "blind_rate_at_90": 0.6188423645320197,
+      "contamination": 0.14290690104166667,
+      "local_threshold_deg": 0.011956,
+      "n_cells_true": 1624,
+      "recovered_at_90": 1013,
+      "recovery_rate_at_90": 0.6237684729064039,
+      "replicate": 1,
+      "strain_key": "3p5"
+    },
+    {
+      "ari": 0.6322824326475178,
+      "arm": "KAM threshold",
+      "contamination": 0.276162109375,
+      "local_threshold_deg": null,
+      "n_cells_true": 1624,
+      "recovered_at_90": 144,
+      "recovery_rate_at_90": 0.08866995073891626,
+      "replicate": 1,
+      "strain_key": "3p5"
+    },
+    {
+      "ari": 0.7772285538075165,
+      "arm": "flood fill",
+      "blind_rate_at_90": 0.5875077303648732,
+      "contamination": 0.142490234375,
+      "local_threshold_deg": 0.011956,
+      "n_cells_true": 1617,
+      "recovered_at_90": 1019,
+      "recovery_rate_at_90": 0.6301793444650587,
+      "replicate": 2,
+      "strain_key": "3p5"
+    },
+    {
+      "ari": 0.7769548484942712,
+      "arm": "flood fill + merge",
+      "blind_rate_at_90": 0.6202844774273346,
+      "contamination": 0.14301595052083332,
+      "local_threshold_deg": 0.011956,
+      "n_cells_true": 1617,
+      "recovered_at_90": 1019,
+      "recovery_rate_at_90": 0.6301793444650587,
+      "replicate": 2,
+      "strain_key": "3p5"
+    },
+    {
+      "ari": 0.6996536445795645,
+      "arm": "KAM threshold",
+      "contamination": 0.24770345052083334,
+      "local_threshold_deg": null,
+      "n_cells_true": 1617,
+      "recovered_at_90": 136,
+      "recovery_rate_at_90": 0.08410636982065553,
+      "replicate": 2,
+      "strain_key": "3p5"
+    },
+    {
+      "ari": 0.7657481072646077,
+      "arm": "flood fill",
+      "blind_rate_at_90": 0.5747055176689398,
+      "contamination": 0.11866373697916667,
+      "local_threshold_deg": 0.009495,
+      "n_cells_true": 1613,
+      "recovered_at_90": 995,
+      "recovery_rate_at_90": 0.6168629882207067,
+      "replicate": 3,
+      "strain_key": "3p5"
+    },
+    {
+      "ari": 0.7674545009664422,
+      "arm": "flood fill + merge",
+      "blind_rate_at_90": 0.6236825790452573,
+      "contamination": 0.11227376302083333,
+      "local_threshold_deg": 0.009495,
+      "n_cells_true": 1613,
+      "recovered_at_90": 1006,
+      "recovery_rate_at_90": 0.6236825790452573,
+      "replicate": 3,
+      "strain_key": "3p5"
+    },
+    {
+      "ari": 0.6756280526686993,
+      "arm": "KAM threshold",
+      "contamination": 0.2586962890625,
+      "local_threshold_deg": null,
+      "n_cells_true": 1613,
+      "recovered_at_90": 134,
+      "recovery_rate_at_90": 0.08307501549907005,
+      "replicate": 3,
+      "strain_key": "3p5"
+    },
+    {
+      "ari": 0.7132915670292248,
+      "arm": "flood fill",
+      "blind_rate_at_90": 0.5846249225046497,
+      "contamination": 0.16389811197916668,
+      "local_threshold_deg": 0.011956,
+      "n_cells_true": 1613,
+      "recovered_at_90": 976,
+      "recovery_rate_at_90": 0.6050836949783013,
+      "replicate": 4,
+      "strain_key": "3p5"
+    },
+    {
+      "ari": 0.7851259305329665,
+      "arm": "flood fill + merge",
+      "blind_rate_at_90": 0.6081835089894606,
+      "contamination": 0.1223876953125,
+      "local_threshold_deg": 0.009495,
+      "n_cells_true": 1613,
+      "recovered_at_90": 981,
+      "recovery_rate_at_90": 0.6081835089894606,
+      "replicate": 4,
+      "strain_key": "3p5"
+    },
+    {
+      "ari": 0.6541624583174075,
+      "arm": "KAM threshold",
+      "contamination": 0.2570882161458333,
+      "local_threshold_deg": null,
+      "n_cells_true": 1613,
+      "recovered_at_90": 139,
+      "recovery_rate_at_90": 0.08617482951022938,
+      "replicate": 4,
+      "strain_key": "3p5"
+    },
+    {
+      "ari": 0.7782947145378944,
+      "arm": "flood fill",
+      "blind_rate_at_90": 0.5967940813810111,
+      "contamination": 0.137490234375,
+      "local_threshold_deg": 0.011956,
+      "n_cells_true": 1622,
+      "recovered_at_90": 1013,
+      "recovery_rate_at_90": 0.6245376078914919,
+      "replicate": 5,
+      "strain_key": "3p5"
+    },
+    {
+      "ari": 0.807645428910832,
+      "arm": "flood fill + merge",
+      "blind_rate_at_90": 0.6387176325524044,
+      "contamination": 0.1056005859375,
+      "local_threshold_deg": 0.009495,
+      "n_cells_true": 1622,
+      "recovered_at_90": 1036,
+      "recovery_rate_at_90": 0.6387176325524044,
+      "replicate": 5,
+      "strain_key": "3p5"
+    },
+    {
+      "ari": 0.6823483466393182,
+      "arm": "KAM threshold",
+      "contamination": 0.24711588541666665,
+      "local_threshold_deg": null,
+      "n_cells_true": 1622,
+      "recovered_at_90": 169,
+      "recovery_rate_at_90": 0.10419235511713934,
+      "replicate": 5,
+      "strain_key": "3p5"
+    },
+    {
+      "ari": 0.8651669988046194,
+      "arm": "flood fill",
+      "blind_rate_at_90": 0.7442946058091287,
+      "contamination": 0.07152180989583333,
+      "local_threshold_deg": 0.011956,
+      "n_cells_true": 1928,
+      "recovered_at_90": 1439,
+      "recovery_rate_at_90": 0.7463692946058091,
+      "replicate": 1,
+      "strain_key": "4p6"
+    },
+    {
+      "ari": 0.865273082544883,
+      "arm": "flood fill + merge",
+      "blind_rate_at_90": 0.7406639004149378,
+      "contamination": 0.0717919921875,
+      "local_threshold_deg": 0.011956,
+      "n_cells_true": 1928,
+      "recovered_at_90": 1451,
+      "recovery_rate_at_90": 0.7525933609958506,
+      "replicate": 1,
+      "strain_key": "4p6"
+    },
+    {
+      "ari": 0.6863116585476003,
+      "arm": "KAM threshold",
+      "contamination": 0.24412434895833332,
+      "local_threshold_deg": null,
+      "n_cells_true": 1928,
+      "recovered_at_90": 160,
+      "recovery_rate_at_90": 0.08298755186721991,
+      "replicate": 1,
+      "strain_key": "4p6"
+    },
+    {
+      "ari": 0.8902067993458129,
+      "arm": "flood fill",
+      "blind_rate_at_90": 0.7167270844122217,
+      "contamination": 0.06908854166666667,
+      "local_threshold_deg": 0.011956,
+      "n_cells_true": 1931,
+      "recovered_at_90": 1390,
+      "recovery_rate_at_90": 0.7198342827550492,
+      "replicate": 2,
+      "strain_key": "4p6"
+    },
+    {
+      "ari": 0.8902845686673138,
+      "arm": "flood fill + merge",
+      "blind_rate_at_90": 0.7141377524598653,
+      "contamination": 0.0693603515625,
+      "local_threshold_deg": 0.011956,
+      "n_cells_true": 1931,
+      "recovered_at_90": 1404,
+      "recovery_rate_at_90": 0.7270844122216468,
+      "replicate": 2,
+      "strain_key": "4p6"
+    },
+    {
+      "ari": 0.7107112564220333,
+      "arm": "KAM threshold",
+      "contamination": 0.23754069010416667,
+      "local_threshold_deg": null,
+      "n_cells_true": 1931,
+      "recovered_at_90": 150,
+      "recovery_rate_at_90": 0.07767995857068877,
+      "replicate": 2,
+      "strain_key": "4p6"
+    },
+    {
+      "ari": 0.852822982782329,
+      "arm": "flood fill",
+      "blind_rate_at_90": 0.7382307294361097,
+      "contamination": 0.0851953125,
+      "local_threshold_deg": 0.011956,
+      "n_cells_true": 1933,
+      "recovered_at_90": 1453,
+      "recovery_rate_at_90": 0.75168132436627,
+      "replicate": 3,
+      "strain_key": "4p6"
+    },
+    {
+      "ari": 0.876301708209173,
+      "arm": "flood fill + merge",
+      "blind_rate_at_90": 0.760993274702535,
+      "contamination": 0.0592333984375,
+      "local_threshold_deg": 0.009495,
+      "n_cells_true": 1933,
+      "recovered_at_90": 1471,
+      "recovery_rate_at_90": 0.760993274702535,
+      "replicate": 3,
+      "strain_key": "4p6"
+    },
+    {
+      "ari": 0.7058051671530077,
+      "arm": "KAM threshold",
+      "contamination": 0.23227864583333332,
+      "local_threshold_deg": null,
+      "n_cells_true": 1933,
+      "recovered_at_90": 154,
+      "recovery_rate_at_90": 0.07966890843248836,
+      "replicate": 3,
+      "strain_key": "4p6"
+    },
+    {
+      "ari": 0.8425803294726559,
+      "arm": "flood fill",
+      "blind_rate_at_90": 0.7156862745098039,
+      "contamination": 0.07936848958333333,
+      "local_threshold_deg": 0.011956,
+      "n_cells_true": 1938,
+      "recovered_at_90": 1403,
+      "recovery_rate_at_90": 0.7239422084623323,
+      "replicate": 4,
+      "strain_key": "4p6"
+    },
+    {
+      "ari": 0.8425644526976974,
+      "arm": "flood fill + merge",
+      "blind_rate_at_90": 0.7012383900928792,
+      "contamination": 0.07986328125,
+      "local_threshold_deg": 0.011956,
+      "n_cells_true": 1938,
+      "recovered_at_90": 1408,
+      "recovery_rate_at_90": 0.7265221878224974,
+      "replicate": 4,
+      "strain_key": "4p6"
+    },
+    {
+      "ari": 0.7121268894230703,
+      "arm": "KAM threshold",
+      "contamination": 0.22733235677083333,
+      "local_threshold_deg": null,
+      "n_cells_true": 1938,
+      "recovered_at_90": 161,
+      "recovery_rate_at_90": 0.08307533539731682,
+      "replicate": 4,
+      "strain_key": "4p6"
+    },
+    {
+      "ari": 0.8517829782433928,
+      "arm": "flood fill",
+      "blind_rate_at_90": 0.7160621761658031,
+      "contamination": 0.0792431640625,
+      "local_threshold_deg": 0.011956,
+      "n_cells_true": 1930,
+      "recovered_at_90": 1406,
+      "recovery_rate_at_90": 0.7284974093264248,
+      "replicate": 5,
+      "strain_key": "4p6"
+    },
+    {
+      "ari": 0.8518655583930187,
+      "arm": "flood fill + merge",
+      "blind_rate_at_90": 0.7233160621761658,
+      "contamination": 0.07948079427083334,
+      "local_threshold_deg": 0.011956,
+      "n_cells_true": 1930,
+      "recovered_at_90": 1419,
+      "recovery_rate_at_90": 0.7352331606217617,
+      "replicate": 5,
+      "strain_key": "4p6"
+    },
+    {
+      "ari": 0.717768355959767,
+      "arm": "KAM threshold",
+      "contamination": 0.22754720052083333,
+      "local_threshold_deg": null,
+      "n_cells_true": 1930,
+      "recovered_at_90": 156,
+      "recovery_rate_at_90": 0.08082901554404145,
+      "replicate": 5,
+      "strain_key": "4p6"
+    },
+    {
+      "ari": 0.907573386536368,
+      "arm": "flood fill",
+      "blind_rate_at_90": 0.7997625643055006,
+      "contamination": 0.0631689453125,
+      "local_threshold_deg": 0.015055,
+      "n_cells_true": 2527,
+      "recovered_at_90": 2021,
+      "recovery_rate_at_90": 0.7997625643055006,
+      "replicate": 1,
+      "strain_key": "6p2"
+    },
+    {
+      "ari": 0.9075504695622679,
+      "arm": "flood fill + merge",
+      "blind_rate_at_90": 0.7760189948555599,
+      "contamination": 0.0634521484375,
+      "local_threshold_deg": 0.015055,
+      "n_cells_true": 2527,
+      "recovered_at_90": 2031,
+      "recovery_rate_at_90": 0.8037198258804907,
+      "replicate": 1,
+      "strain_key": "6p2"
+    },
+    {
+      "ari": 0.6978336500752035,
+      "arm": "KAM threshold",
+      "contamination": 0.2564794921875,
+      "local_threshold_deg": null,
+      "n_cells_true": 2527,
+      "recovered_at_90": 120,
+      "recovery_rate_at_90": 0.04748713889988128,
+      "replicate": 1,
+      "strain_key": "6p2"
+    },
+    {
+      "ari": 0.8881003814806757,
+      "arm": "flood fill",
+      "blind_rate_at_90": 0.7810015898251192,
+      "contamination": 0.0674267578125,
+      "local_threshold_deg": 0.015055,
+      "n_cells_true": 2516,
+      "recovered_at_90": 1965,
+      "recovery_rate_at_90": 0.7810015898251192,
+      "replicate": 2,
+      "strain_key": "6p2"
+    },
+    {
+      "ari": 0.904452673001159,
+      "arm": "flood fill + merge",
+      "blind_rate_at_90": 0.7631160572337043,
+      "contamination": 0.049591471354166666,
+      "local_threshold_deg": 0.011956,
+      "n_cells_true": 2516,
+      "recovered_at_90": 1977,
+      "recovery_rate_at_90": 0.7857710651828299,
+      "replicate": 2,
+      "strain_key": "6p2"
+    },
+    {
+      "ari": 0.6539471513522079,
+      "arm": "KAM threshold",
+      "contamination": 0.260927734375,
+      "local_threshold_deg": null,
+      "n_cells_true": 2516,
+      "recovered_at_90": 125,
+      "recovery_rate_at_90": 0.049682034976152624,
+      "replicate": 2,
+      "strain_key": "6p2"
+    },
+    {
+      "ari": 0.8889741705272658,
+      "arm": "flood fill",
+      "blind_rate_at_90": 0.7713040031708284,
+      "contamination": 0.07136881510416666,
+      "local_threshold_deg": 0.015055,
+      "n_cells_true": 2523,
+      "recovered_at_90": 1946,
+      "recovery_rate_at_90": 0.7713040031708284,
+      "replicate": 3,
+      "strain_key": "6p2"
+    },
+    {
+      "ari": 0.8888840414152704,
+      "arm": "flood fill + merge",
+      "blind_rate_at_90": 0.7415774871185097,
+      "contamination": 0.071748046875,
+      "local_threshold_deg": 0.015055,
+      "n_cells_true": 2523,
+      "recovered_at_90": 1950,
+      "recovery_rate_at_90": 0.7728894173602854,
+      "replicate": 3,
+      "strain_key": "6p2"
+    },
+    {
+      "ari": 0.6694711311615723,
+      "arm": "KAM threshold",
+      "contamination": 0.26414388020833335,
+      "local_threshold_deg": null,
+      "n_cells_true": 2523,
+      "recovered_at_90": 129,
+      "recovery_rate_at_90": 0.05112960760998811,
+      "replicate": 3,
+      "strain_key": "6p2"
+    },
+    {
+      "ari": 0.899292062529421,
+      "arm": "flood fill",
+      "blind_rate_at_90": 0.7943740095087163,
+      "contamination": 0.06451822916666666,
+      "local_threshold_deg": 0.015055,
+      "n_cells_true": 2524,
+      "recovered_at_90": 2005,
+      "recovery_rate_at_90": 0.7943740095087163,
+      "replicate": 4,
+      "strain_key": "6p2"
+    },
+    {
+      "ari": 0.913245956032169,
+      "arm": "flood fill + merge",
+      "blind_rate_at_90": 0.7717908082408875,
+      "contamination": 0.0457568359375,
+      "local_threshold_deg": 0.011956,
+      "n_cells_true": 2524,
+      "recovered_at_90": 2021,
+      "recovery_rate_at_90": 0.8007131537242472,
+      "replicate": 4,
+      "strain_key": "6p2"
+    },
+    {
+      "ari": 0.6594538898563972,
+      "arm": "KAM threshold",
+      "contamination": 0.261923828125,
+      "local_threshold_deg": null,
+      "n_cells_true": 2524,
+      "recovered_at_90": 123,
+      "recovery_rate_at_90": 0.04873217115689382,
+      "replicate": 4,
+      "strain_key": "6p2"
+    },
+    {
+      "ari": 0.8860500151044427,
+      "arm": "flood fill",
+      "blind_rate_at_90": 0.7653631284916201,
+      "contamination": 0.07129720052083334,
+      "local_threshold_deg": 0.015055,
+      "n_cells_true": 2506,
+      "recovered_at_90": 1918,
+      "recovery_rate_at_90": 0.7653631284916201,
+      "replicate": 5,
+      "strain_key": "6p2"
+    },
+    {
+      "ari": 0.8861109764439065,
+      "arm": "flood fill + merge",
+      "blind_rate_at_90": 0.6979249800478851,
+      "contamination": 0.07145182291666667,
+      "local_threshold_deg": 0.015055,
+      "n_cells_true": 2506,
+      "recovered_at_90": 1932,
+      "recovery_rate_at_90": 0.770949720670391,
+      "replicate": 5,
+      "strain_key": "6p2"
+    },
+    {
+      "ari": 0.6984069683829518,
+      "arm": "KAM threshold",
+      "contamination": 0.24267740885416667,
+      "local_threshold_deg": null,
+      "n_cells_true": 2506,
+      "recovered_at_90": 131,
+      "recovery_rate_at_90": 0.05227454110135674,
+      "replicate": 5,
+      "strain_key": "6p2"
+    }
+  ],
+  "replicate_grid_verification": [],
+  "summary": {
+    "KAM threshold": {
+      "2p4": {
+        "max": 0.10405405405405406,
+        "mean": 0.09020946267077287,
+        "min": 0.08113590263691683,
+        "n": 5,
+        "sd": 0.010169031374555366
+      },
+      "3p5": {
+        "max": 0.10419235511713934,
+        "mean": 0.0892437041372021,
+        "min": 0.08307501549907005,
+        "n": 5,
+        "sd": 0.008626329954741566
+      },
+      "4p6": {
+        "max": 0.08307533539731682,
+        "mean": 0.08084815396235105,
+        "min": 0.07767995857068877,
+        "n": 5,
+        "sd": 0.0022894218090011346
+      },
+      "6p2": {
+        "max": 0.05227454110135674,
+        "mean": 0.04986109874885451,
+        "min": 0.04748713889988128,
+        "n": 5,
+        "sd": 0.0018957877931579901
+      }
+    },
+    "flood fill": {
+      "2p4": {
+        "blind_mean": 0.4053453086385483,
+        "blind_sd": 0.01608241822876493,
+        "max": 0.49290060851926976,
+        "mean": 0.4722275538505887,
+        "min": 0.4581081081081081,
+        "n": 5,
+        "sd": 0.012659872014740694
+      },
+      "3p5": {
+        "blind_mean": 0.5863372878223185,
+        "blind_sd": 0.007935560512697589,
+        "max": 0.6301793444650587,
+        "mean": 0.6187317418894368,
+        "min": 0.6050836949783013,
+        "n": 5,
+        "sd": 0.009454273177521039
+      },
+      "4p6": {
+        "blind_mean": 0.7262001740666135,
+        "blind_sd": 0.01392123589620112,
+        "max": 0.75168132436627,
+        "mean": 0.734064903903177,
+        "min": 0.7198342827550492,
+        "n": 5,
+        "sd": 0.014121905303528514
+      },
+      "6p2": {
+        "blind_mean": 0.782361059060357,
+        "blind_sd": 0.014664239227085851,
+        "max": 0.7997625643055006,
+        "mean": 0.782361059060357,
+        "min": 0.7653631284916201,
+        "n": 5,
+        "sd": 0.014664239227085851
+      }
+    },
+    "flood fill + merge": {
+      "2p4": {
+        "blind_mean": 0.48049376557205914,
+        "blind_sd": 0.014733157648781775,
+        "max": 0.504394861392833,
+        "mean": 0.48279472506814053,
+        "min": 0.46959459459459457,
+        "n": 5,
+        "sd": 0.013786821315814223
+      },
+      "3p5": {
+        "blind_mean": 0.6219421125092953,
+        "blind_sd": 0.011023867956429113,
+        "max": 0.6387176325524044,
+        "mean": 0.624906307591717,
+        "min": 0.6081835089894606,
+        "n": 5,
+        "sd": 0.011191534607187253
+      },
+      "4p6": {
+        "blind_mean": 0.7280698759692766,
+        "blind_sd": 0.023340903374138078,
+        "max": 0.760993274702535,
+        "mean": 0.7404852792728582,
+        "min": 0.7265221878224974,
+        "n": 5,
+        "sd": 0.015566947601046294
+      },
+      "6p2": {
+        "blind_mean": 0.7500856654993093,
+        "blind_sd": 0.03204125507765642,
+        "max": 0.8037198258804907,
+        "mean": 0.7868086365636489,
+        "min": 0.770949720670391,
+        "n": 5,
+        "sd": 0.015212251250969106
+      }
+    }
+  },
+  "verification": [
+    {
+      "difference": 0.0,
+      "full_grid": 0.08845374746792707,
+      "reduced_grid": 0.08845374746792707,
+      "strain_key": "2p4"
+    },
+    {
+      "difference": 0.0,
+      "full_grid": 0.10480887792848335,
+      "reduced_grid": 0.10480887792848335,
+      "strain_key": "3p5"
+    },
+    {
+      "difference": 0.0,
+      "full_grid": 0.07796257796257797,
+      "reduced_grid": 0.07796257796257797,
+      "strain_key": "4p6"
+    },
+    {
+      "difference": 0.0,
+      "full_grid": 0.055445544554455446,
+      "reduced_grid": 0.055445544554455446,
+      "strain_key": "6p2"
+    }
+  ]
+}

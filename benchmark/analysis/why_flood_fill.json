@@ -1,0 +1,171 @@
+{
+  "dimension": {
+    "KAM threshold": {
+      "2D+link": {
+        "contamination": 0.9685123697916667,
+        "fused_true_cells": 2531,
+        "n_cells_pred": 48,
+        "recovered_at_90": 2,
+        "recovery_rate": 0.0007892659826361484
+      },
+      "3D": {
+        "contamination": 0.260625,
+        "fused_true_cells": 2078,
+        "n_cells_pred": 1396,
+        "recovered_at_90": 126,
+        "recovery_rate": 0.049723756906077346
+      },
+      "gain_from_3d_cells": 124,
+      "gain_from_3d_relative": 62.0,
+      "unlinked_2d_cells": 4144
+    },
+    "flood fill": {
+      "2D+link": {
+        "contamination": 0.977939453125,
+        "fused_true_cells": 2495,
+        "n_cells_pred": 77,
+        "recovered_at_90": 38,
+        "recovery_rate": 0.01499605367008682
+      },
+      "3D": {
+        "contamination": 0.06451171875,
+        "fused_true_cells": 376,
+        "n_cells_pred": 3029,
+        "recovered_at_90": 2010,
+        "recovery_rate": 0.7932123125493291
+      },
+      "gain_from_3d_cells": 1972,
+      "gain_from_3d_relative": 51.89473684210526,
+      "unlinked_2d_cells": 10806
+    },
+    "note": "2D+link segments each z slice independently and then joins labels through z on >=50 % overlap, which is what one does without a volumetric algorithm. 3D runs use the volumetric algorithm at the same settings."
+  },
+  "flood_parameters": {
+    "footprint_radius_um": 1.345,
+    "footprint_tolerance": 0.04,
+    "global_threshold_deg": 0.873,
+    "kam_radius_um": 1.2,
+    "local_threshold_deg": 0.011956,
+    "min_cell_size": 3
+  },
+  "interior": {
+    "kernel_radius_um": 1.08,
+    "phantoms": {
+      "primary (4.2 um cells)": {
+        "cells_with_no_interior": 907,
+        "fraction_of_cells_with_no_interior": 0.3579321231254933,
+        "kernel_over_diameter": 0.2571392877078977,
+        "mean_cell_diameter_um": 4.200058301580297,
+        "mean_interior_fraction": 0.08417136614392068,
+        "median_interior_fraction": 0.03265360522457684,
+        "n_cells": 2534
+      },
+      "strain 2p4": {
+        "cells_with_no_interior": 339,
+        "fraction_of_cells_with_no_interior": 0.2288993923024983,
+        "kernel_over_diameter": 0.21498983144235084,
+        "mean_cell_diameter_um": 5.023493403173351,
+        "mean_interior_fraction": 0.13375405142877342,
+        "median_interior_fraction": 0.0872093023255814,
+        "n_cells": 1481
+      },
+      "strain 3p5": {
+        "cells_with_no_interior": 412,
+        "fraction_of_cells_with_no_interior": 0.25400739827373614,
+        "kernel_over_diameter": 0.22160685123664312,
+        "mean_cell_diameter_um": 4.873495534877308,
+        "mean_interior_fraction": 0.12648134481162884,
+        "median_interior_fraction": 0.07768112534775283,
+        "n_cells": 1622
+      },
+      "strain 4p6": {
+        "cells_with_no_interior": 552,
+        "fraction_of_cells_with_no_interior": 0.2869022869022869,
+        "kernel_over_diameter": 0.23458554927873365,
+        "mean_cell_diameter_um": 4.603864148156664,
+        "mean_interior_fraction": 0.10847705246225939,
+        "median_interior_fraction": 0.06127262225644975,
+        "n_cells": 1924
+      },
+      "strain 6p2": {
+        "cells_with_no_interior": 980,
+        "fraction_of_cells_with_no_interior": 0.38811881188118813,
+        "kernel_over_diameter": 0.2568344996454383,
+        "mean_cell_diameter_um": 4.205042552659191,
+        "mean_interior_fraction": 0.08364004687407003,
+        "median_interior_fraction": 0.029787234042553193,
+        "n_cells": 2525
+      }
+    }
+  },
+  "kam_parameters": {
+    "connectivity": 2,
+    "kam_radius_um": 1.08,
+    "min_cell_size": 3,
+    "percentile": 22.5
+  },
+  "walls": {
+    "arms": {
+      "KAM threshold": {
+        "cluster_bootstrap": {
+          "difference_median_um_ci95": [
+            0.010200840979814529,
+            0.01530265063047409,
+            0.01977119594812393
+          ],
+          "n_boot": 2000,
+          "n_cluster_cells": 2534,
+          "n_cluster_cells_fused": 2122,
+          "n_cluster_cells_intact": 2532,
+          "ratio_median_ci95": [
+            1.03082123334212,
+            1.0462896331648834,
+            1.0599258415275346
+          ]
+        },
+        "fused_fraction": 0.2075298999267757,
+        "fused_interfaces": 3401,
+        "mannwhitney_u": 22970052.0,
+        "median_area_fused_voxels": 22.0,
+        "median_area_intact_voxels": 13.0,
+        "median_width_fused_um": 0.3456597924232483,
+        "median_width_intact_um": 0.33038949966430664,
+        "p_value_fused_walls_are_wider": 0.00015549155048538048,
+        "width_ratio_fused_over_intact": 1.0462190619691518
+      },
+      "flood fill": {
+        "cluster_bootstrap": {
+          "difference_median_um_ci95": [
+            -0.006797250360250473,
+            0.0012806877493858337,
+            0.013657020032405853
+          ],
+          "n_boot": 2000,
+          "n_cluster_cells": 2534,
+          "n_cluster_cells_fused": 373,
+          "n_cluster_cells_intact": 2534,
+          "ratio_median_ci95": [
+            0.9794668742125567,
+            1.0038396236515792,
+            1.0409750570627907
+          ]
+        },
+        "fused_fraction": 0.01464486209421528,
+        "fused_interfaces": 240,
+        "mannwhitney_u": 1947871.0,
+        "median_area_fused_voxels": 24.5,
+        "median_area_intact_voxels": 14.0,
+        "median_width_fused_um": 0.334805890917778,
+        "median_width_intact_um": 0.3330005556344986,
+        "p_value_fused_walls_are_wider": 0.44473680382762415,
+        "width_ratio_fused_over_intact": 1.0054214182310883
+      }
+    },
+    "n_interfaces": 16388,
+    "wall_width_um": {
+      "median": 0.3330126404762268,
+      "p10": 0.2503887414932251,
+      "p90": 0.6118909478187561
+    }
+  }
+}
