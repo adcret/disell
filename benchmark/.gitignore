@@ -40,3 +40,23 @@ analysis/paper_minimal_v1/*
 
 *.lock
 *.pid.json
+
+# Flood fill vs KAM benchmark.  Search stores and phantoms are large and
+# reproducible from seeds, so they stay local; only the compact products in
+# analysis/ are tracked.
+runs/
+phantoms/
+__pycache__/
+analysis/*
+!analysis/BENCHMARK.md
+!analysis/benchmark.json
+!analysis/strain_optima.csv
+!analysis/arms_at_optimum.pdf
+!analysis/two_versus_three_d.pdf
+!analysis/why_flood_fill.json
+!analysis/generalisation.json
+!analysis/parameter_economy.json
+!analysis/replicates.json
+!analysis/seed_ablation.json
+!analysis/dimension_replicates.json
+!analysis/transfer_rows.csv

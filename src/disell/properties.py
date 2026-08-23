@@ -132,9 +132,14 @@ def kam(vector_field, ndim=None, size=3, footprint=None, fill_invalid=0.0,
     footprint_3d = np.ascontiguousarray(footprint_3d, dtype=np.bool_)
 
     # --- compute the shape of the kam map ---
-    shape = vector_field.shape[:-1] + (np.prod(size) - 1,)
+    # The per-neighbour distances are summed and never inspected individually,
+    # so only the running sum is stored.  Keeping one slot per kernel offset
+    # instead costs prod(size) doubles per voxel: for a 5x13x13 footprint on a
+    # 26x166x166 volume that is 4.8 GB for a single call, which is enough to
+    # exhaust a workstation when several are computed in parallel.
+    shape = vector_field.shape[:-1]
     kam_map = np.zeros(shape)
-    counts_map = np.zeros(shape[:-1], dtype=int)
+    counts_map = np.zeros(shape, dtype=int)
 
     if ndim == 2:
         _kam3D(vector_field[None,...], footprint_3d, kam_map[None,...], counts_map[None,...])
@@ -146,7 +151,7 @@ def kam(vector_field, ndim=None, size=3, footprint=None, fill_invalid=0.0,
 
     valid = counts_map > 0
     denom = np.where(valid, counts_map, 1)
-    out = np.sum(kam_map, axis=-1) / denom
+    out = kam_map / denom
     if per_channel_rms:
         out = out / np.sqrt(vector_field.shape[-1])
     out[~valid] = fill_invalid
@@ -167,8 +172,8 @@ def _kam3D(vector_field, footprint, kam_map, counts_map):
         footprint (:obj:`numpy.ndarray` of bool): Boolean neighbourhood of
             shape (kz, ky, kx) with odd sizes; only True offsets count as
             neighbours (the centre offset is always skipped).
-        kam_map (:obj:`numpy.ndarray`): Empty array to store the KAM values,
-            shape=(Z, Y, X, (kz*ky*kx)-1).
+        kam_map (:obj:`numpy.ndarray`): Empty array to accumulate the summed
+            neighbour misorientations into, shape=(Z, Y, X).
         counts_map (:obj:`numpy.ndarray`): Empty array to store the valid
             neighbor counts, shape=(Z, Y, X).
 
@@ -196,6 +201,7 @@ def _kam3D(vector_field, footprint, kam_map, counts_map):
                         centre_ok = False
                 if centre_ok:
                     count = 0
+                    total = 0.0
                     for dz in range(-(kz // 2), kz // 2 + 1):
                         for dy in range(-(ky // 2), ky // 2 + 1):
                             for dx in range(-(kx // 2), kx // 2 + 1):
@@ -212,8 +218,9 @@ def _kam3D(vector_field, footprint, kam_map, counts_map):
                                     dist = 0.0
                                     for d in range(C):
                                         dist += (n[d] - c[d]) ** 2
-                                    kam_map[z, y, x, count] = np.sqrt(dist)
+                                    total += np.sqrt(dist)
                                     count += 1
+                    kam_map[z, y, x] = total
                     counts_map[z, y, x] = count
 
 
