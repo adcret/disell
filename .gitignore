@@ -209,7 +209,14 @@ __marimo__/
 # Ignore markdown notes/reports
 *.md
 !README.md
-!benchmark/PROVENANCE.md
+!disell_junk/benchmark/PROVENANCE.md
 old_stuff/
 *.npy
 paper_outputs/
+disell_junk/.claude/
+# Notebook source is retained for provenance; generated analysis products are not.
+disell_junk/notebooks/**/*.csv
+disell_junk/notebooks/**/*.json
+disell_junk/notebooks/**/*.npz
+disell_junk/notebooks/**/*.pdf
+disell_junk/notebooks/**/*.png
