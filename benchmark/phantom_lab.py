@@ -300,10 +300,13 @@ def segment(
     min_cell_size: int,
     kam_radius_um: float,
     seed: int = 0,
-    merge_size_voxels: int = 0,
+    merge: bool = True,
+    merge_size_voxels: int = 40,
     merge_threshold_deg: float = 0.0,
-    merge_mode: str = "absolute",
-    merge_factor: float = 0.25,
+    merge_mode: str = "relative",
+    merge_factor: float = 0.15,
+    spread_factor: float | None = 1.0,
+    spread_percentile: float = 95.0,
 ) -> Result:
     """Run the paper's algorithm: size-ordered flood fill + one KAM watershed.
 
@@ -311,8 +314,10 @@ def segment(
     the order candidate seeds are visited in; changing it is the cheapest way
     to see how stable a parameter set is.
 
-    Setting ``merge_size_voxels`` above zero adds the orientation-gated merge
-    step from :mod:`merge_cells`.  ``merge_mode="relative"`` calibrates the
+    With ``merge=True`` (the default), the existing orientation-gated
+    small-cell merge from :mod:`merge_cells` is part of the flood-fill
+    pipeline.  ``merge=False`` returns the labels immediately after watershed.
+    ``merge_mode="relative"`` calibrates the
     threshold against the misorientation between large regions in this volume,
     so no angle has to be supplied; ``"absolute"`` uses
     ``merge_threshold_deg`` directly.  The step is: segment with a small ``min_cell_size``, then
@@ -358,9 +363,9 @@ def segment(
         "min_cell_size": int(min_cell_size),
         "kam_radius_um": float(kam_radius_um),
     }
-    method = "flood fill (size ordered)"
+    method = "flood fill"
     diagnostics = None
-    if int(merge_size_voxels) > 0:
+    if merge:
         import merge_cells
 
         labels, diagnostics = merge_cells.merge_small_cells(
@@ -369,6 +374,8 @@ def segment(
             merge_threshold_deg=float(merge_threshold_deg),
             merge_mode=merge_mode,
             merge_factor=float(merge_factor),
+            spread_factor=spread_factor,
+            spread_percentile=float(spread_percentile),
             local_threshold_deg=float(local_threshold_deg),
             return_diagnostics=True,
         )
@@ -377,7 +384,9 @@ def segment(
         params["merge_mode"] = merge_mode
         if merge_mode != "absolute":
             params["merge_factor"] = float(merge_factor)
-        method = "flood fill + merge"
+        params["spread_factor"] = spread_factor
+        params["spread_percentile"] = float(spread_percentile)
+    params["merge"] = bool(merge)
     return Result(
         labels=labels,
         markers=np.asarray(markers, dtype=np.int32),

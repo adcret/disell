@@ -5,7 +5,7 @@ The phantom is a Laguerre (power) tessellation on an anisotropically sampled
 grid, rendered into a two-channel DFXM angular feature field.  Its properties
 are fixed by construction rather than tuned:
 
-* **Anisotropic voxels**, ``(1.0, 0.4, 0.4)`` um by default, in a
+* **Anisotropic voxels**, ``(1.0, 0.635, 0.20)`` um by default, in a
   ``24 x 64 x 64`` um physical volume.
 * **Log-normal cell volumes.**  Target volumes are drawn from a log-normal and
   then realised by fitting the power-diagram weights, so the distribution is
@@ -52,7 +52,7 @@ class PhantomConfig:
     """Every parameter of the phantom.  Fixed defaults, no severity ladder."""
 
     shape_zyx: tuple[int, int, int] = (24, 160, 160)
-    spacing_um_zyx: tuple[float, float, float] = (1.0, 0.4, 0.4)
+    spacing_um_zyx: tuple[float, float, float] = (1.0, 0.635, 0.20)
     n_cells: int = 360
 
     #: Standard deviation of log(cell volume).  Cell volumes are drawn from
@@ -74,12 +74,12 @@ class PhantomConfig:
     misorientation_fit_iterations: int = 10
     misorientation_fit_max_nfev: int = 80
 
-    #: Wall geometry.  Widths are per facet and log-normal; a fraction of the
-    #: wall area is broadened further so its KAM ridge fades out.
-    wall_width_um: float = 0.25
-    wall_width_dispersion: float = 0.30
-    incomplete_wall_fraction: float = 0.35
-    incomplete_wall_gain: float = 1.5
+    #: Wall rendering is disabled.  The segmentation input is the latent field,
+    #: with boundaries represented as steps between neighbouring voxels.
+    wall_width_um: float = 0.0
+    wall_width_dispersion: float = 0.0
+    incomplete_wall_fraction: float = 0.0
+    incomplete_wall_gain: float = 0.0
     incomplete_patch_um: float = 6.0
 
     #: Structured interiors: affine gradients, smooth curvature, a very slow
@@ -103,7 +103,7 @@ class PhantomConfig:
     intracell_curvature_deg: float = 0.0250
     intracell_curvature_correlation_um: float = 5.0
     drift_deg: float = 0.018
-    noise_sigma_deg: float = 0.001
+    noise_sigma_deg: float = 0.0
 
     seed: int = 20260811
 

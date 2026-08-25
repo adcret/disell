@@ -140,33 +140,18 @@ def outlines(labels):
 
 
 def best_settings():
-    """Each arm's optimum, preferring the refined sweep when it has finished."""
+    """Settings from the corrected latent-field benchmark."""
 
     import capped_search as cs
 
-    refined = HERE / "runs" / "refined" / "refined_optima.json"
-    if refined.exists():
-        rows = json.loads(refined.read_text())
-        pick = {r["arm"]: r for r in rows if r["phantom"] == "primary"}
-        if {"flood fill", "KAM threshold"} <= set(pick):
-            f, k = pick["flood fill"], pick["KAM threshold"]
-            return (
-                {"footprint_radius_um": f["footprint_radius_um"],
-                 "footprint_tolerance": f["footprint_tolerance"],
-                 "local_threshold_deg": f["local_threshold_deg"],
-                 "global_threshold_deg": -1.0,
-                 "min_cell_size": int(f["min_cell_size"]),
-                 "kam_radius_um": 1.2},
-                {"percentile": k["percentile"], "kam_radius_um": k["kam_radius_um"],
-                 "min_cell_size": int(k["min_cell_size"]),
-                 "connectivity": int(k["connectivity"])},
-                "refined")
-    flood = dict(cs.DEFAULTS)
-    flood.pop("merge_size_voxels"); flood.pop("merge_threshold_deg")
-    flood["min_cell_size"] = 10
-    flood["local_threshold_deg"] = cs.DEFAULT_LOCAL_THRESHOLD_DEG["flood fill"]
-    return flood, {"percentile": 22.5, "kam_radius_um": 1.08,
-                   "min_cell_size": 3, "connectivity": 2}, "coarse"
+    return ({"footprint_radius_um": 1.2, "footprint_tolerance": 0.05,
+             "local_threshold_deg": 0.015616, "global_threshold_deg": -1.0,
+             "min_cell_size": 3, "kam_radius_um": 1.2, "merge": True,
+             "merge_size_voxels": 30, "merge_mode": "relative",
+             "merge_factor": 0.15, "spread_factor": 1.0,
+             "spread_percentile": 90.0},
+            {"percentile": 26, "kam_radius_um": 1.0,
+             "min_cell_size": 1, "connectivity": 1}, "corrected latent field")
 
 
 # -------------------------------------------------------------- main figure

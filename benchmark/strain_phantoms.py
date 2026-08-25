@@ -66,7 +66,9 @@ MEASURED_STRAIN_RANGE_PERCENT = (0.6, 4.6)
 
 #: Matched to the primary phantom so results are directly comparable.
 SHAPE_ZYX = (24, 160, 160)
-SPACING_UM_ZYX = (1.0, 0.4, 0.4)
+# disell-ml sanity geometry: (layer, projected in-plane, fine across-beam)
+# with 1.0 um layers, 0.20 um fine pixels and 17.5 degree scattering.
+SPACING_UM_ZYX = (1.0, 0.635, 0.20)
 BASE_SEED = 2026081900
 
 
@@ -94,6 +96,11 @@ def config_for(strain_key: str, realization: int = 0):
         log_volume_sigma=log_volume_sigma,
         misorientation_k=chi_k,
         misorientation_sigma_deg=chi_scale,
+        wall_width_um=0.0,
+        wall_width_dispersion=0.0,
+        incomplete_wall_fraction=0.0,
+        incomplete_wall_gain=0.0,
+        noise_sigma_deg=0.0,
         seed=seed,
     )
     meta = {
