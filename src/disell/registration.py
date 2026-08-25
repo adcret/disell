@@ -44,7 +44,7 @@ def register_slice_2_volume(slice_2d, ref_vol):
     Z, Y, X = ref_vol.shape
     s = slice_2d.astype(np.float32)
 
-    #normalize slice
+    # normalize slice
     s = (s - s.mean()) / (s.std() + 1e-8)
 
     z_candidates = np.arange(0, Z, 1.0)
@@ -52,7 +52,7 @@ def register_slice_2_volume(slice_2d, ref_vol):
     corr_list = []
     for zf in z_candidates:
         plane = ref_vol[int(zf)].astype(np.float32)
-        #Normalize plane
+        # Normalize plane
         plane = (plane - plane.mean()) / (plane.std() + 1e-8)
 
         resp = match_template(plane, s, pad_input=True)
@@ -65,8 +65,13 @@ def register_slice_2_volume(slice_2d, ref_vol):
     return corr_list, max_index
 
 
-def register(volumes: np.ndarray, registration_channel=-1, verbose=False,
-             upsample_factor=1, normalization=None):
+def register(
+    volumes: np.ndarray,
+    registration_channel=-1,
+    verbose=False,
+    upsample_factor=1,
+    normalization=None,
+):
     """
     Register a time series of volumes (T, ..., C) using phase correlation.
     T can also be interpreted as z when aligning slices.
@@ -99,7 +104,9 @@ def register(volumes: np.ndarray, registration_channel=-1, verbose=False,
     """
     T = volumes.shape[0]
     ref_idx = T // 2
-    norm = (volumes - np.nanmin(volumes)) / (np.nanmax(volumes) - np.nanmin(volumes) + 1e-8)
+    norm = (volumes - np.nanmin(volumes)) / (
+        np.nanmax(volumes) - np.nanmin(volumes) + 1e-8
+    )
 
     ref = np.nan_to_num(norm[ref_idx, ..., registration_channel], nan=0.0)
 
@@ -111,7 +118,9 @@ def register(volumes: np.ndarray, registration_channel=-1, verbose=False,
 
         mov = np.nan_to_num(norm[t, ..., registration_channel], nan=0.0)
         shift, _, _ = phase_cross_correlation(
-            ref, mov, upsample_factor=upsample_factor,
+            ref,
+            mov,
+            upsample_factor=upsample_factor,
             normalization=normalization,
         )
         if verbose:
@@ -119,6 +128,7 @@ def register(volumes: np.ndarray, registration_channel=-1, verbose=False,
         transforms.append(shift)
 
     return transforms
+
 
 def apply_transforms(volumes: np.ndarray, transforms, pad_value=np.nan):
     """
@@ -152,7 +162,7 @@ def apply_transforms(volumes: np.ndarray, transforms, pad_value=np.nan):
         volumes = volumes.astype(np.float32)
 
     # Determine if Z exists (i.e., 3D spatial)
-    has_z = (ndim == 3)
+    has_z = ndim == 3
 
     # Compute required Z-padding
     max_z_pad = 0
@@ -162,8 +172,12 @@ def apply_transforms(volumes: np.ndarray, transforms, pad_value=np.nan):
             for shift in transforms
         )
         if max_z_pad > 0:
-            pad_width = [(0, 0)] + [(max_z_pad, max_z_pad)] + [(0, 0)] * (ndim - 1) + [(0, 0)]
-            volumes = np.pad(volumes, pad_width=pad_width, mode='constant', constant_values=np.nan)
+            pad_width = (
+                [(0, 0)] + [(max_z_pad, max_z_pad)] + [(0, 0)] * (ndim - 1) + [(0, 0)]
+            )
+            volumes = np.pad(
+                volumes, pad_width=pad_width, mode="constant", constant_values=np.nan
+            )
 
     aligned = np.empty_like(volumes)
 
@@ -179,7 +193,7 @@ def apply_transforms(volumes: np.ndarray, transforms, pad_value=np.nan):
                 shift=shift_vec,
                 order=1,
                 mode="constant",
-                cval=np.nan
+                cval=np.nan,
             )
 
     # Remove padding to match input shape

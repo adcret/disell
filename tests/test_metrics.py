@@ -87,7 +87,7 @@ def test_vi_sensitive_to_merge():
 def test_connected_component_report_and_split():
     labels = np.zeros((1, 5, 11), dtype=np.int32)
     labels[0, :, :3] = 1
-    labels[0, :, 8:] = 1   # same label, disconnected
+    labels[0, :, 8:] = 1  # same label, disconnected
     labels[0, :, 4:7] = 2
     report = connected_component_report(labels, connectivity=1)
     assert report["n_labels"] == 2

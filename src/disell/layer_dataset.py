@@ -37,15 +37,15 @@ class LayerDatasetError(RuntimeError):
 class LayerVolume:
     """A stacked (Z, Y, X, C) angular feature volume with metadata."""
 
-    field: np.ndarray                 # (Z, Y, X, C) float32
-    mask: np.ndarray                  # (Z, Y, X) bool, True = valid
-    spacing_nm: Tuple[float, float, float]   # (dz, dy, dx)
+    field: np.ndarray  # (Z, Y, X, C) float32
+    mask: np.ndarray  # (Z, Y, X) bool, True = valid
+    spacing_nm: Tuple[float, float, float]  # (dz, dy, dx)
     angle_unit: str
     channel_names: Tuple[str, ...]
     layer_names: List[str]
-    motors: np.ndarray                # (C, m, n) angular grid (same all layers)
+    motors: np.ndarray  # (C, m, n) angular grid (same all layers)
     processing_info: List[Dict[str, Any]]
-    segmaps: Optional[np.ndarray]     # (Z, h, w) historic labels or None
+    segmaps: Optional[np.ndarray]  # (Z, h, w) historic labels or None
     source: Dict[str, Any] = field(default_factory=dict)
 
     @property
@@ -80,9 +80,7 @@ def discover_layers(
         if m:
             found.append((int(m.group(1)), p))
     if not found:
-        raise LayerDatasetError(
-            f"no directories matching {pattern!r} under {root}"
-        )
+        raise LayerDatasetError(f"no directories matching {pattern!r} under {root}")
     numbers = [n for n, _ in found]
     if len(set(numbers)) != len(numbers):
         raise LayerDatasetError(f"duplicate layer numbers under {root}: {numbers}")
@@ -187,9 +185,7 @@ def load_layer_volume(
 
     C = fields[0].shape[-1]
     if len(channel_names) != C:
-        raise LayerDatasetError(
-            f"channel_names {channel_names} does not match C={C}"
-        )
+        raise LayerDatasetError(f"channel_names {channel_names} does not match C={C}")
 
     volume = np.stack(fields, axis=0)
 

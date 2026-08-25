@@ -31,101 +31,101 @@ def flood_fill_dfxm_two_stage(
     min_grain_size=50,
     recycle_small_grains=False,
     stagnation_tolerance=200,
-    random_seed=None
+    random_seed=None,
 ):
     """
     Two-stage size-prioritized flood-fill segmentation for DFXM data.
- 
+
     When cell boundaries are weak or noisy, random seeding can lead to
     non-unique segmentations. This function stabilizes the segmentation
     by first detecting candidate seed regions and then performing flood fill on the the seeds ordered by cell size.
- 
+
     Algorithm
     ---------
     The segmentation proceeds in two stages:
- 
+
     1. **Seed collection**
     `flood_fill_collect_seeds` is executed to detect potential seed
     regions that satisfy the local misorientation and footprint criteria.
     Each candidate seed is associated with an initial region size.
- 
+
     2. **Seed sorting**
     Seeds are sorted by their detected region size so that the largest
     cells are seeded first by the C++ region-grow loop. (The Python
     array is sorted ascending because the C++ loop consumes user seeds
     LIFO via ``back()`` / ``pop_back()``.)
- 
+
     3. **Seeded flood fill**
     `flood_fill_random_seeds_3d` is called with the sorted seed list.
     Once the seed list is exhausted the loop stops, so only voxels
     reachable from a provided seed are labeled.
- 
+
     Note: when ``random_seed`` is a non-negative integer it is passed to the
     RNG of both stages and the result is bit-exact reproducible. With
     ``random_seed=None`` the RNG is seeded from ``std::random_device`` and
     the seed set varies across runs.
- 
+
     The wrapper supports both **2D and 3D datasets**:
- 
+
     - 2D input: `(H, W, C)`
     - 3D input: `(Z, H, W, C)`
- 
+
     Internally, 2D data is lifted to `(1, H, W, C)` so the same C++ routine
     can be used.
- 
+
     Parameters
     ----------
     property_map : ndarray
         DFXM property map to segment.
- 
+
         Shape:
         - `(H, W, C)` for 2D data
         - `(Z, H, W, C)` for 3D data
- 
+
         `C` typically contains fitted orientation parameters such as
         `(chi, phi)`.
- 
+
     footprint : ndarray
         Neighborhood footprint used during flood filling.
- 
+
         Shape:
         - `(h, w)` for 2D
         - `(f, h, w)` for 3D
- 
+
         The footprint should be chosen considering the physical voxel
         spacing of the dataset.
- 
+
     local_misorientation_threshold : float
         Maximum allowed local misorientation used when expanding a region.
- 
+
     global_threshold : float or None, default=None
         Maximum allowed RMS per-channel distance from the running mean of the
         current region (same units as ``local_misorientation_threshold``). Caps
         intra-region spread relative to the running mean of voxels already
         accepted into the region. ``None`` (or any value ``<= 0``) disables the
         check.
- 
+
     footprint_tolerance : float, default=1
         Tolerance applied when comparing values within the footprint.
- 
+
     mask : ndarray, optional
         Binary mask restricting the segmentation region.
- 
+
         Shape:
         - `(H, W)` for 2D
         - `(Z, H, W)` for 3D
- 
+
     max_iterations : int, default=250
         Maximum number of flood-fill iterations.
- 
+
     min_grain_size : int, default=50
         Minimum region size. Regions smaller than this threshold may be
         discarded or recycled depending on `recycle_small_grains`.
- 
+
     recycle_small_grains : bool, default=False
         If True, pixels from small regions are returned to the pool and
         may be reassigned to neighboring grains.
- 
+
     stagnation_tolerance : int, default=200
         Maximum number of iterations without region growth before the
         algorithm terminates.
@@ -142,52 +142,52 @@ def flood_fill_dfxm_two_stage(
 
         segmentation : ndarray
             Label image of segmeted dislocation cell.
- 
+
             Shape:
             - `(H, W)` for 2D
             - `(Z, H, W)` for 3D
- 
+
         means : ndarray
             Mean property values per grain/mean orientation values of cells
- 
+
         sizes : ndarray
             Final region sizes.
- 
+
     sizes_initial : ndarray
         Region sizes obtained during the seed collection stage.
- 
+
     """
- 
-    # As the c++ code is only for 3d this raises 2d into a 3d array in trough python 
+
+    # As the c++ code is only for 3d this raises 2d into a 3d array in trough python
     if property_map.ndim == 3:
         H, W, C = property_map.shape
         property_map_3d = property_map[None, ...]
- 
+
         if footprint.ndim == 2:
             footprint_3d = footprint[None, ...]
         else:
             footprint_3d = footprint
- 
+
         mask_3d = None if mask is None else mask[None, ...].astype(np.uint8)
- 
+
         is_2d = True
- 
+
     elif property_map.ndim == 4:
         property_map_3d = property_map
         footprint_3d = footprint
         mask_3d = mask.astype(np.uint8)
         is_2d = False
- 
+
     else:
         raise ValueError("property_map must be 3D (H,W,C) or 4D (Z,H,W,C)")
- 
+
     # The C++ stage 2 (flood_fill_random_seeds_3d) mutates the mask in place,
     # zeroing voxels as they are claimed. Defensive copy so:
     #   (a) the caller's input mask is preserved;
     #   (b) the function can be called repeatedly to test stability.
     if mask_3d is not None:
         mask_3d = np.ascontiguousarray(mask_3d.copy())
- 
+
     # Step (1): collect seeds + sizes
     g_thr = -1.0 if global_threshold is None else float(global_threshold)
     rs = -1 if random_seed is None else int(random_seed)
@@ -202,28 +202,38 @@ def flood_fill_dfxm_two_stage(
         int(min_grain_size),
         rs,
     )
- 
+
     sizes_initial = seed_info["sizes"]
     seeds_initial = seed_info["seeds"]
- 
+
     if len(sizes_initial) == 0:
         print("No valid seeds found — return empty segmentation")
         seg = np.zeros(property_map_3d.shape[:3], dtype=np.int32)
         if is_2d:
             seg = seg[0]
-        return dict(segmentation=seg, means=None, sizes=None,
-                    diagnostics={
-                        "candidate_collection": {
-                            k: seed_info[k] for k in (
-                                "iterations", "max_iterations_reached",
-                                "remaining_voxels"
-                            ) if k in seed_info
-                        },
-                        "final_growth": None,
-                        "seeds_initial": seeds_initial,
-                        "seeds_sorted": seeds_initial,
-                    }), sizes_initial
- 
+        return (
+            dict(
+                segmentation=seg,
+                means=None,
+                sizes=None,
+                diagnostics={
+                    "candidate_collection": {
+                        k: seed_info[k]
+                        for k in (
+                            "iterations",
+                            "max_iterations_reached",
+                            "remaining_voxels",
+                        )
+                        if k in seed_info
+                    },
+                    "final_growth": None,
+                    "seeds_initial": seeds_initial,
+                    "seeds_sorted": seeds_initial,
+                },
+            ),
+            sizes_initial,
+        )
+
     # Step (2): sort seeds by size ASCENDING in Python.
     # The C++ user-seed loop consumes via back()/pop_back() (LIFO), so the
     # last element of seeds_sorted is processed first. Ascending order in
@@ -231,7 +241,7 @@ def flood_fill_dfxm_two_stage(
     # intended priority for stable segmentation.
     order = np.argsort(sizes_initial).astype(np.int64)
     seeds_sorted = seeds_initial[order]
- 
+
     # Step (3): full segmentation with deterministic seeds
     result = flood_fill.flood_fill_random_seeds_3d(
         property_map_3d,
@@ -248,40 +258,48 @@ def flood_fill_dfxm_two_stage(
         rs,
     )
 
-    seg  = result["segmentation"]
+    seg = result["segmentation"]
     means = result["means"]
     sizes = result["sizes"]
- 
+
     if is_2d:
         seg = seg[0]
- 
+
     diagnostics = {
         "candidate_collection": {
-            k: seed_info[k] for k in (
-                "iterations", "max_iterations_reached", "remaining_voxels"
-            ) if k in seed_info
+            k: seed_info[k]
+            for k in ("iterations", "max_iterations_reached", "remaining_voxels")
+            if k in seed_info
         },
         "final_growth": {
-            k: result[k] for k in (
-                "iterations", "max_iterations_reached", "remaining_voxels",
-                "user_seeds_supplied", "user_seeds_processed",
-                "user_seeds_skipped_claimed", "user_seeds_unconsumed",
-                "small_regions_parked"
-            ) if k in result
+            k: result[k]
+            for k in (
+                "iterations",
+                "max_iterations_reached",
+                "remaining_voxels",
+                "user_seeds_supplied",
+                "user_seeds_processed",
+                "user_seeds_skipped_claimed",
+                "user_seeds_unconsumed",
+                "small_regions_parked",
+            )
+            if k in result
         },
         "seeds_initial": seeds_initial,
         "seeds_sorted": seeds_sorted,
     }
-    return dict(segmentation=seg, means=means, sizes=sizes,
-                diagnostics=diagnostics), sizes_initial
+    return (
+        dict(segmentation=seg, means=means, sizes=sizes, diagnostics=diagnostics),
+        sizes_initial,
+    )
 
 
 def flood_fill_dfxm(
     property_map,
-    footprint = None, 
-    local_threshold = None, 
+    footprint=None,
+    local_threshold=None,
     global_threshold=None,
-    footprint_tolerance = 0.9,
+    footprint_tolerance=0.9,
     mask=None,
     max_iterations=250,
     min_grain_size=50,
@@ -290,7 +308,7 @@ def flood_fill_dfxm(
     random_seed=None,
 ):
     """
-    
+
 
     This function performs sequantial flood-fill segmentation using random seed
     initialization. It provides a unified interface supporting both
@@ -371,7 +389,7 @@ def flood_fill_dfxm(
         Dictionary containing:
 
         segmentation : ndarray
-            Label image of 
+            Label image of
 
             Shape:
             - `(H, W)` for 2D
@@ -390,11 +408,11 @@ def flood_fill_dfxm(
     if property_map.ndim == 3:
         # 2D input: (H,W,C)
         H, W, C = property_map.shape
-        property_map_3d = property_map[None, ...]        # (1,H,W,C)
+        property_map_3d = property_map[None, ...]  # (1,H,W,C)
 
         # ensure footprint is 3D
         if footprint.ndim == 2:
-            footprint_3d = footprint[None, ...]          # (1,fH,fW)
+            footprint_3d = footprint[None, ...]  # (1,fH,fW)
         elif footprint.ndim == 3 and footprint.shape[0] == 1:
             footprint_3d = footprint
         else:
@@ -408,7 +426,6 @@ def flood_fill_dfxm(
                 raise ValueError("2D mask must be shape (H,W)")
             mask_3d = mask[None, ...]
             mask_3d = mask_3d.astype(np.uint8)
-
 
         is_2d = True
 
@@ -467,7 +484,14 @@ def flood_fill_dfxm(
 
     return dict(segmentation=seg, means=means, sizes=sizes)
 
-def overtreshold_cell_skeletonization_2D(single_channel_input, mask, overtreshold_value=0.71, min_cell_size=10, max_cell_size=4000):
+
+def overtreshold_cell_skeletonization_2D(
+    single_channel_input,
+    mask,
+    overtreshold_value=0.71,
+    min_cell_size=10,
+    max_cell_size=4000,
+):
     """
     Segment dislocation cells from a 2-D or 3-D feature map (typically KAM).
 
@@ -513,19 +537,21 @@ def overtreshold_cell_skeletonization_2D(single_channel_input, mask, overtreshol
     """
 
     ndim = single_channel_input.ndim
-    #Check for the number of dimensions
-    if ndim !=2:
+    # Check for the number of dimensions
+    if ndim != 2:
         raise ValueError("single_channel_input must be 2D")
 
-        #the 1GMM COmponent is not smoothed yert so we might need to do that 
+        # the 1GMM COmponent is not smoothed yert so we might need to do that
 
-    overtreshold_map, _, overtreshold_map_dilation, skel = overtreshold_kam_array(single_channel_input, mask, overtreshold_value, ndim)
+    overtreshold_map, _, overtreshold_map_dilation, skel = overtreshold_kam_array(
+        single_channel_input, mask, overtreshold_value, ndim
+    )
 
-    #Run connected components with ndlabel, return that dictionary, that should be input to misorientation and cell size distribution
+    # Run connected components with ndlabel, return that dictionary, that should be input to misorientation and cell size distribution
     if not np.any(skel):
         print("No cells found")
         return None, None, None, None, None
-    
+
     labeled_array, _ = label(~skel)
 
     # count pixels per label
@@ -545,7 +571,10 @@ def overtreshold_cell_skeletonization_2D(single_channel_input, mask, overtreshol
 
     return regions, filtered_regions, labeled_array, labeled_array_filtered
 
-def overtreshold_kam_array(KAM, grain_mask, treshold=0.7, ndim=2, min_cell_size=10, max_cell_size=4000):
+
+def overtreshold_kam_array(
+    KAM, grain_mask, treshold=0.7, ndim=2, min_cell_size=10, max_cell_size=4000
+):
     """
     Threshold and skeletonize a scalar feature map (2-D or 3-D).
 
@@ -584,13 +613,12 @@ def overtreshold_kam_array(KAM, grain_mask, treshold=0.7, ndim=2, min_cell_size=
     """
     if KAM.shape != grain_mask.shape:
         raise ValueError("The images must have the same shape")
-    
+
     # Check that the mask has valid values (0 and 1)
     if not np.any(grain_mask):  # Check if mask contains any non-zero values
         return grain_mask, None, None, None
 
-    
-    treshold = (1- treshold)*100
+    treshold = (1 - treshold) * 100
     # Extract values inside the mask
     masked_values = KAM[grain_mask.astype(bool)]
 
@@ -599,7 +627,7 @@ def overtreshold_kam_array(KAM, grain_mask, treshold=0.7, ndim=2, min_cell_size=
 
     # Apply threshold: True for top 70% inside the mask
     overtreshold = (KAM >= threshold_value) & (grain_mask.astype(bool))
-    
+
     # Morphological operations
     if ndim == 3:
         se = ball(1)
@@ -608,15 +636,15 @@ def overtreshold_kam_array(KAM, grain_mask, treshold=0.7, ndim=2, min_cell_size=
 
     overtreshold_mask_erosion = binary_erosion(overtreshold, se)
     overtreshold_mask_dilation = binary_dilation(overtreshold_mask_erosion, se)
-    
+
     # Skeletonize the refined KAM mask
     if ndim == 2:
         skel_KAM = skeletonize(overtreshold_mask_dilation)
     else:
         skel_KAM = None
 
-
     return overtreshold, overtreshold_mask_erosion, overtreshold_mask_dilation, skel_KAM
+
 
 def _orientation_stats_worker(index, seg, smooth_registered_volume):
     """Worker for multiprocessing."""
@@ -624,11 +652,7 @@ def _orientation_stats_worker(index, seg, smooth_registered_volume):
     return index, out
 
 
-def get_orientation_stats(
-    seg_list,
-    smooth_registered_volume,
-    multiprocess=True
-):
+def get_orientation_stats(seg_list, smooth_registered_volume, multiprocess=True):
     """
     Compute orientation statistics for each segmentation in seg_list.
     Can run sequential or in parallel.
@@ -650,8 +674,9 @@ def get_orientation_stats(
 
     # Parallel version
     if multiprocess:
-        args = [(i, seg_list[i], smooth_registered_volume)
-                for i in range(len(seg_list))]
+        args = [
+            (i, seg_list[i], smooth_registered_volume) for i in range(len(seg_list))
+        ]
 
         with multiprocessing.Pool(processes=multiprocessing.cpu_count()) as pool:
             results = pool.starmap(_orientation_stats_worker, args)
@@ -670,10 +695,7 @@ def get_orientation_stats(
 
 
 def top_down_cell_identification_based_on_misorientation_treshold(
-    seg_list,
-    smooth_registered_volume,
-    misorientation_treshold,
-    multiprocess=True
+    seg_list, smooth_registered_volume, misorientation_treshold, multiprocess=True
 ):
     """
     Top-down identification of cells based on misorientation,
@@ -685,9 +707,7 @@ def top_down_cell_identification_based_on_misorientation_treshold(
 
     # key call: works for both modes
     out_dict = get_orientation_stats(
-        seg_list,
-        smooth_registered_volume,
-        multiprocess=multiprocess
+        seg_list, smooth_registered_volume, multiprocess=multiprocess
     )
 
     # iterate from large → small
@@ -698,7 +718,7 @@ def top_down_cell_identification_based_on_misorientation_treshold(
         for cell_label, values in stats.items():
             if values["q95"] < misorientation_treshold:
 
-                mask = (seg == cell_label)
+                mask = seg == cell_label
                 size = np.count_nonzero(mask)
                 if size == 0:
                     continue

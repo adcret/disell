@@ -22,7 +22,6 @@ import pytest
 
 import disell
 
-
 # ---------------------------------------------------------------------------
 # Synthetic data
 # ---------------------------------------------------------------------------
@@ -107,10 +106,18 @@ def _sample_seeds(mask: np.ndarray, n_seeds: int, rng: np.random.Generator):
     return np.stack([z, y, x], axis=-1).astype(np.int64)
 
 
-def _run_multiseed_flood_fill(field, mask, *, footprint, local_threshold,
-                              footprint_tolerance, min_grain_size,
-                              max_seed_attempts, stagnation_tolerance,
-                              random_seed):
+def _run_multiseed_flood_fill(
+    field,
+    mask,
+    *,
+    footprint,
+    local_threshold,
+    footprint_tolerance,
+    min_grain_size,
+    max_seed_attempts,
+    stagnation_tolerance,
+    random_seed,
+):
     """Deterministic Python wrapper around ``flood_fill_random_seeds_3d``.
 
     Mitigations applied (mirrors the paper-figure scripts):
@@ -125,10 +132,10 @@ def _run_multiseed_flood_fill(field, mask, *, footprint, local_threshold,
     half = tuple(s // 2 for s in footprint.shape)
     pad = ((half[0],) * 2, (half[1],) * 2, (half[2],) * 2)
 
-    field_p = np.pad(np.ascontiguousarray(field, dtype=np.float32),
-                     pad + ((0, 0),), mode="constant")
-    mask_p = np.pad(np.ascontiguousarray(mask.astype(np.uint8)),
-                    pad, mode="constant")
+    field_p = np.pad(
+        np.ascontiguousarray(field, dtype=np.float32), pad + ((0, 0),), mode="constant"
+    )
+    mask_p = np.pad(np.ascontiguousarray(mask.astype(np.uint8)), pad, mode="constant")
 
     rng = np.random.default_rng(random_seed)
     seeds_p = _sample_seeds(mask_p.astype(bool), max_seed_attempts, rng)
@@ -142,15 +149,15 @@ def _run_multiseed_flood_fill(field, mask, *, footprint, local_threshold,
         mask_p.copy(),
         int(max_seed_attempts),
         int(min_grain_size),
-        False,                       # recycle_small_grains
+        False,  # recycle_small_grains
         int(stagnation_tolerance),
         seeds_p,
     )
     seg_p = np.asarray(result["segmentation"], dtype=np.int32)
     sz, sy, sx = half
-    return seg_p[sz: seg_p.shape[0] - sz,
-                 sy: seg_p.shape[1] - sy,
-                 sx: seg_p.shape[2] - sx].copy()
+    return seg_p[
+        sz : seg_p.shape[0] - sz, sy : seg_p.shape[1] - sy, sx : seg_p.shape[2] - sx
+    ].copy()
 
 
 # ---------------------------------------------------------------------------
@@ -215,9 +222,10 @@ def test_pipeline_recovers_four_quadrants():
     # Multi-seed flood fill (deterministic).
     footprint = np.ones((3, 3, 3), dtype=bool)
     markers = _run_multiseed_flood_fill(
-        field, mask,
+        field,
+        mask,
         footprint=footprint,
-        local_threshold=0.1,    # ||·||² < 0.1**2 * 2 = 0.02; well above noise
+        local_threshold=0.1,  # ||·||² < 0.1**2 * 2 = 0.02; well above noise
         footprint_tolerance=0.85,
         min_grain_size=50,
         max_seed_attempts=300,
@@ -238,9 +246,9 @@ def test_pipeline_recovers_four_quadrants():
 
     # Every in-mask voxel must receive a label.
     unassigned = (labels == 0) & mask
-    assert unassigned.sum() == 0, (
-        f"watershed left {int(unassigned.sum())} in-mask voxels unlabelled"
-    )
+    assert (
+        unassigned.sum() == 0
+    ), f"watershed left {int(unassigned.sum())} in-mask voxels unlabelled"
 
     # Each ground-truth quadrant must be dominated by exactly one label.
     for gt_id in (1, 2, 3, 4):

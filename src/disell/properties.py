@@ -2,10 +2,17 @@ import numba
 import numpy as np
 from typing import Tuple
 
-def kam(vector_field, ndim=None, size=3, footprint=None, fill_invalid=0.0,
-        per_channel_rms=False):
 
-    #vector_field lets do ndim and than size
+def kam(
+    vector_field,
+    ndim=None,
+    size=3,
+    footprint=None,
+    fill_invalid=0.0,
+    per_channel_rms=False,
+):
+
+    # vector_field lets do ndim and than size
     """Compute the KAM (Kernel Average Misorientation) map on a data input for 2D or 3D data with C input channels.
 
     KAM is computed by sliding a kernel across the image and for each voxel computing
@@ -85,26 +92,24 @@ def kam(vector_field, ndim=None, size=3, footprint=None, fill_invalid=0.0,
     if footprint is not None:
         footprint = np.asarray(footprint, dtype=bool)
         if footprint.ndim != ndim:
-            raise ValueError(
-                f"footprint has {footprint.ndim} axes but ndim={ndim}."
-            )
+            raise ValueError(f"footprint has {footprint.ndim} axes but ndim={ndim}.")
         size = np.array(footprint.shape, dtype=int)
     elif isinstance(size, int):
         size = np.array([size] * ndim, dtype=int)
     elif isinstance(size, (tuple, np.ndarray)):
         size = np.array(size, dtype=int)
         if size.size != ndim:
-            raise ValueError(
-                f"size length {size.size} does not match ndim={ndim}."
-            )
+            raise ValueError(f"size length {size.size} does not match ndim={ndim}.")
     else:
-        raise TypeError("size must be int, tuple, or numpy.ndarray if the size is defined for each axis")
+        raise TypeError(
+            "size must be int, tuple, or numpy.ndarray if the size is defined for each axis"
+        )
 
     # --- fit the vector_field to the ndim if needed ---
     if ndim == 2:
         if vector_field.ndim == 2:
             vector_field = vector_field[..., None]
-        elif vector_field.ndim   == 3:
+        elif vector_field.ndim == 3:
             pass
         else:
             raise ValueError("For a 2D kernel, property must be 2D or 3D")
@@ -117,7 +122,6 @@ def kam(vector_field, ndim=None, size=3, footprint=None, fill_invalid=0.0,
             raise ValueError("For a 3D kernel, property must be 3D or 4D")
     else:
         raise ValueError("Kernel size must be 2D 3D")
-
 
     assert all(s % 2 == 1 for s in size), "size must be odd"
     assert all(s >= 1 for s in size), "size must be at least 1"
@@ -142,7 +146,12 @@ def kam(vector_field, ndim=None, size=3, footprint=None, fill_invalid=0.0,
     counts_map = np.zeros(shape, dtype=int)
 
     if ndim == 2:
-        _kam3D(vector_field[None,...], footprint_3d, kam_map[None,...], counts_map[None,...])
+        _kam3D(
+            vector_field[None, ...],
+            footprint_3d,
+            kam_map[None, ...],
+            counts_map[None, ...],
+        )
     elif ndim == 3:
         _kam3D(vector_field, footprint_3d, kam_map, counts_map)
 
@@ -156,8 +165,6 @@ def kam(vector_field, ndim=None, size=3, footprint=None, fill_invalid=0.0,
         out = out / np.sqrt(vector_field.shape[-1])
     out[~valid] = fill_invalid
     return out
-
-
 
 
 @numba.jit(nopython=True, parallel=True, cache=True)
@@ -207,7 +214,9 @@ def _kam3D(vector_field, footprint, kam_map, counts_map):
                             for dx in range(-(kx // 2), kx // 2 + 1):
                                 if dx == 0 and dy == 0 and dz == 0:
                                     continue
-                                if not footprint[dz + kz // 2, dy + ky // 2, dx + kx // 2]:
+                                if not footprint[
+                                    dz + kz // 2, dy + ky // 2, dx + kx // 2
+                                ]:
                                     continue
                                 n = vector_field[z + dz, y + dy, x + dx]
                                 neigh_ok = True
@@ -225,7 +234,7 @@ def _kam3D(vector_field, footprint, kam_map, counts_map):
 
 
 @numba.jit(parallel=True)
-def batch_erode_labels(labeled_image, labels, footprint = None, iterations=1):
+def batch_erode_labels(labeled_image, labels, footprint=None, iterations=1):
     """
     Erode multiple labels in parallel.
 
@@ -248,7 +257,6 @@ def batch_erode_labels(labeled_image, labels, footprint = None, iterations=1):
     Erode multiple labels in parallel.
     """
 
-    
     ndim = labeled_image.ndim
 
     if footprint is None:
@@ -256,12 +264,12 @@ def batch_erode_labels(labeled_image, labels, footprint = None, iterations=1):
             footprint = np.ones((3, 3), dtype=np.bool_)
         else:
             footprint = np.ones((3, 3, 3), dtype=np.bool_)
-            
+
     result = np.zeros((len(labels),) + labeled_image.shape, dtype=np.bool_)
 
     for idx in numba.prange(len(labels)):
         label = labels[idx]
-        mask = (labeled_image == label)
+        mask = labeled_image == label
 
         if ndim == 2:
             result[idx] = _binary_erosion_2d(mask, footprint, iterations=iterations)
@@ -269,7 +277,6 @@ def batch_erode_labels(labeled_image, labels, footprint = None, iterations=1):
             result[idx] = _binary_erosion_3d(mask, footprint, iterations=iterations)
 
     return result
-
 
 
 @numba.jit
@@ -310,7 +317,6 @@ def _binary_erosion_2d(mask, footprint, iterations=1):
 
     # src now contains the final iteration output
     return src
-
 
 
 @numba.njit
@@ -357,9 +363,6 @@ def _binary_erosion_3d(mask, footprint, iterations=1):
     return src
 
 
-
-
-
 @numba.njit(parallel=True)
 def batch_dilate_labels(labeled_image, labels, footprint=None, iterations=1):
     """
@@ -394,7 +397,7 @@ def batch_dilate_labels(labeled_image, labels, footprint=None, iterations=1):
 
     for idx in numba.prange(len(labels)):
         label = labels[idx]
-        mask = (labeled_image == label)
+        mask = labeled_image == label
 
         if ndim == 2:
             result[idx] = _binary_dilation_2d(mask, footprint, iterations)
@@ -480,6 +483,7 @@ def _binary_dilation_3d(mask, footprint, iterations=1):
 
     return src
 
+
 def find_connected_cells_numba(labeled_image, filtered_regions=None):
     """
     Find directly touching labels using Numba-based dilation.
@@ -499,19 +503,20 @@ def find_connected_cells_numba(labeled_image, filtered_regions=None):
     if filtered_regions is None:
         filtered_labels_set = set(np.unique(labeled_image)) - {0}
     else:
-        filtered_labels_set = set(region.label for region in filtered_regions if region.label != 0)
+        filtered_labels_set = set(
+            region.label for region in filtered_regions if region.label != 0
+        )
 
     if labeled_image.ndim == 2:
-        struct_elem = np.ones((3,3), dtype=bool)
+        struct_elem = np.ones((3, 3), dtype=bool)
     elif labeled_image.ndim == 3:
-        struct_elem = np.ones((3,3,3), dtype=bool)
+        struct_elem = np.ones((3, 3, 3), dtype=bool)
     else:
         raise ValueError("Labeled image must be 2D or 3D")
 
-
     # List of valid labels
     # Get all unique labels from the image, excluding background (0)
-    
+
     # Initialize the dictionary for connected regions
     connected_regions = {label: set() for label in filtered_labels_set}
 
@@ -526,8 +531,12 @@ def find_connected_cells_numba(labeled_image, filtered_regions=None):
 
     # Vectorized neighbor extraction
     for label, expanded_mask in expanded_regions.items():
-        neighbor_labels = np.unique(labeled_image[expanded_mask])  # Extract labels from expanded region
+        neighbor_labels = np.unique(
+            labeled_image[expanded_mask]
+        )  # Extract labels from expanded region
         neighbor_labels = neighbor_labels[neighbor_labels != label]  # Exclude self
-        connected_regions[label] = {lbl for lbl in neighbor_labels if lbl in filtered_labels_set}
+        connected_regions[label] = {
+            lbl for lbl in neighbor_labels if lbl in filtered_labels_set
+        }
 
     return connected_regions

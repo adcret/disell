@@ -20,8 +20,13 @@ def test_flood_fill_dfxm_preserves_mask():
     field, mask, footprint = _phantom()
     mask_before = mask.copy()
     flood_fill_dfxm(
-        field, footprint=footprint, local_threshold=0.1, mask=mask,
-        max_iterations=500, min_grain_size=10, random_seed=1,
+        field,
+        footprint=footprint,
+        local_threshold=0.1,
+        mask=mask,
+        max_iterations=500,
+        min_grain_size=10,
+        random_seed=1,
     )
     np.testing.assert_array_equal(mask, mask_before)
 
@@ -30,17 +35,22 @@ def test_flood_fill_two_stage_preserves_mask():
     field, mask, footprint = _phantom()
     mask_before = mask.copy()
     flood_fill_dfxm_two_stage(
-        field, footprint=footprint, local_misorientation_threshold=0.1,
-        mask=mask, max_iterations=500, min_grain_size=10, random_seed=1,
+        field,
+        footprint=footprint,
+        local_misorientation_threshold=0.1,
+        mask=mask,
+        max_iterations=500,
+        min_grain_size=10,
+        random_seed=1,
     )
     np.testing.assert_array_equal(mask, mask_before)
 
 
 def test_get_cell_size_list_min_size_filter():
     labels = np.zeros((10, 10), dtype=np.int32)
-    labels[:2, :2] = 1      # 4 px
-    labels[5:, 5:] = 2      # 25 px
-    labels[0, 5:8] = 3      # 3 px
+    labels[:2, :2] = 1  # 4 px
+    labels[5:, 5:] = 2  # 25 px
+    labels[0, 5:8] = 3  # 3 px
     ids, sizes = get_cell_size_list(labels, min_cell_size=4)
     assert list(ids) == [2]
     assert list(sizes) == [25.0]

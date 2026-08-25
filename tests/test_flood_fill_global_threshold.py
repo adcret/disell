@@ -10,7 +10,6 @@ import pytest
 
 import disell._flood_fill as ff
 
-
 # Shared synthetic geometry: a 1D property map (1, 1, N, 1) with
 #   - a left plateau at 0.0
 #   - a linearly interpolated bridge from 0.0 -> 0.5
@@ -70,7 +69,7 @@ def test_global_enabled_stops_before_right_plateau():
     # Seed is still labelled.
     assert seg[0] != 0
     # Growth must not reach the right plateau (value 0.5 voxels).
-    right_plateau = seg[len(LEFT) + len(BRIDGE):]
+    right_plateau = seg[len(LEFT) + len(BRIDGE) :]
     assert np.all(right_plateau == 0)
     assert seg[-1] == 0
 

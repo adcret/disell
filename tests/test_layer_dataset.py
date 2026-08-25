@@ -11,9 +11,9 @@ from disell import LayerDatasetError, discover_layers, load_layer_volume
 
 def make_dataset(tmp_path, n_layers=11, shape=(20, 30), C=2, scramble=False):
     """Build a synthetic layer_<n>_1 dataset. Channel c value range c*10+[0,1]."""
-    motors = np.stack([
-        np.linspace(0, 1, 5 * 7).reshape(5, 7) + 10 * c for c in range(C)
-    ])
+    motors = np.stack(
+        [np.linspace(0, 1, 5 * 7).reshape(5, 7) + 10 * c for c in range(C)]
+    )
     rng = np.random.default_rng(0)
     order = list(range(1, n_layers + 1))
     for n in order:
@@ -43,9 +43,7 @@ def test_discover_layers_numeric_sort(tmp_path):
 
 def test_load_layer_volume_stacks_and_masks(tmp_path):
     make_dataset(tmp_path, n_layers=3, shape=(20, 30))
-    vol = load_layer_volume(
-        tmp_path, spacing_nm=(500, 1240, 400), expect_n_layers=3
-    )
+    vol = load_layer_volume(tmp_path, spacing_nm=(500, 1240, 400), expect_n_layers=3)
     assert vol.field.shape == (3, 20, 30, 2)
     assert vol.field.dtype == np.float32
     assert vol.mask.shape == (3, 20, 30)
@@ -60,7 +58,9 @@ def test_load_layer_volume_stacks_and_masks(tmp_path):
 def test_load_layer_volume_crop(tmp_path):
     make_dataset(tmp_path, n_layers=2, shape=(20, 30))
     vol = load_layer_volume(
-        tmp_path, spacing_nm=(1, 1, 1), crop=(5, 15, 10, 30),
+        tmp_path,
+        spacing_nm=(1, 1, 1),
+        crop=(5, 15, 10, 30),
         expect_shape_yx=(10, 20),
     )
     assert vol.field.shape == (2, 10, 20, 2)

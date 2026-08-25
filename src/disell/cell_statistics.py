@@ -1,9 +1,14 @@
 import numpy as np
 from skimage.measure import regionprops
 from skimage.segmentation import find_boundaries
-from .properties import find_connected_cells_numba, batch_erode_labels, batch_dilate_labels
+from .properties import (
+    find_connected_cells_numba,
+    batch_erode_labels,
+    batch_dilate_labels,
+)
 from scipy import ndimage
 from scipy.optimize import curve_fit
+
 
 def neighbour_misorientation(labled_image, angle_features):
     """
@@ -25,10 +30,16 @@ def neighbour_misorientation(labled_image, angle_features):
 
     neighbours_dict = find_connected_cells_numba(labled_image, regions)
     # Extract average Chi and Phi values for each region
-    chi_img = angle_features[...,0]
-    phi_img = angle_features[...,1]
-    ave_Chi = {int(prop.label): np.nanmedian(chi_img[prop.coords[:, 0], prop.coords[:, 1]]) for prop in regions}
-    ave_Phi = {int(prop.label): np.nanmedian(phi_img[prop.coords[:, 0], prop.coords[:, 1]]) for prop in regions}
+    chi_img = angle_features[..., 0]
+    phi_img = angle_features[..., 1]
+    ave_Chi = {
+        int(prop.label): np.nanmedian(chi_img[prop.coords[:, 0], prop.coords[:, 1]])
+        for prop in regions
+    }
+    ave_Phi = {
+        int(prop.label): np.nanmedian(phi_img[prop.coords[:, 0], prop.coords[:, 1]])
+        for prop in regions
+    }
 
     misorientations = []
 
@@ -39,25 +50,33 @@ def neighbour_misorientation(labled_image, angle_features):
         cell_Phi = ave_Phi[cell_id]
 
         # Only look at neighbors that are in the dictionary and have a greater label
-        neighbor_ids = [n_id for n_id in neighbours_dict.get(cell_id, []) if n_id > cell_id]
+        neighbor_ids = [
+            n_id for n_id in neighbours_dict.get(cell_id, []) if n_id > cell_id
+        ]
 
         for neighbor_id in neighbor_ids:
             neighbor_Chi = ave_Chi[int(neighbor_id)]
             neighbor_Phi = ave_Phi[int(neighbor_id)]
 
             # Calculate the angular differences for Chi and Phi
-            chi_diff = min(abs(cell_Chi-neighbor_Chi), 360 - abs(cell_Chi-neighbor_Chi))
-            phi_diff = min(abs(cell_Phi-neighbor_Phi), 360 - abs(cell_Phi-neighbor_Phi))
+            chi_diff = min(
+                abs(cell_Chi - neighbor_Chi), 360 - abs(cell_Chi - neighbor_Chi)
+            )
+            phi_diff = min(
+                abs(cell_Phi - neighbor_Phi), 360 - abs(cell_Phi - neighbor_Phi)
+            )
 
             # Combine the differences to estimate misorientation (simplified)
             # Note: This is a simplification and may not accurately represent crystallographic misorientation
             misorientation = np.sqrt(chi_diff**2 + phi_diff**2)
-            
+
             misorientations.append(misorientation)
     return misorientations
 
-def get_cell_size_list(labeled_image, background=0, mask=None, pixel_size= None, min_cell_size= None):
 
+def get_cell_size_list(
+    labeled_image, background=0, mask=None, pixel_size=None, min_cell_size=None
+):
     """
     Compute label IDs and cell sizes (in pixels or physical units) for a labeled image, it is possible to define a sequnace of labels not to include
 
@@ -129,19 +148,17 @@ def cell_stats_orientation_based(
     """
 
     def gauss(x, A, mu, sigma):
-        return A * np.exp(-0.5 * ((x - mu) / sigma)**2)
+        return A * np.exp(-0.5 * ((x - mu) / sigma) ** 2)
 
     seg = seg.astype(np.int32)
     labels = np.unique(seg)
     labels = labels[labels != 0]
     slices = ndimage.find_objects(seg)
 
-
     if wall:
         inner_stack = batch_erode_labels(seg, labels, iterations=erosion_iters)
     else:
         inner_stack = None
-
 
     if wall:
         # boundaries per label → skel_mask
@@ -149,19 +166,19 @@ def cell_stats_orientation_based(
         skeleton_stack = np.zeros((len(labels),) + seg.shape, dtype=np.bool_)
 
         for i, label in enumerate(labels):
-            mask_full = (seg == label)
+            mask_full = seg == label
             skel = find_boundaries(mask_full, mode="inner")
             skeleton_stack[i] = skel
 
         # Now dilate all skeletons in parallel
-        wall_stack = batch_dilate_labels(skeleton_stack, labels, iterations=erosion_iters)
+        wall_stack = batch_dilate_labels(
+            skeleton_stack, labels, iterations=erosion_iters
+        )
     else:
         wall_stack = None
 
-
     out = {}
     q95_values = []
-
 
     for idx, label in enumerate(labels):
 
@@ -173,7 +190,7 @@ def cell_stats_orientation_based(
         feat_crop = angle_features[sl]
 
         # full mask inside crop
-        mask_full = (seg_crop == label)
+        mask_full = seg_crop == label
 
         if wall:
             mask_inner = inner_stack[idx][sl]
@@ -185,8 +202,7 @@ def cell_stats_orientation_based(
             continue
 
         mean = A.mean(axis=0)
-        d_cell = np.sqrt((A[:, 0] - mean[0])**2 +
-                         (A[:, 1] - mean[1])**2)
+        d_cell = np.sqrt((A[:, 0] - mean[0]) ** 2 + (A[:, 1] - mean[1]) ** 2)
 
         var_cell = np.var(d_cell) if d_cell.size > 1 else np.nan
         fit_var_cell = np.nan
@@ -211,10 +227,9 @@ def cell_stats_orientation_based(
                         centers = 0.5 * (bins[:-1] + bins[1:])
                         p0 = [hist.max(), d_clean.mean(), d_clean.std()]
                         popt, _ = curve_fit(gauss, centers, hist, p0=p0, maxfev=5000)
-                        fit_var_cell = popt[2]**2
+                        fit_var_cell = popt[2] ** 2
             except Exception:
                 fit_var_cell = np.nan
-
 
         q95 = np.nanpercentile(d_cell, cutoff_percentile_cell)
         q95_values.append(q95)
@@ -234,4 +249,3 @@ def cell_stats_orientation_based(
         cutoff = np.nan
 
     return out, cutoff
-

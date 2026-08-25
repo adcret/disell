@@ -39,7 +39,6 @@ from .metrics import (
     split_disconnected_labels,
 )
 from .visualization import (
-
     export_grain_meshes,
 )
 from ._flood_fill import (

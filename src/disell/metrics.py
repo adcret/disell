@@ -110,7 +110,11 @@ def boundary_band_kam(
             out[int(lbl)] = np.nan
             continue
 
-        band = ndimage.binary_dilation(boundary, structure=struct, iterations=r_bd) if r_bd > 0 else boundary
+        band = (
+            ndimage.binary_dilation(boundary, structure=struct, iterations=r_bd)
+            if r_bd > 0
+            else boundary
+        )
         vals = kam[sl_exp][band]
         vals = vals[np.isfinite(vals)]
         out[int(lbl)] = float(np.median(vals)) if vals.size else np.nan
@@ -131,7 +135,9 @@ def _contingency(a: np.ndarray, b: np.ndarray):
 
 
 def variation_of_information(
-    a: np.ndarray, b: np.ndarray, mask: np.ndarray | None = None,
+    a: np.ndarray,
+    b: np.ndarray,
+    mask: np.ndarray | None = None,
     ignore_background: bool = True,
 ) -> float:
     """Variation of information (bits) between two labelings of the same grid.
@@ -165,7 +171,9 @@ def variation_of_information(
 
 
 def matched_overlap(
-    a: np.ndarray, b: np.ndarray, mask: np.ndarray | None = None,
+    a: np.ndarray,
+    b: np.ndarray,
+    mask: np.ndarray | None = None,
     ignore_background: bool = True,
 ) -> float:
     """Size-weighted symmetric best-match IoU between two labelings.
@@ -197,9 +205,7 @@ def matched_overlap(
     return float(0.5 * (wa + wb))
 
 
-def connected_component_report(
-    labels: np.ndarray, connectivity: int = 1
-) -> dict:
+def connected_component_report(labels: np.ndarray, connectivity: int = 1) -> dict:
     """Check that every label forms one connected component.
 
     Returns
@@ -252,8 +258,12 @@ def split_disconnected_labels(
     struct = _connectivity_structure(labels.ndim, connectivity)
     out = labels.copy()
     next_id = int(labels.max()) + 1
-    info = {"splits": {}, "removed_voxels": 0, "min_size": min_size,
-            "connectivity": connectivity}
+    info = {
+        "splits": {},
+        "removed_voxels": 0,
+        "min_size": min_size,
+        "connectivity": connectivity,
+    }
     objects = ndimage.find_objects(labels)
     for lbl, sl in enumerate(objects, start=1):
         if sl is None:

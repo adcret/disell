@@ -9,7 +9,6 @@ import vtk.util.numpy_support as ns
 # importing ``disell`` (and the C++ flood-fill extension) does not require it.
 
 
-
 def smooth_mesh(mesh, method="none", iterations=30):
     if method == "none":
         return mesh
@@ -62,19 +61,29 @@ def o3d_to_vtk(o3d_mesh, rgb_color, grain_id):
     return poly
 
 
-def export_grain_meshes(seg_filled, rgb_vol, output_path="grains_surface.vtp", voxel_size = (1,1,1), selected_grains = None,
-                        min_voxels=50, type="volume", smoothing="none", smoothing_iterations=30):
+def export_grain_meshes(
+    seg_filled,
+    rgb_vol,
+    output_path="grains_surface.vtp",
+    voxel_size=(1, 1, 1),
+    selected_grains=None,
+    min_voxels=50,
+    type="volume",
+    smoothing="none",
+    smoothing_iterations=30,
+):
     import open3d as o3d
 
     unique_ids = np.unique(seg_filled)
     unique_ids = unique_ids[unique_ids != 0]
 
-
     if output_path != "grains_surface.vtp":
-        #check if the path is .vtp
-        file_type = output_path.split('.')[-1]
+        # check if the path is .vtp
+        file_type = output_path.split(".")[-1]
         if file_type != "vtp":
-            raise TypeError("output path must specify the file type which needs to be .vtp")
+            raise TypeError(
+                "output path must specify the file type which needs to be .vtp"
+            )
     if selected_grains is not None:
         unique_ids = [gid for gid in unique_ids if gid in selected_grains]
     dz, dy, dx = voxel_size
@@ -85,7 +94,7 @@ def export_grain_meshes(seg_filled, rgb_vol, output_path="grains_surface.vtp", v
 
     for grain_id in unique_ids:
         grain_mask = seg_filled == grain_id
-        #switch y and x axis
+        # switch y and x axis
         grain_mask = np.transpose(grain_mask, (0, 2, 1))
         if np.count_nonzero(grain_mask) < min_voxels:
             continue
@@ -96,11 +105,11 @@ def export_grain_meshes(seg_filled, rgb_vol, output_path="grains_surface.vtp", v
             verts -= np.array([dz, dy, dx])
             mesh = o3d.geometry.TriangleMesh(
                 vertices=o3d.utility.Vector3dVector(verts),
-                triangles=o3d.utility.Vector3iVector(faces)
+                triangles=o3d.utility.Vector3iVector(faces),
             )
         elif type == "points":
             zz, yy, xx = np.nonzero(grain_mask)
-            coords = np.stack([xx*dx, yy*dy, zz*dz], axis=-1).astype(np.float32)
+            coords = np.stack([xx * dx, yy * dy, zz * dz], axis=-1).astype(np.float32)
             mesh = o3d.geometry.PointCloud(o3d.utility.Vector3dVector(coords))
         else:
             raise ValueError("type must be 'volume' or 'points'")
@@ -113,7 +122,7 @@ def export_grain_meshes(seg_filled, rgb_vol, output_path="grains_surface.vtp", v
 
         poly = o3d_to_vtk(mesh, mean_rgb, grain_id)
         vtk_data.AddInputData(poly)
-        grains_count += 1	
+        grains_count += 1
 
     vtk_data.Update()
 

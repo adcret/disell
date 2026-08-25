@@ -13,10 +13,13 @@ def _make_stack(shift_yx, n=3, seed=0):
     rng = np.random.default_rng(seed)
     base = rng.normal(size=(80, 90))
     from scipy.ndimage import gaussian_filter
+
     base = gaussian_filter(base, 3)
     frames = []
     for i in range(n):
-        frames.append(ndi_shift(base, np.asarray(shift_yx) * i, order=1, mode="nearest"))
+        frames.append(
+            ndi_shift(base, np.asarray(shift_yx) * i, order=1, mode="nearest")
+        )
     stack = np.stack(frames)[..., None]  # (T, Y, X, 1)
     return stack
 

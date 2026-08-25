@@ -12,8 +12,13 @@ def test_flood_fill_region_touching_all_boundaries():
     mask = np.ones(field.shape[:3], dtype=np.uint8)
     footprint = np.ones((3, 3, 3), dtype=bool)
     res = flood_fill_dfxm(
-        field, footprint=footprint, local_threshold=0.1, mask=mask,
-        max_iterations=100, min_grain_size=1, footprint_tolerance=0.9,
+        field,
+        footprint=footprint,
+        local_threshold=0.1,
+        mask=mask,
+        max_iterations=100,
+        min_grain_size=1,
+        footprint_tolerance=0.9,
         random_seed=0,
     )
     seg = res["segmentation"]
@@ -30,8 +35,13 @@ def test_anisotropic_footprint_controls_z_connectivity():
     fp_inplane = np.zeros((1, 3, 3), dtype=bool)
     fp_inplane[0] = True
     res = flood_fill_dfxm(
-        field, footprint=fp_inplane, local_threshold=0.1, mask=mask,
-        max_iterations=100, min_grain_size=1, footprint_tolerance=0.9,
+        field,
+        footprint=fp_inplane,
+        local_threshold=0.1,
+        mask=mask,
+        max_iterations=100,
+        min_grain_size=1,
+        footprint_tolerance=0.9,
         random_seed=0,
     )
     seg = res["segmentation"]
@@ -44,8 +54,13 @@ def test_anisotropic_footprint_controls_z_connectivity():
     fp_z[1] = True
     fp_z[0, 1, 1] = fp_z[2, 1, 1] = True
     res = flood_fill_dfxm(
-        field, footprint=fp_z, local_threshold=0.1, mask=mask,
-        max_iterations=100, min_grain_size=1, footprint_tolerance=0.9,
+        field,
+        footprint=fp_z,
+        local_threshold=0.1,
+        mask=mask,
+        max_iterations=100,
+        min_grain_size=1,
+        footprint_tolerance=0.9,
         random_seed=0,
     )
     assert (res["segmentation"] == 1).all()
@@ -56,12 +71,17 @@ def test_min_grain_size_parked_regions_absorbable():
     growth domain, so watershed or later growth can still claim them."""
     field = np.zeros((1, 4, 12, 2), dtype=np.float32)
     field[..., 0] = 0.0
-    field[0, :, 8:, 0] = 5.0          # small distinct corner region (16 px)
+    field[0, :, 8:, 0] = 5.0  # small distinct corner region (16 px)
     mask = np.ones(field.shape[:3], dtype=np.uint8)
     fp = np.ones((1, 3, 3), dtype=bool)
     res = flood_fill_dfxm(
-        field, footprint=fp, local_threshold=0.1, mask=mask,
-        max_iterations=200, min_grain_size=20, footprint_tolerance=0.9,
+        field,
+        footprint=fp,
+        local_threshold=0.1,
+        mask=mask,
+        max_iterations=200,
+        min_grain_size=20,
+        footprint_tolerance=0.9,
         random_seed=3,
     )
     seg = res["segmentation"]

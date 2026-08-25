@@ -6,8 +6,6 @@ KAM, watershed refinement, registration, metrics and layer handling.
 
 The repository contains the installable package under `src/disell`, its C++
 extension under `src/cpp`, tests, documentation and a small example notebook.
-The synthetic phantom generator and paper-specific benchmark archive are kept
-under [`disell_junk/`](disell_junk/).
 
 Install the package with:
 
