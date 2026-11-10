@@ -192,8 +192,8 @@ py::dict flood_fill_random_seeds_3d(
     py::object mask_obj,
     int max_iterations,
     int min_grain_size,
-    bool fill_remaining,            // was `recycle_small_grains` (dead); now meaningful
-    int stagnation_tolerance,
+    bool fill_remaining,            // continue with random seeds once user seeds run out
+    int /*stagnation_tolerance*/,   // ignored; kept so existing callers keep working
     py::object seed_points_obj = py::none(),
     int random_seed = -1
 ) {
@@ -283,7 +283,6 @@ py::dict flood_fill_random_seeds_3d(
 
     int label = 1;
     int iteration = 0;
-    int last_success = -1;
     int user_seeds_processed = 0;
     int user_seeds_skipped_claimed = 0;
     int small_regions_parked = 0;
@@ -360,37 +359,20 @@ py::dict flood_fill_random_seeds_3d(
         }
         label_sizes.push_back(grain_size);
         label_means.push_back(mean_feat);
-        last_success = iteration;
         iteration++;
-
-        if (stagnation_tolerance > 0 &&
-            (iteration - last_success) > stagnation_tolerance)
-            break;
     }
 
-    // --- relabel to a contiguous 1..K (all stored labels already pass) ---
-    const int num_labels_raw = label - 1;
-    std::vector<int> new_map((size_t)std::max(num_labels_raw, 0), 0);
-    int new_id = 1;
-    for (int lbl = 1; lbl <= num_labels_raw; ++lbl)
-        new_map[lbl - 1] = new_id++;
-    const int num_final = new_id - 1;
-
-    for (size_t idx = 0; idx < Nvox; ++idx) {
-        const int old = segmentation[idx];
-        if (old > 0) segmentation[idx] = new_map[old - 1];
-    }
+    // Labels are assigned consecutively as 1..K, so no relabelling is needed.
+    const int num_final = label - 1;
 
     py::array_t<double> means_arr({num_final, C});
     py::array_t<long long> sizes_arr({num_final});
     double* mp = static_cast<double*>(means_arr.mutable_data());
     long long* sp = static_cast<long long*>(sizes_arr.mutable_data());
-    for (int lbl = 1; lbl <= num_labels_raw; ++lbl) {
-        const int out = new_map[lbl - 1] - 1;
-        if (out < 0) continue;
-        sp[out] = (long long)label_sizes[lbl - 1];
+    for (int out = 0; out < num_final; ++out) {
+        sp[out] = (long long)label_sizes[out];
         for (int c = 0; c < C; ++c)
-            mp[(size_t)out * C + c] = label_means[lbl - 1][c];
+            mp[(size_t)out * C + c] = label_means[out][c];
     }
 
     py::dict out;

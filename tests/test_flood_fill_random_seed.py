@@ -19,9 +19,7 @@ def _make_inputs():
     rng = np.random.default_rng(0)
     H, W = 16, 16
     prop = rng.random((H, W, 1)).astype(np.float32)
-    # The C++ flood fill assumes a masked-off border (it does not bounds-check
-    # neighbour indices), which is the realistic usage pattern. Keep a 1-voxel
-    # false frame so edge voxels are never grown.
+    # Keep a 1-voxel masked-off frame, which is the realistic usage pattern.
     mask = np.zeros((H, W), dtype=bool)
     mask[1:-1, 1:-1] = True
     footprint = np.ones((3, 3), dtype=bool)

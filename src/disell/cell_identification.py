@@ -11,6 +11,8 @@ It contains the following functions:
 
 """
 
+import warnings
+
 import numpy as np
 import multiprocessing
 from skimage.morphology import ball, disk, binary_erosion, binary_dilation, skeletonize
@@ -20,6 +22,31 @@ from .cell_statistics import cell_stats_orientation_based
 from . import _flood_fill as flood_fill
 
 
+def _resolve_max_iterations(max_iterations, mask_3d):
+    """Seed-attempt cap passed to the C++ routines.
+
+    ``None`` means "run until the seed pool is empty". Every attempt removes
+    at least one element from the pool, so the number of valid elements is an
+    upper bound on the number of attempts needed.
+    """
+    if max_iterations is None:
+        return int(np.count_nonzero(mask_3d)) + 1
+    return int(max_iterations)
+
+
+def _warn_if_seed_pool_not_exhausted(info, max_iterations):
+    if info.get("max_iterations_reached", False):
+        warnings.warn(
+            f"Flood fill stopped after max_iterations={max_iterations} seed attempts "
+            f"with {int(info.get('remaining_voxels', 0))} elements never offered as "
+            "part of a candidate region. The segmentation then depends on "
+            "max_iterations and on the random seed; use max_iterations=None to run "
+            "until the seed pool is empty.",
+            RuntimeWarning,
+            stacklevel=3,
+        )
+
+
 def flood_fill_dfxm_two_stage(
     property_map,
     footprint=None,
@@ -27,10 +54,10 @@ def flood_fill_dfxm_two_stage(
     global_threshold=None,
     footprint_tolerance=1,
     mask=None,
-    max_iterations=250,
+    max_iterations=None,
     min_grain_size=50,
     recycle_small_grains=False,
-    stagnation_tolerance=200,
+    stagnation_tolerance=None,
     random_seed=None,
 ):
     """
@@ -61,9 +88,17 @@ def flood_fill_dfxm_two_stage(
     reachable from a provided seed are labeled.
 
     Note: when ``random_seed`` is a non-negative integer it is passed to the
-    RNG of both stages and the result is bit-exact reproducible. With
+    RNG of both stages and repeated runs give the same segmentation. With
     ``random_seed=None`` the RNG is seeded from ``std::random_device`` and
     the seed set varies across runs.
+
+    Dependence on the seeds: with ``footprint_tolerance=0`` and no
+    ``global_threshold`` each region is a connected component of the graph
+    joining neighbours closer than the local threshold, and the partition
+    does not depend on the seeds. With either criterion active, different
+    random seeds assign a small fraction of elements differently, provided
+    enough seeds are drawn; with too few seed attempts (``max_iterations``
+    reached) the number and size of the regions depend on ``max_iterations``.
 
     The wrapper supports both **2D and 3D datasets**:
 
@@ -115,20 +150,23 @@ def flood_fill_dfxm_two_stage(
         - `(H, W)` for 2D
         - `(Z, H, W)` for 3D
 
-    max_iterations : int, default=250
-        Maximum number of flood-fill iterations.
+    max_iterations : int or None, default=None
+        Maximum number of seed attempts. ``None`` runs until the seed pool
+        is empty, which is the recommended setting. A ``RuntimeWarning`` is
+        issued if a finite value stops the seeding early.
 
     min_grain_size : int, default=50
-        Minimum region size. Regions smaller than this threshold may be
-        discarded or recycled depending on `recycle_small_grains`.
+        Minimum region size. Smaller regions are not labelled; their
+        elements stay in the mask so that a later region or the subsequent
+        watershed can claim them.
 
     recycle_small_grains : bool, default=False
-        If True, pixels from small regions are returned to the pool and
-        may be reassigned to neighboring grains.
+        If True, continue with random seeds after the size-ordered seed
+        list is exhausted (passed to the C++ routine as ``fill_remaining``).
+        The name is kept for backward compatibility.
 
-    stagnation_tolerance : int, default=200
-        Maximum number of iterations without region growth before the
-        algorithm terminates.
+    stagnation_tolerance : ignored
+        Has no effect. Accepted so that existing scripts keep working.
 
     random_seed : int or None, default=None
         Seed for the internal random number generator. When None, the RNG is seeded from
@@ -158,9 +196,13 @@ def flood_fill_dfxm_two_stage(
 
     """
 
+    if footprint is None:
+        raise ValueError("footprint must be provided")
+    if mask is None:
+        mask = np.ones(property_map.shape[:-1], dtype=np.uint8)
+
     # As the c++ code is only for 3d this raises 2d into a 3d array in trough python
     if property_map.ndim == 3:
-        H, W, C = property_map.shape
         property_map_3d = property_map[None, ...]
 
         if footprint.ndim == 2:
@@ -168,7 +210,7 @@ def flood_fill_dfxm_two_stage(
         else:
             footprint_3d = footprint
 
-        mask_3d = None if mask is None else mask[None, ...].astype(np.uint8)
+        mask_3d = mask[None, ...].astype(np.uint8)
 
         is_2d = True
 
@@ -191,6 +233,8 @@ def flood_fill_dfxm_two_stage(
     # Step (1): collect seeds + sizes
     g_thr = -1.0 if global_threshold is None else float(global_threshold)
     rs = -1 if random_seed is None else int(random_seed)
+    requested_max_iterations = max_iterations
+    max_iterations = _resolve_max_iterations(max_iterations, mask_3d)
     seed_info = flood_fill.flood_fill_collect_seeds(
         property_map_3d,
         footprint_3d,
@@ -205,6 +249,7 @@ def flood_fill_dfxm_two_stage(
 
     sizes_initial = seed_info["sizes"]
     seeds_initial = seed_info["seeds"]
+    _warn_if_seed_pool_not_exhausted(seed_info, requested_max_iterations)
 
     if len(sizes_initial) == 0:
         print("No valid seeds found — return empty segmentation")
@@ -253,7 +298,7 @@ def flood_fill_dfxm_two_stage(
         int(max_iterations),
         int(min_grain_size),
         bool(recycle_small_grains),
-        int(stagnation_tolerance),
+        0,  # stagnation_tolerance: ignored by the C++ routine
         seeds_sorted,
         rs,
     )
@@ -301,10 +346,10 @@ def flood_fill_dfxm(
     global_threshold=None,
     footprint_tolerance=0.9,
     mask=None,
-    max_iterations=250,
+    max_iterations=None,
     min_grain_size=50,
     recycle_small_grains=False,
-    stagnation_tolerance=200,
+    stagnation_tolerance=None,
     random_seed=None,
 ):
     """
@@ -364,19 +409,22 @@ def flood_fill_dfxm(
         - `(H, W)` for 2D
         - `(Z, H, W)` for 3D
 
-    max_iterations : int, default=250
-        Maximum number of flood-fill iterations.
+    max_iterations : int or None, default=None
+        Maximum number of seed attempts. ``None`` runs until the seed pool
+        is empty, which is the recommended setting. A ``RuntimeWarning`` is
+        issued if a finite value stops the seeding early.
 
     min_grain_size : int, default=50
-        Minimum region size. Regions smaller than this threshold may
-        be removed or recycled.
+        Minimum region size. Smaller regions are not labelled; their
+        elements stay in the mask so that a later region or the subsequent
+        watershed can claim them.
 
     recycle_small_grains : bool, default=False
-        If True, pixels from small grains are recycled and reassigned.
+        Has no effect in this function, which always seeds at random.
+        The name is kept for backward compatibility.
 
-    stagnation_tolerance : int, default=200
-        Maximum number of iterations without region growth before
-        termination.
+    stagnation_tolerance : ignored
+        Has no effect. Accepted so that existing scripts keep working.
 
     random_seed : int or None, default=None
         Seed for the internal random number generator. When None, the RNG is seeded from
@@ -405,9 +453,13 @@ def flood_fill_dfxm(
     # -------------------------------------------------------------
     # Detect dimensionality
     # -------------------------------------------------------------
+    if footprint is None:
+        raise ValueError("footprint must be provided")
+    if mask is None:
+        mask = np.ones(property_map.shape[:-1], dtype=np.uint8)
+
     if property_map.ndim == 3:
         # 2D input: (H,W,C)
-        H, W, C = property_map.shape
         property_map_3d = property_map[None, ...]  # (1,H,W,C)
 
         # ensure footprint is 3D
@@ -456,6 +508,8 @@ def flood_fill_dfxm(
     # -------------------------------------------------------------
     g_thr = -1.0 if global_threshold is None else float(global_threshold)
     rs = -1 if random_seed is None else int(random_seed)
+    requested_max_iterations = max_iterations
+    max_iterations = _resolve_max_iterations(max_iterations, mask_3d)
     result = flood_fill.flood_fill_random_seeds_3d(
         property_map_3d,
         footprint_3d,
@@ -466,10 +520,11 @@ def flood_fill_dfxm(
         int(max_iterations),
         int(min_grain_size),
         bool(recycle_small_grains),
-        int(stagnation_tolerance),
+        0,  # stagnation_tolerance: ignored by the C++ routine
         None,
         rs,
     )
+    _warn_if_seed_pool_not_exhausted(result, requested_max_iterations)
 
     # -------------------------------------------------------------
     # Convert back to 2D if needed

@@ -12,8 +12,8 @@ py::dict flood_fill_random_seeds_3d(
     py::object mask_obj,
     int max_iterations,
     int min_grain_size,
-    bool recycle_small_grains,
-    int stagnation_tolerance,
+    bool fill_remaining,
+    int stagnation_tolerance,   // ignored; kept for backward compatibility
     py::object seed_points_obj,
     int random_seed
 );
@@ -41,8 +41,8 @@ PYBIND11_MODULE(_flood_fill, m) {
         py::arg("mask"),
         py::arg("max_iterations"),
         py::arg("min_grain_size"),
-        py::arg("recycle_small_grains"),
-        py::arg("stagnation_tolerance"),
+        py::arg("fill_remaining"),
+        py::arg("stagnation_tolerance"),   // ignored; kept for backward compatibility
         py::arg("seed_points") = py::none(),
         py::arg("random_seed") = -1
     );
